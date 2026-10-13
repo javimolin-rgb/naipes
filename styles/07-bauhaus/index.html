@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Propuesta 07 · Bauhaus — Mazo de 8 Pintas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4f3ee;
+    --paper-dark:#e9e7de;
+    --ink:#121212;
+    --black:#121212;
+    --red:#d32d27;
+    --yellow:#f3c623;
+    --blue:#1859a9;
+    --grid-line:#cfcdc2;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    font-family:'Archivo', sans-serif;
+    color:var(--ink);
+    padding-bottom:80px;
+  }
+  header{
+    max-width:1100px;
+    margin:0 auto;
+    padding:40px 24px 20px;
+    text-align:center;
+  }
+  .back-link{
+    display:inline-block;
+    margin-bottom:18px;
+    font-family:'Archivo',sans-serif;
+    font-weight:700;
+    text-transform:uppercase;
+    font-size:.78rem;
+    letter-spacing:.08em;
+    color:var(--red);
+    text-decoration:none;
+    border-bottom:2px solid var(--black);
+    padding-bottom:2px;
+  }
+  h1{
+    font-family:'Archivo', sans-serif;
+    font-weight:900;
+    text-transform:uppercase;
+    font-size:2.5rem;
+    letter-spacing:.01em;
+    margin:0 0 8px;
+    color:var(--ink);
+  }
+  .tagline{
+    font-weight:700;
+    text-transform:uppercase;
+    color:var(--blue);
+    letter-spacing:.1em;
+    font-size:1rem;
+    margin:0 0 16px;
+  }
+  .desc{
+    max-width:720px;
+    margin:0 auto;
+    line-height:1.65;
+    font-size:1.02rem;
+    font-weight:400;
+  }
+  h2.section-title{
+    text-align:center;
+    font-family:'Archivo', sans-serif;
+    font-weight:900;
+    text-transform:uppercase;
+    font-size:1.2rem;
+    letter-spacing:.1em;
+    margin:60px 0 28px;
+  }
+  h2.section-title:before, h2.section-title:after{
+    content:"■";
+    font-size:.6em;
+    color:var(--red);
+    margin:0 14px;
+    position:relative;
+    top:-2px;
+  }
+
+  /* ---- Suit grid ---- */
+  .suit-grid{
+    max-width:980px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:20px;
+    padding:0 24px;
+  }
+  .suit-card{
+    background:#ffffff;
+    border:3px solid var(--black);
+    border-radius:0;
+    padding:16px 10px 12px;
+    text-align:center;
+    box-shadow:5px 5px 0 var(--black);
+  }
+  .suit-card svg{width:72px;height:72px;}
+  .suit-name{
+    display:block;
+    margin-top:8px;
+    font-size:.82rem;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    color:var(--ink);
+  }
+
+  /* ---- Cards section ---- */
+  .cards-row{
+    max-width:1100px;
+    margin:0 auto;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:40px;
+    padding:0 24px;
+  }
+  .playing-card{
+    width:250px;
+    aspect-ratio:63/88;
+    background:
+      repeating-linear-gradient(0deg, transparent 0 19px, var(--grid-line) 19px 20px),
+      repeating-linear-gradient(90deg, transparent 0 19px, var(--grid-line) 19px 20px),
+      #ffffff;
+    background-blend-mode:normal;
+    opacity:1;
+    border:3px solid var(--black);
+    border-radius:4px;
+    position:relative;
+    box-shadow:7px 7px 0 var(--black);
+    overflow:hidden;
+  }
+  .corner{
+    position:absolute;
+    font-family:'Archivo',sans-serif;
+    font-weight:900;
+    font-size:.95rem;
+    text-align:center;
+    line-height:1;
+    color:var(--ink);
+  }
+  .corner svg{width:16px;height:16px;display:block;margin:3px auto 0;}
+  .corner.tl{top:12px;left:12px;}
+  .corner.br{bottom:12px;right:12px;transform:rotate(180deg);}
+  .card-figure{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .card-label{
+    position:absolute;
+    bottom:13px;
+    left:0;right:0;
+    text-align:center;
+    font-family:'Archivo', sans-serif;
+    font-weight:900;
+    font-size:.62rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--red);
+  }
+  .card-caption{
+    text-align:center;
+    margin-top:14px;
+    font-size:.85rem;
+    color:var(--ink);
+    font-weight:400;
+    max-width:250px;
+  }
+  .card-block{display:flex;flex-direction:column;align-items:center;}
+
+  footer{
+    text-align:center;
+    margin-top:70px;
+    font-size:.78rem;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color:var(--blue);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back-link" href="../../index.html">← Volver a las 10 propuestas</a>
+  <h1>07 · Bauhaus</h1>
+  <p class="tagline">Geometría funcional</p>
+  <p class="desc">Círculo, triángulo y cuadrado como único alfabeto visual, en tinta plana roja, amarilla y azul sobre negro y blanco — sin curvas decorativas ni degradados. Cada pinta se reduce a su composición mínima de formas puras sobre una retícula, siguiendo la lógica de Oskar Schlemmer y Kandinsky en la Bauhaus. El amarillo asume el rol de la familia "verde" para mantener la tríada primaria estricta.</p>
+</header>
+
+<h2 class="section-title">Las 8 pintas</h2>
+<div class="suit-grid">
+
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#bh-club"/></svg>
+    <span class="suit-name">Tréboles</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#bh-diamond"/></svg>
+    <span class="suit-name">Diamantes</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#bh-star"/></svg>
+    <span class="suit-name">Estrella</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#bh-moon"/></svg>
+    <span class="suit-name">Luna</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#bh-spade"/></svg>
+    <span class="suit-name">Picas</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#bh-heart"/></svg>
+    <span class="suit-name">Corazones</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#bh-bolt"/></svg>
+    <span class="suit-name">Rayo</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#bh-cross"/></svg>
+    <span class="suit-name">Aspa</span>
+  </div>
+
+</div>
+
+<!-- shared suit symbol defs -->
+<svg width="0" height="0" style="position:absolute">
+<defs>
+
+  <mask id="bh-moon-mask">
+    <rect x="0" y="0" width="100" height="100" fill="#fff"/>
+    <circle cx="62" cy="37" r="27" fill="#000"/>
+  </mask>
+
+  <g id="bh-club" fill="var(--black)">
+    <circle cx="50" cy="29" r="15"/>
+    <circle cx="35" cy="52" r="15"/>
+    <circle cx="65" cy="52" r="15"/>
+    <rect x="43" y="56" width="14" height="33"/>
+  </g>
+
+  <g id="bh-diamond" fill="var(--red)">
+    <rect x="28" y="28" width="44" height="44" transform="rotate(45 50 50)"/>
+  </g>
+
+  <g id="bh-star" fill="var(--yellow)" stroke="var(--black)" stroke-width="2.5" stroke-linejoin="round">
+    <polygon points="50,7 83,71 17,71"/>
+    <polygon points="50,93 17,29 83,29"/>
+  </g>
+
+  <g id="bh-moon">
+    <circle cx="45" cy="50" r="34" fill="var(--blue)" mask="url(#bh-moon-mask)"/>
+  </g>
+
+  <g id="bh-spade" fill="var(--black)">
+    <circle cx="33" cy="66" r="16"/>
+    <circle cx="67" cy="66" r="16"/>
+    <polygon points="50,10 79,66 21,66"/>
+    <rect x="44" y="78" width="12" height="17"/>
+  </g>
+
+  <g id="bh-heart" fill="var(--red)">
+    <circle cx="35" cy="38" r="16"/>
+    <circle cx="65" cy="38" r="16"/>
+    <polygon points="16,46 84,46 50,92"/>
+  </g>
+
+  <g id="bh-bolt" fill="var(--yellow)" stroke="var(--black)" stroke-width="2.5" stroke-linejoin="round">
+    <polygon points="62,4 62,38 84,38 44,96 44,60 22,60"/>
+  </g>
+
+  <g id="bh-cross" fill="var(--blue)">
+    <rect x="6" y="42" width="88" height="16" transform="rotate(45 50 50)"/>
+    <rect x="6" y="42" width="88" height="16" transform="rotate(-45 50 50)"/>
+  </g>
+
+</defs>
+</svg>
+
+<h2 class="section-title">Joker, Rey, Número y Reverso</h2>
+<div class="cards-row">
+
+  <!-- JOKER -->
+  <div class="card-block">
+    <div class="playing-card">
+      <div class="corner tl">JK<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#bh-star"/></svg></div>
+      <div class="corner br">JK<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#bh-star"/></svg></div>
+      <div class="card-figure">
+        <svg viewBox="0 0 200 280" width="168">
+          <!-- thin grid -->
+          <g stroke="var(--grid-line)" stroke-width="1">
+            <line x1="40" y1="0" x2="40" y2="280"/>
+            <line x1="100" y1="0" x2="100" y2="280"/>
+            <line x1="160" y1="0" x2="160" y2="280"/>
+            <line x1="0" y1="70" x2="200" y2="70"/>
+            <line x1="0" y1="140" x2="200" y2="140"/>
+            <line x1="0" y1="210" x2="200" y2="210"/>
+          </g>
+          <!-- jester cap: 3 triangles -->
+          <polygon points="68,98 94,98 81,40" fill="var(--red)" stroke="var(--black)" stroke-width="3"/>
+          <polygon points="90,96 112,96 101,28" fill="var(--yellow)" stroke="var(--black)" stroke-width="3"/>
+          <polygon points="108,98 134,98 121,40" fill="var(--blue)" stroke="var(--black)" stroke-width="3"/>
+          <circle cx="81" cy="40" r="6" fill="var(--black)"/>
+          <circle cx="101" cy="28" r="6" fill="var(--black)"/>
+          <circle cx="121" cy="40" r="6" fill="var(--black)"/>
+          <!-- head -->
+          <circle cx="101" cy="95" r="30" fill="#ffffff" stroke="var(--black)" stroke-width="4"/>
+          <rect x="85" y="88" width="12" height="7" fill="var(--black)"/>
+          <rect x="105" y="88" width="12" height="7" fill="var(--black)"/>
+          <!-- collar triangle -->
+          <polygon points="52,148 150,148 101,112" fill="var(--yellow)" stroke="var(--black)" stroke-width="3.5"/>
+          <!-- torso rectangle -->
+          <rect x="71" y="146" width="60" height="112" fill="var(--blue)" stroke="var(--black)" stroke-width="3.5"/>
+          <rect x="71" y="190" width="60" height="12" fill="var(--red)"/>
+          <g transform="translate(83,208) scale(.3)"><use href="#bh-star"/></g>
+          <g transform="translate(108,208) scale(.3)"><use href="#bh-moon"/></g>
+          <!-- limbs -->
+          <line x1="72" y1="160" x2="30" y2="205" stroke="var(--black)" stroke-width="6" stroke-linecap="round"/>
+          <line x1="130" y1="160" x2="172" y2="205" stroke="var(--black)" stroke-width="6" stroke-linecap="round"/>
+          <circle cx="30" cy="205" r="9" fill="var(--red)" stroke="var(--black)" stroke-width="2"/>
+          <circle cx="172" cy="205" r="9" fill="var(--yellow)" stroke="var(--black)" stroke-width="2"/>
+          <line x1="88" y1="258" x2="78" y2="272" stroke="var(--black)" stroke-width="6" stroke-linecap="round"/>
+          <line x1="114" y1="258" x2="124" y2="272" stroke="var(--black)" stroke-width="6" stroke-linecap="round"/>
+          <circle cx="78" cy="272" r="8" fill="var(--black)"/>
+          <circle cx="124" cy="272" r="8" fill="var(--black)"/>
+        </svg>
+      </div>
+      <div class="card-label">LA FIGURA Nº1</div>
+    </div>
+    <p class="card-caption">Joker exclusivo — figurín escénico al modo de Oskar Schlemmer, solo círculo, triángulo y rectángulo.</p>
+  </div>
+
+  <!-- KING -->
+  <div class="card-block">
+    <div class="playing-card">
+      <div class="corner tl">R<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#bh-moon"/></svg></div>
+      <div class="corner br">R<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#bh-moon"/></svg></div>
+      <div class="card-figure">
+        <svg viewBox="0 0 200 280" width="168">
+          <g stroke="var(--grid-line)" stroke-width="1">
+            <line x1="40" y1="0" x2="40" y2="280"/>
+            <line x1="100" y1="0" x2="100" y2="280"/>
+            <line x1="160" y1="0" x2="160" y2="280"/>
+            <line x1="0" y1="70" x2="200" y2="70"/>
+            <line x1="0" y1="140" x2="200" y2="140"/>
+            <line x1="0" y1="210" x2="200" y2="210"/>
+          </g>
+          <!-- triangular crown -->
+          <polygon points="62,78 90,78 76,42" fill="var(--yellow)" stroke="var(--black)" stroke-width="3"/>
+          <polygon points="85,80 117,80 101,26" fill="var(--yellow)" stroke="var(--black)" stroke-width="3"/>
+          <polygon points="112,78 140,78 126,42" fill="var(--yellow)" stroke="var(--black)" stroke-width="3"/>
+          <!-- head -->
+          <circle cx="101" cy="100" r="30" fill="#ffffff" stroke="var(--black)" stroke-width="4"/>
+          <rect x="85" y="94" width="12" height="7" fill="var(--black)"/>
+          <rect x="105" y="94" width="12" height="7" fill="var(--black)"/>
+          <!-- beard triangle -->
+          <polygon points="76,122 126,122 101,156" fill="var(--black)"/>
+          <!-- cape / robe -->
+          <rect x="56" y="150" width="90" height="118" fill="var(--blue)" stroke="var(--black)" stroke-width="3.5"/>
+          <rect x="56" y="150" width="90" height="16" fill="var(--red)"/>
+          <g transform="translate(75,200) scale(.32)"><use href="#bh-moon"/></g>
+          <g transform="translate(108,230) scale(.32)"><use href="#bh-moon"/></g>
+          <!-- arms -->
+          <line x1="57" y1="168" x2="26" y2="210" stroke="var(--black)" stroke-width="6" stroke-linecap="round"/>
+          <line x1="145" y1="168" x2="176" y2="210" stroke="var(--black)" stroke-width="6" stroke-linecap="round"/>
+          <circle cx="26" cy="210" r="9" fill="var(--yellow)" stroke="var(--black)" stroke-width="2"/>
+          <circle cx="176" cy="210" r="9" fill="var(--red)" stroke="var(--black)" stroke-width="2"/>
+          <!-- scepter -->
+          <line x1="176" y1="210" x2="176" y2="150" stroke="var(--black)" stroke-width="5" stroke-linecap="round"/>
+          <g transform="translate(176,138) scale(.3)"><use href="#bh-moon"/></g>
+        </svg>
+      </div>
+      <div class="card-label">REY DE LUNA</div>
+    </div>
+    <p class="card-caption">Rey con corona triangular amarilla y capa-rectángulo azul — mismo alfabeto geométrico que el Joker.</p>
+  </div>
+
+  <!-- NUMBER CARD -->
+  <div class="card-block">
+    <div class="playing-card">
+      <div class="corner tl">5<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#bh-diamond"/></svg></div>
+      <div class="corner br">5<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#bh-diamond"/></svg></div>
+      <div class="card-figure">
+        <svg viewBox="0 0 200 280" width="180">
+          <g stroke="var(--grid-line)" stroke-width="1">
+            <line x1="50" y1="0" x2="50" y2="280"/>
+            <line x1="100" y1="0" x2="100" y2="280"/>
+            <line x1="150" y1="0" x2="150" y2="280"/>
+            <line x1="0" y1="56" x2="200" y2="56"/>
+            <line x1="0" y1="112" x2="200" y2="112"/>
+            <line x1="0" y1="168" x2="200" y2="168"/>
+            <line x1="0" y1="224" x2="200" y2="224"/>
+          </g>
+          <g transform="translate(50,56) scale(.42)"><use href="#bh-diamond"/></g>
+          <g transform="translate(150,56) scale(.42)"><use href="#bh-diamond"/></g>
+          <g transform="translate(100,140) scale(.42)"><use href="#bh-diamond"/></g>
+          <g transform="translate(50,224) scale(.42)"><use href="#bh-diamond"/></g>
+          <g transform="translate(150,224) scale(.42)"><use href="#bh-diamond"/></g>
+        </svg>
+      </div>
+      <div class="card-label">CINCO DE DIAMANTES</div>
+    </div>
+    <p class="card-caption">Pintas sobre retícula funcional visible — disposición en quincunce, legible a tamaño de mano.</p>
+  </div>
+
+  <!-- BACK -->
+  <div class="card-block">
+    <div class="playing-card" style="background:#ffffff;">
+      <div class="card-figure">
+        <svg viewBox="0 0 200 280" width="190">
+          <rect x="10" y="10" width="180" height="260" fill="none" stroke="var(--black)" stroke-width="4"/>
+          <!-- Mondrian-style asymmetric grid -->
+          <line x1="10" y1="90" x2="190" y2="90" stroke="var(--black)" stroke-width="4"/>
+          <line x1="10" y1="190" x2="190" y2="190" stroke="var(--black)" stroke-width="4"/>
+          <line x1="80" y1="10" x2="80" y2="90" stroke="var(--black)" stroke-width="4"/>
+          <line x1="140" y1="90" x2="140" y2="190" stroke="var(--black)" stroke-width="4"/>
+          <line x1="60" y1="190" x2="60" y2="270" stroke="var(--black)" stroke-width="4"/>
+          <line x1="130" y1="190" x2="130" y2="270" stroke="var(--black)" stroke-width="4"/>
+          <rect x="10" y="10" width="70" height="80" fill="var(--red)"/>
+          <rect x="140" y="90" width="50" height="100" fill="var(--blue)"/>
+          <rect x="60" y="190" width="70" height="80" fill="var(--yellow)"/>
+          <circle cx="110" cy="50" r="22" fill="#ffffff" stroke="var(--black)" stroke-width="4"/>
+          <polygon points="35,230 20,260 50,260" fill="#ffffff" stroke="var(--black)" stroke-width="3"/>
+          <!-- 8 small squares: one per pinta -->
+          <g>
+            <rect x="92" y="100" width="12" height="12" fill="var(--black)"/>
+            <rect x="110" y="100" width="12" height="12" fill="var(--red)"/>
+            <rect x="92" y="118" width="12" height="12" fill="var(--yellow)"/>
+            <rect x="110" y="118" width="12" height="12" fill="var(--blue)"/>
+            <rect x="92" y="136" width="12" height="12" fill="var(--black)"/>
+            <rect x="110" y="136" width="12" height="12" fill="var(--red)"/>
+            <rect x="92" y="154" width="12" height="12" fill="var(--yellow)"/>
+            <rect x="110" y="154" width="12" height="12" fill="var(--blue)"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <p class="card-caption">Reverso: composición asimétrica tipo Mondrian — ocho cuadrados, uno por cada pinta de la familia, sin revelar información.</p>
+  </div>
+
+</div>
+
+<footer>Propuesta 7 de 10 — Mazo de 8 Pintas</footer>
+</body>
+</html>

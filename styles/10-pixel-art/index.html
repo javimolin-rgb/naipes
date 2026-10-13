@@ -1,0 +1,745 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Propuesta 10 · Píxeles Retro — Mazo de 8 Pintas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --px-bg:#0b0b1d;
+    --px-bg2:#15152c;
+    --px-bg3:#1d1d3a;
+    --px-panel:#181830;
+    --px-ink:#0e0e1a;
+    --px-paper:#eef0ff;
+    --px-black:#111116;
+    --px-red:#e8435a;
+    --px-green:#2ea043;
+    --px-blue:#3b6fe0;
+    --px-gold:#ffd23f;
+    --px-gold-dk:#c9941e;
+    --px-skin:#f0c389;
+    --px-white:#f4f4f4;
+  }
+  *{box-sizing:border-box;}
+  html,body{overflow-x:hidden;}
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, rgba(255,255,255,.025) 0px, rgba(255,255,255,.025) 1px, transparent 1px, transparent 3px),
+      var(--px-bg);
+    font-family:'VT323', monospace;
+    color:var(--px-paper);
+    padding-bottom:90px;
+    font-size:1.15rem;
+  }
+  svg{shape-rendering:crispEdges;}
+  header{
+    max-width:1100px;
+    margin:0 auto;
+    padding:40px 24px 20px;
+    text-align:center;
+  }
+  .back-link{
+    display:inline-block;
+    margin-bottom:22px;
+    font-family:'Press Start 2P', monospace;
+    font-size:.6rem;
+    color:var(--px-bg);
+    text-decoration:none;
+    background:var(--px-gold);
+    padding:8px 12px;
+    box-shadow:4px 4px 0 0 var(--px-ink);
+  }
+  .back-link:hover{ transform:translate(1px,1px); box-shadow:3px 3px 0 0 var(--px-ink); }
+  h1{
+    font-family:'Press Start 2P', monospace;
+    font-size:1.6rem;
+    line-height:1.5;
+    margin:0 0 16px;
+    color:var(--px-gold);
+    text-shadow:3px 3px 0 var(--px-red);
+  }
+  .tagline{
+    font-family:'Press Start 2P', monospace;
+    color:var(--px-green);
+    font-size:.75rem;
+    letter-spacing:.02em;
+    margin:0 0 20px;
+  }
+  .desc{
+    max-width:680px;
+    margin:0 auto;
+    line-height:1.5;
+    font-size:1.25rem;
+    color:#c9ccf0;
+  }
+  h2.section-title{
+    text-align:center;
+    font-family:'Press Start 2P', monospace;
+    font-size:.95rem;
+    line-height:1.8;
+    margin:70px 0 32px;
+    letter-spacing:.02em;
+    color:var(--px-paper);
+  }
+  h2.section-title:before, h2.section-title:after{
+    content:"■";
+    color:var(--px-red);
+    margin:0 16px;
+    font-size:.6rem;
+    vertical-align:middle;
+  }
+
+  /* ---- Suit grid ---- */
+  .suit-grid{
+    max-width:980px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:22px;
+    padding:0 24px;
+  }
+  .suit-card{
+    background:var(--px-panel);
+    border:3px solid var(--px-ink);
+    box-shadow:0 0 0 3px var(--px-gold), 6px 6px 0 0 rgba(0,0,0,.55);
+    border-radius:0;
+    padding:16px 10px 12px;
+    text-align:center;
+  }
+  .suit-card svg{width:68px;height:68px;image-rendering:pixelated;}
+  .suit-name{
+    display:block;
+    margin-top:10px;
+    font-family:'Press Start 2P', monospace;
+    font-size:.55rem;
+    letter-spacing:.02em;
+    color:var(--px-paper);
+  }
+
+  /* ---- Cards section ---- */
+  .cards-row{
+    max-width:1100px;
+    margin:0 auto;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:44px;
+    padding:0 24px;
+  }
+  .playing-card{
+    width:250px;
+    aspect-ratio:63/88;
+    background:var(--px-panel);
+    border:3px solid var(--px-ink);
+    border-radius:0;
+    position:relative;
+    box-shadow:0 0 0 3px var(--px-gold), 8px 8px 0 0 rgba(0,0,0,.55);
+    overflow:hidden;
+  }
+  .playing-card:before{
+    content:"";
+    position:absolute;
+    inset:9px;
+    border:2px solid var(--px-gold-dk);
+    pointer-events:none;
+    opacity:.6;
+  }
+  .corner{
+    position:absolute;
+    font-family:'Press Start 2P', monospace;
+    font-size:.6rem;
+    text-align:center;
+    line-height:1.6;
+    color:var(--px-paper);
+    z-index:2;
+  }
+  .corner svg{width:16px;height:16px;display:block;margin:3px auto 0;image-rendering:pixelated;}
+  .corner.tl{top:13px;left:13px;}
+  .corner.br{bottom:13px;right:13px;transform:rotate(180deg);}
+  .card-figure{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .card-label{
+    position:absolute;
+    bottom:15px;
+    left:0;right:0;
+    text-align:center;
+    font-family:'Press Start 2P', monospace;
+    font-size:.5rem;
+    letter-spacing:.04em;
+    color:var(--px-gold);
+    z-index:2;
+  }
+  .card-caption{
+    text-align:center;
+    margin-top:16px;
+    font-size:1.1rem;
+    line-height:1.4;
+    color:#c9ccf0;
+    max-width:250px;
+  }
+  .card-block{display:flex;flex-direction:column;align-items:center;}
+
+  .sprite-frame{
+    background:var(--px-bg2);
+    border:2px solid var(--px-ink);
+    box-shadow:0 0 0 2px var(--px-gold);
+    padding:7px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .sprite-frame svg{width:150px;height:187.5px;image-rendering:pixelated;}
+
+  .nameplate{
+    position:absolute;
+    top:10px; left:0; right:0;
+    text-align:center;
+    font-family:'Press Start 2P', monospace;
+    font-size:.42rem;
+    color:var(--px-green);
+    z-index:2;
+    letter-spacing:.02em;
+  }
+
+  footer{
+    text-align:center;
+    margin-top:80px;
+    font-family:'Press Start 2P', monospace;
+    font-size:.6rem;
+    color:var(--px-gold-dk);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back-link" href="../../index.html">&lt; VOLVER</a>
+  <h1>10 · PIXELES RETRO</h1>
+  <p class="tagline">8-BIT / SPRITES DE CONSOLA</p>
+  <p class="desc">Cada pinta se redibuja como un sprite de NES/Game&nbsp;Boy: una retícula de 20×20 "píxeles" cuadrados, sin curvas ni antialiasing, con <code>shape-rendering: crispEdges</code> para que el borde quede siempre duro. Paleta limitada tipo cartucho de 8 bits — negro, blanco y cuatro tintas saturadas — y tipografía "Press Start 2P" en todos los títulos. El dorso esconde un guiño a las 8 pintas: una insignia con el número 8 en píxeles, flanqueada por un ícono de cada familia de color.</p>
+</header>
+
+<h2 class="section-title">Las 8 pintas</h2>
+<div class="suit-grid">
+
+  <div class="suit-card">
+    <svg viewBox="0 0 20 20"><use href="#px-club"/></svg>
+    <span class="suit-name">TREBOLES</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 20 20"><use href="#px-diamond"/></svg>
+    <span class="suit-name">DIAMANTES</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 20 20"><use href="#px-star"/></svg>
+    <span class="suit-name">ESTRELLA</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 20 20"><use href="#px-moon"/></svg>
+    <span class="suit-name">LUNA</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 20 20"><use href="#px-spade"/></svg>
+    <span class="suit-name">PICAS</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 20 20"><use href="#px-heart"/></svg>
+    <span class="suit-name">CORAZONES</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 20 20"><use href="#px-bolt"/></svg>
+    <span class="suit-name">RAYO</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 20 20"><use href="#px-cross"/></svg>
+    <span class="suit-name">ASPA</span>
+  </div>
+
+</div>
+
+<!-- shared suit / sprite defs -->
+<svg width="0" height="0" style="position:absolute">
+<defs>
+
+<g id="px-club" fill="var(--px-black)" shape-rendering="crispEdges">
+  <rect x="9" y="2" width="2" height="1"/>
+  <rect x="8" y="3" width="4" height="1"/>
+  <rect x="7" y="4" width="6" height="1"/>
+  <rect x="7" y="5" width="6" height="1"/>
+  <rect x="4" y="6" width="12" height="1"/>
+  <rect x="3" y="7" width="14" height="1"/>
+  <rect x="3" y="8" width="6" height="1"/>
+  <rect x="11" y="8" width="6" height="1"/>
+  <rect x="3" y="9" width="6" height="1"/>
+  <rect x="11" y="9" width="6" height="1"/>
+  <rect x="3" y="10" width="6" height="1"/>
+  <rect x="11" y="10" width="6" height="1"/>
+  <rect x="4" y="11" width="4" height="1"/>
+  <rect x="9" y="11" width="2" height="1"/>
+  <rect x="12" y="11" width="4" height="1"/>
+  <rect x="9" y="12" width="2" height="1"/>
+  <rect x="9" y="13" width="2" height="1"/>
+  <rect x="9" y="14" width="2" height="1"/>
+  <rect x="9" y="15" width="2" height="1"/>
+  <rect x="9" y="16" width="2" height="1"/>
+  <rect x="9" y="17" width="2" height="1"/>
+  <rect x="9" y="18" width="2" height="1"/>
+</g>
+
+<g id="px-diamond" fill="var(--px-red)" shape-rendering="crispEdges">
+  <rect x="9" y="1" width="2" height="1"/>
+  <rect x="9" y="2" width="2" height="1"/>
+  <rect x="8" y="3" width="4" height="1"/>
+  <rect x="7" y="4" width="6" height="1"/>
+  <rect x="6" y="5" width="8" height="1"/>
+  <rect x="6" y="6" width="8" height="1"/>
+  <rect x="5" y="7" width="10" height="1"/>
+  <rect x="4" y="8" width="12" height="1"/>
+  <rect x="3" y="9" width="14" height="1"/>
+  <rect x="3" y="10" width="14" height="1"/>
+  <rect x="4" y="11" width="12" height="1"/>
+  <rect x="5" y="12" width="10" height="1"/>
+  <rect x="6" y="13" width="8" height="1"/>
+  <rect x="6" y="14" width="8" height="1"/>
+  <rect x="7" y="15" width="6" height="1"/>
+  <rect x="8" y="16" width="4" height="1"/>
+  <rect x="9" y="17" width="2" height="1"/>
+  <rect x="9" y="18" width="2" height="1"/>
+</g>
+
+<g id="px-star" fill="var(--px-green)" shape-rendering="crispEdges">
+  <rect x="9" y="1" width="2" height="1"/>
+  <rect x="8" y="2" width="4" height="1"/>
+  <rect x="8" y="3" width="4" height="1"/>
+  <rect x="8" y="4" width="4" height="1"/>
+  <rect x="8" y="5" width="4" height="1"/>
+  <rect x="2" y="6" width="5" height="1"/>
+  <rect x="8" y="6" width="4" height="1"/>
+  <rect x="13" y="6" width="5" height="1"/>
+  <rect x="1" y="7" width="18" height="1"/>
+  <rect x="2" y="8" width="16" height="1"/>
+  <rect x="3" y="9" width="14" height="1"/>
+  <rect x="4" y="10" width="12" height="1"/>
+  <rect x="6" y="11" width="8" height="1"/>
+  <rect x="5" y="12" width="10" height="1"/>
+  <rect x="5" y="13" width="10" height="1"/>
+  <rect x="4" y="14" width="12" height="1"/>
+  <rect x="4" y="15" width="5" height="1"/>
+  <rect x="11" y="15" width="5" height="1"/>
+  <rect x="4" y="16" width="4" height="1"/>
+  <rect x="12" y="16" width="4" height="1"/>
+  <rect x="4" y="17" width="1" height="1"/>
+  <rect x="15" y="17" width="1" height="1"/>
+</g>
+
+<g id="px-moon" fill="var(--px-blue)" shape-rendering="crispEdges">
+  <rect x="6" y="2" width="8" height="1"/>
+  <rect x="5" y="3" width="6" height="1"/>
+  <rect x="4" y="4" width="6" height="1"/>
+  <rect x="3" y="5" width="6" height="1"/>
+  <rect x="2" y="6" width="6" height="1"/>
+  <rect x="2" y="7" width="6" height="1"/>
+  <rect x="2" y="8" width="5" height="1"/>
+  <rect x="2" y="9" width="5" height="1"/>
+  <rect x="2" y="10" width="5" height="1"/>
+  <rect x="2" y="11" width="5" height="1"/>
+  <rect x="2" y="12" width="6" height="1"/>
+  <rect x="2" y="13" width="6" height="1"/>
+  <rect x="3" y="14" width="6" height="1"/>
+  <rect x="4" y="15" width="6" height="1"/>
+  <rect x="5" y="16" width="8" height="1"/>
+  <rect x="15" y="16" width="1" height="1"/>
+  <rect x="6" y="17" width="8" height="1"/>
+</g>
+
+<g id="px-spade" fill="var(--px-black)" shape-rendering="crispEdges">
+  <rect x="9" y="1" width="2" height="1"/>
+  <rect x="8" y="2" width="4" height="1"/>
+  <rect x="7" y="3" width="6" height="1"/>
+  <rect x="6" y="4" width="8" height="1"/>
+  <rect x="5" y="5" width="10" height="1"/>
+  <rect x="4" y="6" width="12" height="1"/>
+  <rect x="4" y="7" width="12" height="1"/>
+  <rect x="3" y="8" width="14" height="1"/>
+  <rect x="3" y="9" width="14" height="1"/>
+  <rect x="3" y="10" width="14" height="1"/>
+  <rect x="3" y="11" width="14" height="1"/>
+  <rect x="4" y="12" width="12" height="1"/>
+  <rect x="8" y="14" width="4" height="1"/>
+  <rect x="8" y="15" width="4" height="1"/>
+  <rect x="9" y="16" width="2" height="1"/>
+  <rect x="9" y="17" width="2" height="1"/>
+  <rect x="9" y="18" width="2" height="1"/>
+</g>
+
+<g id="px-heart" fill="var(--px-red)" shape-rendering="crispEdges">
+  <rect x="5" y="4" width="4" height="1"/>
+  <rect x="11" y="4" width="4" height="1"/>
+  <rect x="4" y="5" width="12" height="1"/>
+  <rect x="3" y="6" width="14" height="1"/>
+  <rect x="3" y="7" width="14" height="1"/>
+  <rect x="4" y="8" width="12" height="1"/>
+  <rect x="4" y="9" width="5" height="1"/>
+  <rect x="11" y="9" width="5" height="1"/>
+  <rect x="4" y="10" width="12" height="1"/>
+  <rect x="5" y="11" width="10" height="1"/>
+  <rect x="6" y="12" width="8" height="1"/>
+  <rect x="6" y="13" width="8" height="1"/>
+  <rect x="7" y="14" width="6" height="1"/>
+  <rect x="8" y="15" width="4" height="1"/>
+  <rect x="8" y="16" width="4" height="1"/>
+  <rect x="9" y="17" width="2" height="1"/>
+</g>
+
+<g id="px-bolt" fill="var(--px-green)" shape-rendering="crispEdges">
+  <rect x="10" y="2" width="1" height="1"/>
+  <rect x="10" y="3" width="1" height="1"/>
+  <rect x="9" y="4" width="2" height="1"/>
+  <rect x="9" y="5" width="2" height="1"/>
+  <rect x="8" y="6" width="3" height="1"/>
+  <rect x="7" y="7" width="3" height="1"/>
+  <rect x="7" y="8" width="3" height="1"/>
+  <rect x="6" y="9" width="9" height="1"/>
+  <rect x="6" y="10" width="8" height="1"/>
+  <rect x="9" y="11" width="4" height="1"/>
+  <rect x="9" y="12" width="3" height="1"/>
+  <rect x="9" y="13" width="3" height="1"/>
+  <rect x="8" y="14" width="3" height="1"/>
+  <rect x="8" y="15" width="2" height="1"/>
+  <rect x="8" y="16" width="1" height="1"/>
+  <rect x="7" y="18" width="1" height="1"/>
+</g>
+
+<g id="px-cross" fill="var(--px-blue)" shape-rendering="crispEdges">
+  <rect x="1" y="1" width="3" height="1"/>
+  <rect x="16" y="1" width="3" height="1"/>
+  <rect x="1" y="2" width="4" height="1"/>
+  <rect x="15" y="2" width="4" height="1"/>
+  <rect x="1" y="3" width="5" height="1"/>
+  <rect x="14" y="3" width="5" height="1"/>
+  <rect x="2" y="4" width="5" height="1"/>
+  <rect x="13" y="4" width="5" height="1"/>
+  <rect x="3" y="5" width="5" height="1"/>
+  <rect x="12" y="5" width="5" height="1"/>
+  <rect x="4" y="6" width="5" height="1"/>
+  <rect x="11" y="6" width="5" height="1"/>
+  <rect x="5" y="7" width="10" height="1"/>
+  <rect x="6" y="8" width="8" height="1"/>
+  <rect x="7" y="9" width="6" height="1"/>
+  <rect x="7" y="10" width="6" height="1"/>
+  <rect x="6" y="11" width="8" height="1"/>
+  <rect x="5" y="12" width="10" height="1"/>
+  <rect x="4" y="13" width="5" height="1"/>
+  <rect x="11" y="13" width="5" height="1"/>
+  <rect x="3" y="14" width="5" height="1"/>
+  <rect x="12" y="14" width="5" height="1"/>
+  <rect x="2" y="15" width="5" height="1"/>
+  <rect x="13" y="15" width="5" height="1"/>
+  <rect x="1" y="16" width="5" height="1"/>
+  <rect x="14" y="16" width="5" height="1"/>
+  <rect x="1" y="17" width="4" height="1"/>
+  <rect x="15" y="17" width="4" height="1"/>
+  <rect x="1" y="18" width="3" height="1"/>
+  <rect x="16" y="18" width="3" height="1"/>
+</g>
+
+<!-- JOKER sprite: "BUFÓN-8BIT" — 16x20 grid -->
+<g id="px-joker-sprite" shape-rendering="crispEdges">
+  <rect x="7" y="0" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="2" y="1" width="1" height="1" fill="var(--px-gold)"/>
+  <rect x="13" y="1" width="1" height="1" fill="var(--px-gold)"/>
+  <rect x="7" y="1" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="6" y="2" width="4" height="1" fill="var(--px-gold)"/>
+  <rect x="5" y="3" width="6" height="1" fill="var(--px-gold)"/>
+  <rect x="1" y="2" width="3" height="1" fill="var(--px-red)"/>
+  <rect x="12" y="2" width="3" height="1" fill="var(--px-red)"/>
+  <rect x="0" y="3" width="5" height="1" fill="var(--px-red)"/>
+  <rect x="11" y="3" width="5" height="1" fill="var(--px-red)"/>
+  <rect x="0" y="5" width="16" height="1" fill="var(--px-red)"/>
+  <rect x="0" y="6" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="14" y="6" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="0" y="7" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="14" y="7" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="0" y="8" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="14" y="8" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="0" y="9" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="14" y="9" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="0" y="10" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="14" y="10" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="0" y="4" width="16" height="1" fill="var(--px-gold)"/>
+  <rect x="2" y="6" width="12" height="1" fill="var(--px-skin)"/>
+  <rect x="2" y="7" width="12" height="1" fill="var(--px-skin)"/>
+  <rect x="2" y="8" width="3" height="1" fill="var(--px-skin)"/>
+  <rect x="7" y="8" width="2" height="1" fill="var(--px-skin)"/>
+  <rect x="11" y="8" width="3" height="1" fill="var(--px-skin)"/>
+  <rect x="2" y="9" width="12" height="1" fill="var(--px-skin)"/>
+  <rect x="2" y="10" width="4" height="1" fill="var(--px-skin)"/>
+  <rect x="10" y="10" width="4" height="1" fill="var(--px-skin)"/>
+  <rect x="1" y="11" width="14" height="1" fill="var(--px-skin)"/>
+  <rect x="5" y="8" width="2" height="1" fill="var(--px-black)"/>
+  <rect x="9" y="8" width="2" height="1" fill="var(--px-black)"/>
+  <rect x="6" y="10" width="4" height="1" fill="var(--px-black)"/>
+  <rect x="0" y="12" width="1" height="1" fill="var(--px-red)"/>
+  <rect x="2" y="12" width="1" height="1" fill="var(--px-red)"/>
+  <rect x="4" y="12" width="1" height="1" fill="var(--px-red)"/>
+  <rect x="6" y="12" width="1" height="1" fill="var(--px-red)"/>
+  <rect x="8" y="12" width="1" height="1" fill="var(--px-red)"/>
+  <rect x="10" y="12" width="1" height="1" fill="var(--px-red)"/>
+  <rect x="12" y="12" width="1" height="1" fill="var(--px-red)"/>
+  <rect x="14" y="12" width="1" height="1" fill="var(--px-red)"/>
+  <rect x="1" y="13" width="1" height="1" fill="var(--px-red)"/>
+  <rect x="3" y="13" width="1" height="1" fill="var(--px-red)"/>
+  <rect x="5" y="13" width="1" height="1" fill="var(--px-red)"/>
+  <rect x="7" y="13" width="1" height="1" fill="var(--px-red)"/>
+  <rect x="9" y="13" width="1" height="1" fill="var(--px-red)"/>
+  <rect x="11" y="13" width="1" height="1" fill="var(--px-red)"/>
+  <rect x="13" y="13" width="1" height="1" fill="var(--px-red)"/>
+  <rect x="15" y="13" width="1" height="1" fill="var(--px-red)"/>
+  <rect x="0" y="14" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="4" y="14" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="8" y="14" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="12" y="14" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="0" y="15" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="4" y="15" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="8" y="15" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="12" y="15" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="2" y="16" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="6" y="16" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="10" y="16" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="14" y="16" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="2" y="17" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="6" y="17" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="10" y="17" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="14" y="17" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="0" y="18" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="4" y="18" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="8" y="18" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="12" y="18" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="0" y="19" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="4" y="19" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="8" y="19" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="12" y="19" width="2" height="1" fill="var(--px-red)"/>
+  <rect x="1" y="12" width="1" height="1" fill="var(--px-gold)"/>
+  <rect x="3" y="12" width="1" height="1" fill="var(--px-gold)"/>
+  <rect x="5" y="12" width="1" height="1" fill="var(--px-gold)"/>
+  <rect x="7" y="12" width="1" height="1" fill="var(--px-gold)"/>
+  <rect x="9" y="12" width="1" height="1" fill="var(--px-gold)"/>
+  <rect x="11" y="12" width="1" height="1" fill="var(--px-gold)"/>
+  <rect x="13" y="12" width="1" height="1" fill="var(--px-gold)"/>
+  <rect x="15" y="12" width="1" height="1" fill="var(--px-gold)"/>
+  <rect x="0" y="13" width="1" height="1" fill="var(--px-gold)"/>
+  <rect x="2" y="13" width="1" height="1" fill="var(--px-gold)"/>
+  <rect x="4" y="13" width="1" height="1" fill="var(--px-gold)"/>
+  <rect x="6" y="13" width="1" height="1" fill="var(--px-gold)"/>
+  <rect x="8" y="13" width="1" height="1" fill="var(--px-gold)"/>
+  <rect x="10" y="13" width="1" height="1" fill="var(--px-gold)"/>
+  <rect x="12" y="13" width="1" height="1" fill="var(--px-gold)"/>
+  <rect x="14" y="13" width="1" height="1" fill="var(--px-gold)"/>
+  <rect x="2" y="14" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="6" y="14" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="10" y="14" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="14" y="14" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="2" y="15" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="6" y="15" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="10" y="15" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="14" y="15" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="0" y="16" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="4" y="16" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="8" y="16" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="12" y="16" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="0" y="17" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="4" y="17" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="8" y="17" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="12" y="17" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="2" y="18" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="6" y="18" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="10" y="18" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="14" y="18" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="2" y="19" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="6" y="19" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="10" y="19" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="14" y="19" width="2" height="1" fill="var(--px-gold)"/>
+</g>
+
+<!-- KING sprite: "REY DE PICAS" — 16x20 grid -->
+<g id="px-king-sprite" shape-rendering="crispEdges">
+  <rect x="7" y="0" width="2" height="1" fill="var(--px-green)"/>
+  <rect x="2" y="1" width="1" height="1" fill="var(--px-gold)"/>
+  <rect x="7" y="1" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="13" y="1" width="1" height="1" fill="var(--px-gold)"/>
+  <rect x="1" y="2" width="3" height="1" fill="var(--px-gold)"/>
+  <rect x="6" y="2" width="4" height="1" fill="var(--px-gold)"/>
+  <rect x="12" y="2" width="3" height="1" fill="var(--px-gold)"/>
+  <rect x="0" y="3" width="16" height="1" fill="var(--px-gold)"/>
+  <rect x="0" y="5" width="16" height="1" fill="var(--px-gold)"/>
+  <rect x="0" y="6" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="14" y="6" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="0" y="7" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="14" y="7" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="0" y="8" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="14" y="8" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="0" y="9" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="14" y="9" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="0" y="10" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="14" y="10" width="2" height="1" fill="var(--px-gold)"/>
+  <rect x="0" y="4" width="16" height="1" fill="var(--px-gold-dk)"/>
+  <rect x="2" y="6" width="12" height="1" fill="var(--px-skin)"/>
+  <rect x="2" y="7" width="12" height="1" fill="var(--px-skin)"/>
+  <rect x="2" y="8" width="3" height="1" fill="var(--px-skin)"/>
+  <rect x="7" y="8" width="2" height="1" fill="var(--px-skin)"/>
+  <rect x="11" y="8" width="3" height="1" fill="var(--px-skin)"/>
+  <rect x="2" y="9" width="12" height="1" fill="var(--px-skin)"/>
+  <rect x="2" y="10" width="3" height="1" fill="var(--px-skin)"/>
+  <rect x="11" y="10" width="3" height="1" fill="var(--px-skin)"/>
+  <rect x="1" y="11" width="2" height="1" fill="var(--px-skin)"/>
+  <rect x="13" y="11" width="2" height="1" fill="var(--px-skin)"/>
+  <rect x="5" y="8" width="2" height="1" fill="var(--px-black)"/>
+  <rect x="9" y="8" width="2" height="1" fill="var(--px-black)"/>
+  <rect x="5" y="10" width="6" height="1" fill="var(--px-white)"/>
+  <rect x="3" y="11" width="10" height="1" fill="var(--px-white)"/>
+  <rect x="0" y="12" width="16" height="1" fill="var(--px-white)"/>
+  <rect x="0" y="13" width="16" height="1" fill="var(--px-white)"/>
+  <rect x="0" y="14" width="16" height="1" fill="var(--px-white)"/>
+  <rect x="2" y="15" width="12" height="1" fill="var(--px-white)"/>
+  <rect x="0" y="15" width="2" height="1" fill="var(--px-black)"/>
+  <rect x="14" y="15" width="2" height="1" fill="var(--px-black)"/>
+  <rect x="0" y="16" width="3" height="1" fill="var(--px-black)"/>
+  <rect x="4" y="16" width="8" height="1" fill="var(--px-black)"/>
+  <rect x="13" y="16" width="3" height="1" fill="var(--px-black)"/>
+  <rect x="0" y="17" width="4" height="1" fill="var(--px-black)"/>
+  <rect x="5" y="17" width="6" height="1" fill="var(--px-black)"/>
+  <rect x="12" y="17" width="4" height="1" fill="var(--px-black)"/>
+  <rect x="0" y="18" width="5" height="1" fill="var(--px-black)"/>
+  <rect x="6" y="18" width="4" height="1" fill="var(--px-black)"/>
+  <rect x="11" y="18" width="5" height="1" fill="var(--px-black)"/>
+  <rect x="0" y="19" width="6" height="1" fill="var(--px-black)"/>
+  <rect x="7" y="19" width="2" height="1" fill="var(--px-black)"/>
+  <rect x="10" y="19" width="6" height="1" fill="var(--px-black)"/>
+  <rect x="3" y="16" width="1" height="1" fill="var(--px-gold)"/>
+  <rect x="12" y="16" width="1" height="1" fill="var(--px-gold)"/>
+  <rect x="4" y="17" width="1" height="1" fill="var(--px-gold)"/>
+  <rect x="11" y="17" width="1" height="1" fill="var(--px-gold)"/>
+  <rect x="5" y="18" width="1" height="1" fill="var(--px-gold)"/>
+  <rect x="10" y="18" width="1" height="1" fill="var(--px-gold)"/>
+  <rect x="6" y="19" width="1" height="1" fill="var(--px-gold)"/>
+  <rect x="9" y="19" width="1" height="1" fill="var(--px-gold)"/>
+</g>
+
+<!-- pixel digit 8, 5x7 grid -->
+<g id="px-digit8" fill="var(--px-gold)" shape-rendering="crispEdges">
+  <rect x="1" y="0" width="3" height="1"/>
+  <rect x="0" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/>
+  <rect x="0" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/>
+  <rect x="1" y="3" width="3" height="1"/>
+  <rect x="0" y="4" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/>
+  <rect x="0" y="5" width="1" height="1"/><rect x="4" y="5" width="1" height="1"/>
+  <rect x="1" y="6" width="3" height="1"/>
+</g>
+
+<!-- repeating 8-bit tile pattern for the card back -->
+<pattern id="px-tile" width="8" height="8" patternUnits="userSpaceOnUse">
+  <rect width="8" height="8" fill="var(--px-bg2)"/>
+  <rect x="0" y="0" width="2" height="2" fill="var(--px-bg3)"/>
+  <rect x="4" y="0" width="2" height="2" fill="var(--px-bg3)"/>
+  <rect x="2" y="2" width="2" height="2" fill="var(--px-bg3)"/>
+  <rect x="6" y="2" width="2" height="2" fill="var(--px-bg3)"/>
+  <rect x="0" y="4" width="2" height="2" fill="var(--px-bg3)"/>
+  <rect x="4" y="4" width="2" height="2" fill="var(--px-bg3)"/>
+  <rect x="2" y="6" width="2" height="2" fill="var(--px-bg3)"/>
+  <rect x="6" y="6" width="2" height="2" fill="var(--px-bg3)"/>
+</pattern>
+
+</defs>
+</svg>
+
+<h2 class="section-title">Joker, Rey, Numero y Reverso</h2>
+<div class="cards-row">
+
+  <!-- JOKER -->
+  <div class="card-block">
+    <div class="playing-card">
+      <div class="corner tl">JK<br><svg viewBox="0 0 20 20"><use href="#px-star"/></svg></div>
+      <div class="corner br">JK<br><svg viewBox="0 0 20 20"><use href="#px-star"/></svg></div>
+      <div class="card-figure">
+        <div class="sprite-frame">
+          <svg viewBox="0 0 16 20"><use href="#px-joker-sprite"/></svg>
+        </div>
+      </div>
+      <div class="card-label">BUFON-8BIT</div>
+    </div>
+    <p class="card-caption">Joker exclusivo — sprite propio de bufón con gorro bicolor, cascabeles y túnica a cuadros, al estilo retrato de selección de personaje.</p>
+  </div>
+
+  <!-- KING -->
+  <div class="card-block">
+    <div class="playing-card">
+      <div class="corner tl">R<br><svg viewBox="0 0 20 20"><use href="#px-spade"/></svg></div>
+      <div class="corner br">R<br><svg viewBox="0 0 20 20"><use href="#px-spade"/></svg></div>
+      <div class="card-figure">
+        <div class="sprite-frame">
+          <svg viewBox="0 0 16 20"><use href="#px-king-sprite"/></svg>
+        </div>
+      </div>
+      <div class="card-label">REY DE PICAS</div>
+    </div>
+    <p class="card-caption">Rey con corona de 3 puntas, barba blanca en bloques y manto negro con ribete dorado — sprite de "jefe final" retro.</p>
+  </div>
+
+  <!-- NUMBER CARD -->
+  <div class="card-block">
+    <div class="playing-card">
+      <div class="corner tl">7<br><svg viewBox="0 0 20 20"><use href="#px-bolt"/></svg></div>
+      <div class="corner br">7<br><svg viewBox="0 0 20 20"><use href="#px-bolt"/></svg></div>
+      <div class="card-figure">
+        <svg viewBox="0 0 200 280" width="180">
+          <g transform="translate(56,34) scale(2)"><use href="#px-bolt"/></g>
+          <g transform="translate(124,34) scale(2)"><use href="#px-bolt"/></g>
+          <g transform="translate(80,80) scale(2)"><use href="#px-bolt"/></g>
+          <g transform="translate(56,126) scale(2)"><use href="#px-bolt"/></g>
+          <g transform="translate(124,126) scale(2)"><use href="#px-bolt"/></g>
+          <g transform="translate(96,246) scale(2) rotate(180)"><use href="#px-bolt"/></g>
+          <g transform="translate(164,246) scale(2) rotate(180)"><use href="#px-bolt"/></g>
+        </svg>
+      </div>
+      <div class="card-label">SIETE DE RAYO</div>
+    </div>
+    <p class="card-caption">Siete pips en retícula de píxeles — disposición clásica de naipe, legible incluso a tamaño de mano.</p>
+  </div>
+
+  <!-- BACK -->
+  <div class="card-block">
+    <div class="playing-card" style="background:var(--px-bg2);">
+      <div class="card-figure">
+        <svg viewBox="0 0 200 280" width="190">
+          <rect x="14" y="14" width="172" height="252" fill="url(#px-tile)"/>
+          <rect x="14" y="14" width="172" height="252" fill="none" stroke="var(--px-gold)" stroke-width="3"/>
+          <rect x="22" y="22" width="156" height="236" fill="none" stroke="var(--px-gold-dk)" stroke-width="2"/>
+          <!-- 4 family icons, one per color group, near the corners -->
+          <g transform="translate(34,40) scale(1.2)"><use href="#px-club"/></g>
+          <g transform="translate(142,40) scale(1.2)"><use href="#px-diamond"/></g>
+          <g transform="translate(34,206) scale(1.2)"><use href="#px-moon"/></g>
+          <g transform="translate(142,206) scale(1.2)"><use href="#px-star"/></g>
+          <!-- center "8" badge -->
+          <rect x="72" y="106" width="56" height="68" fill="var(--px-ink)" stroke="var(--px-gold)" stroke-width="3"/>
+          <g transform="translate(80,118) scale(8)"><use href="#px-digit8"/></g>
+        </svg>
+      </div>
+    </div>
+    <p class="card-caption">Reverso: trama de 8 bits a cuadros con una insignia central "8" — una por cada pinta de la familia.</p>
+  </div>
+
+</div>
+
+<footer>PROPUESTA 10 DE 10 — MAZO DE 8 PINTAS</footer>
+</body>
+</html>

@@ -1,0 +1,632 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Propuesta 03 · Cubismo — Mazo de 8 Pintas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --linen:#e7ddc8;
+    --linen-dark:#d9cbab;
+    --ink:#2a2520;
+    --ochre:#b98d3e;
+    --ochre-dark:#8a6526;
+    --terracotta:#a65b3f;
+    --greybrown:#776a5a;
+    --olive:#6e6b3f;
+    --slate:#51657a;
+
+    --black:#2c2622;
+    --black2:#4a423a;
+    --red:#9c4a35;
+    --red2:#c08161;
+    --green:#6b7a45;
+    --green2:#8f9a66;
+    --blue:#4c6478;
+    --blue2:#7490a3;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(135deg, rgba(0,0,0,0.015) 0px, rgba(0,0,0,0.015) 2px, transparent 2px, transparent 5px),
+      radial-gradient(circle at 25% 5%, #f0e8d4 0%, var(--linen) 50%, var(--linen-dark) 100%);
+    font-family:'Archivo', sans-serif;
+    color:var(--ink);
+    padding-bottom:80px;
+  }
+  header{
+    max-width:1100px;
+    margin:0 auto;
+    padding:40px 24px 20px;
+    text-align:center;
+  }
+  .back-link{
+    display:inline-block;
+    margin-bottom:18px;
+    font-family:'Archivo', sans-serif;
+    font-weight:700;
+    font-size:.85rem;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    color:var(--ochre-dark);
+    text-decoration:none;
+    border-bottom:2px solid var(--ochre-dark);
+    padding-bottom:1px;
+  }
+  h1{
+    font-family:'Archivo Black', sans-serif;
+    font-size:2.5rem;
+    margin:0 0 8px;
+    color:var(--ink);
+    letter-spacing:.01em;
+    text-transform:uppercase;
+  }
+  .tagline{
+    font-weight:500;
+    color:var(--terracotta);
+    font-size:1.15rem;
+    margin:0 0 14px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+  }
+  .desc{
+    max-width:720px;
+    margin:0 auto;
+    line-height:1.65;
+    font-size:1.03rem;
+    color:var(--black2);
+  }
+  h2.section-title{
+    text-align:center;
+    font-family:'Archivo Black', sans-serif;
+    font-size:1.2rem;
+    margin:60px 0 28px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--ink);
+  }
+  h2.section-title:before, h2.section-title:after{
+    content:"◢◣";
+    color:var(--ochre);
+    margin:0 14px;
+    font-size:.8rem;
+    letter-spacing:-2px;
+  }
+
+  /* ---- Suit grid ---- */
+  .suit-grid{
+    max-width:980px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:18px;
+    padding:0 24px;
+  }
+  .suit-card{
+    background:var(--linen);
+    border:2px solid var(--ink);
+    box-shadow: 4px 4px 0 rgba(42,37,32,.18);
+    padding:14px 10px 10px;
+    text-align:center;
+  }
+  .suit-card svg{width:72px;height:72px;}
+  .suit-name{
+    display:block;
+    margin-top:6px;
+    font-size:.82rem;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    font-weight:700;
+    color:var(--ink);
+  }
+
+  /* ---- Cards section ---- */
+  .cards-row{
+    max-width:1100px;
+    margin:0 auto;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:36px;
+    padding:0 24px;
+  }
+  .playing-card{
+    width:250px;
+    aspect-ratio:63/88;
+    background:var(--linen);
+    border:3px solid var(--ink);
+    border-radius:4px;
+    position:relative;
+    box-shadow:7px 7px 0 rgba(42,37,32,.22);
+    overflow:hidden;
+  }
+  .playing-card:before{
+    content:"";
+    position:absolute;
+    inset:7px;
+    border:1px solid var(--ochre-dark);
+    pointer-events:none;
+  }
+  .corner{
+    position:absolute;
+    font-family:'Archivo', sans-serif;
+    font-weight:700;
+    font-size:.95rem;
+    text-align:center;
+    line-height:1;
+    color:var(--ink);
+    z-index:2;
+  }
+  .corner svg{width:16px;height:16px;display:block;margin:2px auto 0;}
+  .corner.tl{top:12px;left:12px;}
+  .corner.br{bottom:12px;right:12px;transform:rotate(180deg);}
+  .card-figure{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .card-label{
+    position:absolute;
+    bottom:13px;
+    left:0;right:0;
+    text-align:center;
+    font-family:'Archivo Black', sans-serif;
+    font-size:.62rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--ochre-dark);
+    z-index:2;
+  }
+  .card-caption{
+    text-align:center;
+    margin-top:12px;
+    font-size:.85rem;
+    color:var(--black2);
+    max-width:250px;
+  }
+  .card-block{display:flex;flex-direction:column;align-items:center;}
+
+  footer{
+    text-align:center;
+    margin-top:70px;
+    font-size:.8rem;
+    color:var(--ochre-dark);
+    letter-spacing:.05em;
+    text-transform:uppercase;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back-link" href="../../index.html">← Volver a las 10 propuestas</a>
+  <h1>03 · Cubismo</h1>
+  <p class="tagline">Fragmentación</p>
+  <p class="desc">Cada pinta se descompone en facetas poligonales translúcidas que se superponen desde ángulos simultáneos, como un bodegón de Braque visto desde todos sus costados a la vez. Paleta analítica de ocres, terracotas y grises-azulados sobre lino crudo (1909–12). La figuras — un arlequín fragmentado y un rey de planos astillados — muestran rostro de frente y de perfil al mismo tiempo.</p>
+</header>
+
+<h2 class="section-title">Las 8 pintas</h2>
+<div class="suit-grid">
+
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#cb-club"/></svg>
+    <span class="suit-name">Tréboles</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#cb-diamond"/></svg>
+    <span class="suit-name">Diamantes</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#cb-star"/></svg>
+    <span class="suit-name">Estrella</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#cb-moon"/></svg>
+    <span class="suit-name">Luna</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#cb-spade"/></svg>
+    <span class="suit-name">Picas</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#cb-heart"/></svg>
+    <span class="suit-name">Corazones</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#cb-bolt"/></svg>
+    <span class="suit-name">Rayo</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#cb-cross"/></svg>
+    <span class="suit-name">Aspa</span>
+  </div>
+
+</div>
+
+<!-- shared suit symbol defs -->
+<svg width="0" height="0" style="position:absolute">
+<defs>
+
+  <!-- CLUB (black family): three-circle clover faceted into angular shards -->
+  <g id="cb-club">
+    <clipPath id="clip-club">
+      <circle cx="50" cy="33" r="17"/>
+      <circle cx="34" cy="55" r="17"/>
+      <circle cx="66" cy="55" r="17"/>
+      <path d="M42,58 L58,58 L53,90 Q50,95 47,90 Z"/>
+    </clipPath>
+    <g clip-path="url(#clip-club)">
+      <rect x="0" y="0" width="100" height="100" fill="var(--black)"/>
+      <polygon points="0,0 55,0 40,45 10,60" fill="var(--black2)" opacity=".75"/>
+      <polygon points="55,0 100,0 100,50 60,40" fill="var(--greybrown)" opacity=".7"/>
+      <polygon points="10,60 40,45 60,40 65,75 30,95" fill="var(--black)" opacity=".55"/>
+      <polygon points="60,40 100,50 100,100 55,100 65,75" fill="var(--black2)" opacity=".6"/>
+      <polygon points="30,95 65,75 55,100 35,100" fill="var(--greybrown)" opacity=".8"/>
+      <polygon points="0,0 10,60 0,60" fill="var(--black)" opacity=".4"/>
+      <polygon points="0,60 10,60 30,95 0,100" fill="var(--black2)" opacity=".5"/>
+      <polygon points="40,45 60,40 65,75 30,95 10,60" fill="none"/>
+    </g>
+    <g clip-path="url(#clip-club)" fill="none" stroke="var(--ink)" stroke-width="1.1" opacity=".8">
+      <path d="M55,0 L40,45 L10,60 M55,0 L60,40 L100,50 M40,45 L60,40 M10,60 L30,95 L65,75 L60,40 M65,75 L55,100 M0,60 L10,60"/>
+    </g>
+  </g>
+
+  <!-- DIAMOND (red family): rhombus split into prismatic facets -->
+  <g id="cb-diamond">
+    <clipPath id="clip-diamond">
+      <path d="M50,6 C34,28 28,40 16,50 C28,60 34,72 50,94 C66,72 72,60 84,50 C72,40 66,28 50,6 Z"/>
+    </clipPath>
+    <g clip-path="url(#clip-diamond)">
+      <rect x="0" y="0" width="100" height="100" fill="var(--red)"/>
+      <polygon points="16,50 50,6 55,35 35,45" fill="var(--red2)" opacity=".75"/>
+      <polygon points="50,6 84,50 65,45 55,35" fill="var(--red)" opacity=".6"/>
+      <polygon points="16,50 35,45 45,65 20,62" fill="var(--terracotta)" opacity=".7"/>
+      <polygon points="35,45 55,35 65,45 60,62 45,65" fill="var(--red2)" opacity=".55"/>
+      <polygon points="65,45 84,50 80,62 60,62" fill="var(--terracotta)" opacity=".65"/>
+      <polygon points="20,62 45,65 50,94 16,50" fill="var(--red)" opacity=".5"/>
+      <polygon points="45,65 60,62 80,62 50,94" fill="var(--red2)" opacity=".6"/>
+    </g>
+    <g clip-path="url(#clip-diamond)" fill="none" stroke="var(--ink)" stroke-width="1.1" opacity=".8">
+      <path d="M16,50 L35,45 L55,35 L50,6 M55,35 L65,45 L84,50 M35,45 L45,65 L60,62 L65,45 M20,62 L45,65 M60,62 L80,62 M45,65 L50,94"/>
+    </g>
+  </g>
+
+  <!-- STAR (green family): 5-point star shattered into triangular shards -->
+  <g id="cb-star">
+    <clipPath id="clip-star">
+      <path d="M50,5 L61,35 L95,35 L68,57 L78,91 L50,70 L22,91 L32,57 L5,35 L39,35 Z"/>
+    </clipPath>
+    <g clip-path="url(#clip-star)">
+      <rect x="0" y="0" width="100" height="100" fill="var(--green)"/>
+      <polygon points="50,5 61,35 39,35" fill="var(--green2)" opacity=".75"/>
+      <polygon points="61,35 95,35 68,57 50,50" fill="var(--olive)" opacity=".7"/>
+      <polygon points="39,35 61,35 50,50 50,5" fill="var(--green)" opacity=".5"/>
+      <polygon points="5,35 39,35 50,50 32,57" fill="var(--green2)" opacity=".6"/>
+      <polygon points="68,57 78,91 50,70 50,50" fill="var(--olive)" opacity=".55"/>
+      <polygon points="32,57 50,50 50,70 22,91" fill="var(--green)" opacity=".65"/>
+    </g>
+    <g clip-path="url(#clip-star)" fill="none" stroke="var(--ink)" stroke-width="1.1" opacity=".8">
+      <path d="M50,5 L50,50 L61,35 M50,50 L68,57 M50,50 L32,57 M50,50 L50,70"/>
+    </g>
+  </g>
+
+  <!-- MOON (blue family): crescent divided into curved-edge facets -->
+  <g id="cb-moon">
+    <clipPath id="clip-moon">
+      <path clip-rule="evenodd" fill-rule="evenodd" d="M 46,50 m -40,0 a 40,40 0 1,0 80,0 a 40,40 0 1,0 -80,0 Z
+        M 60,50 m -32,0 a 32,32 0 1,0 64,0 a 32,32 0 1,0 -64,0 Z"/>
+    </clipPath>
+    <g clip-path="url(#clip-moon)">
+      <rect x="0" y="0" width="100" height="100" fill="var(--blue)"/>
+      <polygon points="30,8 65,8 55,35 25,38" fill="var(--blue2)" opacity=".7"/>
+      <polygon points="10,30 30,8 25,38 15,50" fill="var(--slate)" opacity=".65"/>
+      <polygon points="25,38 55,35 50,62 22,62" fill="var(--blue)" opacity=".55"/>
+      <polygon points="10,70 15,50 22,62 18,80" fill="var(--blue2)" opacity=".6"/>
+      <polygon points="22,62 50,62 65,92 30,92" fill="var(--slate)" opacity=".5"/>
+      <polygon points="18,80 22,62 30,92" fill="var(--blue)" opacity=".7"/>
+    </g>
+    <g clip-path="url(#clip-moon)" fill="none" stroke="var(--ink)" stroke-width="1.1" opacity=".8">
+      <path d="M30,8 L25,38 L15,50 L22,62 L18,80 M25,38 L55,35 L50,62 L22,62 M50,62 L65,92"/>
+    </g>
+  </g>
+
+  <!-- SPADE (black family): angular leaf split into facets -->
+  <g id="cb-spade">
+    <clipPath id="clip-spade">
+      <path d="M50,8 C24,36 13,52 13,66 C13,80 25,88 37,82 C41,80 45,75 47,70
+               C45,84 39,91 28,94 L72,94 C61,91 55,84 53,70
+               C55,75 59,80 63,82 C75,88 87,80 87,66 C87,52 76,36 50,8 Z"/>
+    </clipPath>
+    <g clip-path="url(#clip-spade)">
+      <rect x="0" y="0" width="100" height="100" fill="var(--black)"/>
+      <polygon points="50,8 70,38 50,50 35,40" fill="var(--black2)" opacity=".75"/>
+      <polygon points="70,38 87,66 65,62 50,50" fill="var(--greybrown)" opacity=".65"/>
+      <polygon points="35,40 50,50 65,62 55,78 30,75" fill="var(--black)" opacity=".5"/>
+      <polygon points="13,66 35,40 30,75" fill="var(--black2)" opacity=".6"/>
+      <polygon points="30,75 55,78 53,70 72,94 28,94" fill="var(--greybrown)" opacity=".7"/>
+      <polygon points="55,78 65,62 87,66 72,94 53,70" fill="var(--black)" opacity=".55"/>
+    </g>
+    <g clip-path="url(#clip-spade)" fill="none" stroke="var(--ink)" stroke-width="1.1" opacity=".8">
+      <path d="M50,8 L35,40 L50,50 L70,38 M50,50 L65,62 L87,66 M35,40 L13,66 L30,75 L55,78 L65,62 M30,75 L28,94 M55,78 L53,70"/>
+    </g>
+  </g>
+
+  <!-- HEART (red family): heart split into overlapping prismatic planes -->
+  <g id="cb-heart">
+    <clipPath id="clip-heart">
+      <path d="M50,88 C10,58 8,28 28,16 C40,9 50,20 50,32 C50,20 60,9 72,16 C92,28 90,58 50,88 Z"/>
+    </clipPath>
+    <g clip-path="url(#clip-heart)">
+      <rect x="0" y="0" width="100" height="100" fill="var(--red)"/>
+      <polygon points="8,28 28,16 42,30 25,42" fill="var(--terracotta)" opacity=".7"/>
+      <polygon points="42,30 50,32 50,20 72,16 60,35" fill="var(--red2)" opacity=".65"/>
+      <polygon points="8,28 25,42 20,58 10,48" fill="var(--red)" opacity=".5"/>
+      <polygon points="25,42 42,30 60,35 55,55 35,58" fill="var(--terracotta)" opacity=".55"/>
+      <polygon points="60,35 72,16 92,28 85,48 70,52" fill="var(--red)" opacity=".6"/>
+      <polygon points="20,58 35,58 50,88 10,48" fill="var(--red2)" opacity=".7"/>
+      <polygon points="35,58 55,55 70,52 85,48 50,88" fill="var(--terracotta)" opacity=".6"/>
+    </g>
+    <g clip-path="url(#clip-heart)" fill="none" stroke="var(--ink)" stroke-width="1.1" opacity=".8">
+      <path d="M8,28 L25,42 L20,58 L10,48 M25,42 L42,30 L60,35 L72,16 M42,30 L50,32 L50,20 M60,35 L55,55 L35,58 L20,58 M55,55 L70,52 L85,48 L92,28 M35,58 L50,88 L70,52"/>
+    </g>
+  </g>
+
+  <!-- BOLT (green family): lightning split along its zig-zag into facets -->
+  <g id="cb-bolt">
+    <clipPath id="clip-bolt">
+      <path d="M58,4 C44,22 34,38 28,52 C34,52 40,52 46,52 C38,68 32,82 30,96
+               C50,74 64,56 74,42 C66,42 60,42 54,42 C62,28 68,16 70,6
+               C66,8 62,8 58,4 Z"/>
+    </clipPath>
+    <g clip-path="url(#clip-bolt)">
+      <rect x="0" y="0" width="100" height="100" fill="var(--green)"/>
+      <polygon points="58,4 70,6 60,24 45,24" fill="var(--olive)" opacity=".7"/>
+      <polygon points="28,52 45,24 60,24 54,42 40,48" fill="var(--green2)" opacity=".65"/>
+      <polygon points="54,42 74,42 60,58 40,48" fill="var(--green)" opacity=".5"/>
+      <polygon points="28,52 40,48 46,52 38,68 30,70" fill="var(--olive)" opacity=".6"/>
+      <polygon points="40,48 60,58 74,42 62,64 44,70" fill="var(--green2)" opacity=".55"/>
+      <polygon points="30,70 38,68 44,70 30,96" fill="var(--green)" opacity=".7"/>
+      <polygon points="44,70 62,64 30,96" fill="var(--olive)" opacity=".6"/>
+    </g>
+    <g clip-path="url(#clip-bolt)" fill="none" stroke="var(--ink)" stroke-width="1.1" opacity=".8">
+      <path d="M58,4 L45,24 L60,24 L70,6 M28,52 L45,24 M54,42 L60,24 M28,52 L40,48 L54,42 L74,42 L60,58 L40,48 L46,52 L38,68 L30,70 L44,70 L62,64 L74,42 M30,70 L30,96 L44,70"/>
+    </g>
+  </g>
+
+  <!-- CROSS/X (blue family): angular X split into facets -->
+  <g id="cb-cross">
+    <clipPath id="clip-cross">
+      <path d="M22,32 L38,16 L50,28 L62,16 L78,32 L66,44 L78,56 L62,72 L50,60 L38,72 L22,56 L34,44 Z"/>
+    </clipPath>
+    <g clip-path="url(#clip-cross)">
+      <rect x="0" y="0" width="100" height="100" fill="var(--blue)"/>
+      <polygon points="22,32 38,16 50,28 40,38" fill="var(--blue2)" opacity=".75"/>
+      <polygon points="50,28 62,16 78,32 60,38" fill="var(--slate)" opacity=".65"/>
+      <polygon points="22,32 40,38 34,44 22,56" fill="var(--blue)" opacity=".5"/>
+      <polygon points="40,38 50,28 60,38 50,50 34,44" fill="var(--blue2)" opacity=".6"/>
+      <polygon points="60,38 78,32 66,44 50,50" fill="var(--slate)" opacity=".55"/>
+      <polygon points="22,56 34,44 50,50 38,72" fill="var(--slate)" opacity=".6"/>
+      <polygon points="50,50 66,44 78,56 62,72 50,60" fill="var(--blue)" opacity=".65"/>
+    </g>
+    <g clip-path="url(#clip-cross)" fill="none" stroke="var(--ink)" stroke-width="1.1" opacity=".8">
+      <path d="M22,32 L40,38 L50,28 L60,38 L78,32 M40,38 L34,44 L50,50 L66,44 L60,38 M22,56 L34,44 M50,50 L38,72 M50,50 L50,60 L62,72"/>
+    </g>
+  </g>
+
+</defs>
+</svg>
+
+<h2 class="section-title">Joker, Rey, Número y Reverso</h2>
+<div class="cards-row">
+
+  <!-- JOKER -->
+  <div class="card-block">
+    <div class="playing-card">
+      <div class="corner tl">JK<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#cb-star"/></svg></div>
+      <div class="corner br">JK<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#cb-star"/></svg></div>
+      <div class="card-figure">
+        <svg viewBox="0 0 200 280" width="170">
+          <!-- fractured diamond-pattern collar background -->
+          <g opacity=".5">
+            <polygon points="30,60 70,40 60,90 20,100" fill="var(--olive)"/>
+            <polygon points="70,40 130,50 110,95 60,90" fill="var(--terracotta)"/>
+            <polygon points="130,50 175,70 150,110 110,95" fill="var(--slate)"/>
+          </g>
+          <!-- diamond-patterned harlequin collar -->
+          <g stroke="var(--ink)" stroke-width="1.4">
+            <polygon points="60,110 80,96 100,110 80,124" fill="var(--terracotta)"/>
+            <polygon points="100,110 120,96 140,110 120,124" fill="var(--olive)"/>
+            <polygon points="40,118 60,110 80,124 60,134" fill="var(--slate)"/>
+            <polygon points="80,124 100,110 120,124 100,138" fill="var(--ochre)"/>
+            <polygon points="120,124 140,110 160,118 140,134" fill="var(--terracotta)"/>
+          </g>
+          <!-- shard crown / hat points -->
+          <g stroke="var(--ink)" stroke-width="2">
+            <polygon points="55,56 68,20 78,52" fill="var(--terracotta)"/>
+            <polygon points="88,50 100,10 112,50" fill="var(--olive)"/>
+            <polygon points="122,52 134,22 145,56" fill="var(--slate)"/>
+          </g>
+          <circle cx="68" cy="18" r="4" fill="var(--ochre)" stroke="var(--ink)" stroke-width="1.6"/>
+          <circle cx="100" cy="8" r="4" fill="var(--ochre)" stroke="var(--ink)" stroke-width="1.6"/>
+          <circle cx="134" cy="20" r="4" fill="var(--ochre)" stroke="var(--ink)" stroke-width="1.6"/>
+
+          <!-- fractured face: simultaneous front + profile planes (Picasso harlequin) -->
+          <g stroke="var(--ink)" stroke-width="1.8" stroke-linejoin="round">
+            <!-- base frontal plane -->
+            <polygon points="70,54 130,54 138,90 115,112 85,112 62,90" fill="#d9c49a"/>
+            <!-- profile nose plane overlapping to the right side, turned sideways -->
+            <polygon points="100,56 140,66 132,88 108,92" fill="#c7ad7c" opacity=".92"/>
+            <!-- forehead facet -->
+            <polygon points="70,54 130,54 118,66 82,66" fill="#e6d3a9" opacity=".9"/>
+            <!-- cheek shadow facet -->
+            <polygon points="62,90 85,112 70,96" fill="var(--terracotta)" opacity=".55"/>
+            <polygon points="115,112 138,90 122,100" fill="var(--slate)" opacity=".45"/>
+            <!-- frontal eye (left, round) -->
+            <circle cx="84" cy="76" r="4.2" fill="var(--ink)"/>
+            <!-- profile eye (right, almond, looking sideways) -->
+            <polygon points="108,72 122,68 124,78 110,80" fill="#fff" stroke="var(--ink)" stroke-width="1.4"/>
+            <circle cx="117" cy="74" r="2.6" fill="var(--ink)"/>
+            <!-- frontal nose triangle -->
+            <polygon points="98,78 104,78 101,92" fill="none" stroke="var(--ink)" stroke-width="1.6"/>
+            <!-- profile nose ridge jutting from the side plane -->
+            <polygon points="132,78 144,84 132,90" fill="#c7ad7c" stroke="var(--ink)" stroke-width="1.6"/>
+            <!-- mouth, asymmetric smirk -->
+            <path d="M80,100 Q100,110 120,98" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round"/>
+          </g>
+
+          <!-- diamond-patterned harlequin bib / body, faceted -->
+          <g stroke="var(--ink)" stroke-width="1.6">
+            <polygon points="62,112 100,138 60,180 30,200 35,140" fill="var(--ochre)"/>
+            <polygon points="100,138 138,112 165,140 170,200 140,180" fill="var(--slate)"/>
+            <polygon points="60,180 100,138 140,180 100,260 55,255" fill="var(--terracotta)" opacity=".9"/>
+            <polygon points="100,138 140,180 100,260 145,255" fill="var(--olive)" opacity=".85"/>
+          </g>
+          <!-- diamond checker overlay on torso -->
+          <g fill="none" stroke="var(--ink)" stroke-width="1.1" opacity=".7">
+            <path d="M70,150 L100,138 L130,150 L100,172 Z"/>
+            <path d="M60,180 L90,168 L120,180 L90,202 Z"/>
+            <path d="M80,205 L110,195 L140,205 L110,230 Z"/>
+          </g>
+          <!-- pip motif on chest, small -->
+          <g transform="translate(88,150) scale(.26)"><use href="#cb-heart"/></g>
+
+          <!-- scepter with star shard -->
+          <path d="M35,150 L15,230" stroke="var(--ink)" stroke-width="4" stroke-linecap="round"/>
+          <polygon points="4,130 26,122 30,145 10,152" fill="var(--olive)" stroke="var(--ink)" stroke-width="1.6"/>
+          <g transform="translate(17,136) scale(.22)"><use href="#cb-star"/></g>
+        </svg>
+      </div>
+      <div class="card-label">EL ARLEQUÍN FRAGMENTADO</div>
+    </div>
+    <p class="card-caption">Joker exclusivo — rostro de frente y de perfil simultáneos sobre un cuerpo de rombos astillados, homenaje al arlequín picassiano.</p>
+  </div>
+
+  <!-- KING -->
+  <div class="card-block">
+    <div class="playing-card">
+      <div class="corner tl">R<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#cb-spade"/></svg></div>
+      <div class="corner br">R<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#cb-spade"/></svg></div>
+      <div class="card-figure">
+        <svg viewBox="0 0 200 280" width="170">
+          <!-- angular shard crown -->
+          <g stroke="var(--ink)" stroke-width="1.8" stroke-linejoin="round">
+            <polygon points="62,66 70,30 84,56" fill="var(--ochre)"/>
+            <polygon points="84,56 92,20 104,52" fill="var(--terracotta)"/>
+            <polygon points="104,52 116,18 128,54" fill="var(--ochre)"/>
+            <polygon points="128,54 140,28 148,64" fill="var(--terracotta)"/>
+            <polygon points="62,66 84,56 104,52 128,54 148,64 150,78 60,78" fill="var(--greybrown)"/>
+          </g>
+          <circle cx="70" cy="30" r="3.2" fill="var(--ink)"/>
+          <circle cx="92" cy="20" r="3.2" fill="var(--ink)"/>
+          <circle cx="116" cy="18" r="3.2" fill="var(--ink)"/>
+          <circle cx="140" cy="28" r="3.2" fill="var(--ink)"/>
+
+          <!-- face: simultaneous front/profile planes -->
+          <g stroke="var(--ink)" stroke-width="1.8" stroke-linejoin="round">
+            <polygon points="65,78 148,78 155,112 130,138 85,138 58,112" fill="#d9c49a"/>
+            <polygon points="108,80 150,90 142,114 115,118" fill="#c7ad7c" opacity=".92"/>
+            <polygon points="65,78 148,78 134,92 80,92" fill="#e6d3a9" opacity=".9"/>
+            <polygon points="58,112 85,138 68,118" fill="var(--terracotta)" opacity=".5"/>
+            <polygon points="130,138 155,112 136,124" fill="var(--slate)" opacity=".45"/>
+            <!-- frontal eye -->
+            <circle cx="88" cy="100" r="4.4" fill="var(--ink)"/>
+            <!-- profile eye -->
+            <polygon points="116,96 132,92 134,102 118,104" fill="#fff" stroke="var(--ink)" stroke-width="1.4"/>
+            <circle cx="125" cy="98" r="2.8" fill="var(--ink)"/>
+            <!-- frontal nose -->
+            <polygon points="103,102 109,102 106,118" fill="none" stroke="var(--ink)" stroke-width="1.6"/>
+            <!-- profile nose ridge -->
+            <polygon points="142,104 155,110 142,116" fill="#c7ad7c" stroke="var(--ink)" stroke-width="1.6"/>
+            <!-- stern mouth -->
+            <path d="M85,125 Q106,132 128,122" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round"/>
+          </g>
+
+          <!-- angular beard shards -->
+          <g stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round">
+            <polygon points="68,118 90,138 84,160 60,150 58,124" fill="var(--black2)"/>
+            <polygon points="90,138 130,138 140,160 100,166 84,160" fill="var(--black)"/>
+            <polygon points="130,138 150,122 155,146 140,160" fill="var(--black2)"/>
+          </g>
+
+          <!-- robe, faceted -->
+          <g stroke="var(--ochre)" stroke-width="1.4" stroke-linejoin="round">
+            <polygon points="52,160 100,166 65,205 35,270 20,195" fill="var(--black)"/>
+            <polygon points="100,166 148,160 180,195 165,270 135,205" fill="var(--black2)"/>
+            <polygon points="65,205 100,166 135,205 100,270 35,270" fill="var(--greybrown)" opacity=".85"/>
+          </g>
+          <!-- pip motif -->
+          <g transform="translate(86,186) scale(.3)"><use href="#cb-spade"/></g>
+        </svg>
+      </div>
+      <div class="card-label">REY DE PICAS</div>
+    </div>
+    <p class="card-caption">Corona reducida a astillas angulares; rostro partido entre plano frontal y de perfil, como un retrato analítico de 1910.</p>
+  </div>
+
+  <!-- NUMBER CARD -->
+  <div class="card-block">
+    <div class="playing-card">
+      <div class="corner tl">7<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#cb-diamond"/></svg></div>
+      <div class="corner br">7<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#cb-diamond"/></svg></div>
+      <div class="card-figure">
+        <svg viewBox="0 0 200 280" width="180">
+          <!-- subtle cubist still-life background: fragmented guitar/bottle silhouette -->
+          <g opacity=".16" stroke="var(--ink)" stroke-width="1">
+            <ellipse cx="100" cy="90" rx="34" ry="46" fill="var(--olive)"/>
+            <ellipse cx="100" cy="190" rx="46" ry="54" fill="var(--terracotta)"/>
+            <rect x="92" y="30" width="16" height="50" fill="var(--greybrown)"/>
+            <polygon points="60,70 140,70 150,120 50,120" fill="var(--slate)"/>
+            <polygon points="55,150 145,150 130,230 70,230" fill="var(--ochre)"/>
+          </g>
+          <g transform="translate(70,40) scale(.42)"><use href="#cb-diamond"/></g>
+          <g transform="translate(118,40) scale(.42)"><use href="#cb-diamond"/></g>
+          <g transform="translate(94,90) scale(.42)"><use href="#cb-diamond"/></g>
+          <g transform="translate(70,140) scale(.42)"><use href="#cb-diamond"/></g>
+          <g transform="translate(118,140) scale(.42)"><use href="#cb-diamond"/></g>
+          <g transform="translate(70,190) scale(.42) rotate(180)"><use href="#cb-diamond"/></g>
+          <g transform="translate(118,190) scale(.42) rotate(180)"><use href="#cb-diamond"/></g>
+        </svg>
+      </div>
+      <div class="card-label">SIETE DE DIAMANTES</div>
+    </div>
+    <p class="card-caption">Pips facetados sobre un bodegón cubista apenas insinuado — guitarra y botella fragmentadas de fondo, legibles a tamaño de mano.</p>
+  </div>
+
+  <!-- BACK -->
+  <div class="card-block">
+    <div class="playing-card" style="background:var(--greybrown);">
+      <div class="card-figure">
+        <svg viewBox="0 0 200 280" width="190">
+          <rect x="14" y="14" width="172" height="252" fill="none" stroke="var(--ochre)" stroke-width="2"/>
+          <rect x="22" y="22" width="156" height="236" fill="none" stroke="var(--ochre)" stroke-width="1"/>
+          <!-- abstract cubist still-life, symmetric, hints of "8" -->
+          <g stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+            <polygon points="100,38 130,60 122,95 78,95 70,60" fill="var(--olive)" opacity=".85"/>
+            <polygon points="100,95 138,115 128,150 72,150 62,115" fill="var(--terracotta)" opacity=".8"/>
+            <polygon points="100,150 132,172 122,205 78,205 68,172" fill="var(--slate)" opacity=".85"/>
+            <polygon points="100,205 128,224 120,248 80,248 72,224" fill="var(--ochre)" opacity=".8"/>
+            <polygon points="78,95 100,95 100,150 72,150 62,115" fill="var(--greybrown)" opacity=".4"/>
+            <polygon points="100,95 122,95 128,150 100,150" fill="var(--black2)" opacity=".3"/>
+            <!-- neck of a fragmented bottle through the middle -->
+            <rect x="92" y="18" width="16" height="30" fill="var(--greybrown)" opacity=".8"/>
+            <polygon points="88,48 112,48 118,70 82,70" fill="var(--olive)" opacity=".7"/>
+          </g>
+          <circle cx="100" cy="140" r="86" fill="none" stroke="var(--ochre)" stroke-width="1" opacity=".55"/>
+          <circle cx="100" cy="140" r="60" fill="none" stroke="var(--ochre)" stroke-width="1" opacity=".4"/>
+        </svg>
+      </div>
+    </div>
+    <p class="card-caption">Reverso: bodegón abstracto simétrico — una botella fragmentada que no revela ninguna información de la carta.</p>
+  </div>
+
+</div>
+
+<footer>Propuesta 3 de 10 — Mazo de 8 Pintas</footer>
+</body>
+</html>

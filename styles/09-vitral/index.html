@@ -1,0 +1,713 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Propuesta 09 · Vitral — Mazo de 8 Pintas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,500&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#070a16;
+    --cream-dark:#0c1126;
+    --ink:#e9e1c8;
+    --gold:#d9a53c;
+    --gold-light:#f6cf6e;
+    --black:#39285c;
+    --red:#c4283f;
+    --green:#1f9e68;
+    --blue:#2f72c0;
+    --lead:#07070b;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 50% 0%, #15193a 0%, var(--cream-dark) 35%, var(--cream) 75%, #03040a 100%);
+    font-family:'Cormorant Garamond', serif;
+    color:var(--ink);
+    padding-bottom:80px;
+  }
+  header{
+    max-width:1100px;
+    margin:0 auto;
+    padding:40px 24px 20px;
+    text-align:center;
+  }
+  .back-link{
+    display:inline-block;
+    margin-bottom:18px;
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-weight:600;
+    color:var(--gold-light);
+    text-decoration:none;
+    border-bottom:1px solid var(--gold);
+  }
+  h1{
+    font-family:'Cinzel', serif;
+    font-weight:700;
+    font-size:2.5rem;
+    margin:0 0 6px;
+    color:var(--ink);
+    text-shadow:0 0 18px rgba(217,165,60,.45), 0 0 2px rgba(0,0,0,.8);
+    letter-spacing:.02em;
+  }
+  h1 .frak{
+    font-family:'UnifrakturMaguntia', cursive;
+    font-size:1.5em;
+    font-weight:400;
+    color:var(--gold-light);
+    text-shadow:0 0 14px rgba(246,207,110,.7);
+    vertical-align:-0.08em;
+  }
+  .tagline{
+    font-style:italic;
+    color:var(--gold-light);
+    font-size:1.25rem;
+    margin:0 0 14px;
+    font-weight:600;
+  }
+  .desc{
+    max-width:720px;
+    margin:0 auto;
+    line-height:1.65;
+    font-size:1.08rem;
+    color:#d8cfb2;
+  }
+  h2.section-title{
+    text-align:center;
+    font-family:'Cinzel', serif;
+    font-weight:600;
+    font-size:1.3rem;
+    margin:60px 0 28px;
+    letter-spacing:.08em;
+    color:var(--gold-light);
+  }
+  h2.section-title:before, h2.section-title:after{
+    content:"✦";
+    color:var(--gold);
+    margin:0 14px;
+    font-size:.9em;
+  }
+
+  /* ---- Suit grid ---- */
+  .suit-grid{
+    max-width:980px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:18px;
+    padding:0 24px;
+  }
+  .suit-card{
+    background:
+      radial-gradient(circle at 50% 30%, #161b3c 0%, var(--cream-dark) 70%);
+    border:2px solid var(--lead);
+    outline:1px solid rgba(217,165,60,.55);
+    outline-offset:-5px;
+    border-radius:6px;
+    padding:14px 10px 10px;
+    text-align:center;
+    box-shadow:0 0 18px rgba(217,165,60,.1), inset 0 0 20px rgba(0,0,0,.6);
+  }
+  .suit-card svg{width:72px;height:72px;filter:drop-shadow(0 0 6px rgba(217,165,60,.25));}
+  .suit-name{
+    display:block;
+    margin-top:6px;
+    font-family:'Cinzel', serif;
+    font-size:.78rem;
+    letter-spacing:.06em;
+    color:var(--ink);
+  }
+
+  /* ---- Cards section ---- */
+  .cards-row{
+    max-width:1100px;
+    margin:0 auto;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:36px;
+    padding:0 24px;
+  }
+  .playing-card{
+    width:250px;
+    aspect-ratio:63/88;
+    background:
+      radial-gradient(circle at 50% 38%, #171c3e 0%, var(--cream-dark) 65%, #050713 100%);
+    border:3px solid var(--lead);
+    border-radius:10px;
+    position:relative;
+    box-shadow:0 0 34px rgba(217,165,60,.18), 0 10px 26px rgba(0,0,0,.55);
+    overflow:hidden;
+  }
+  .playing-card:before{
+    content:"";
+    position:absolute;
+    inset:7px;
+    border:1.5px solid var(--gold);
+    border-radius:5px;
+    pointer-events:none;
+    opacity:.75;
+  }
+  .corner{
+    position:absolute;
+    font-family:'Cormorant Garamond',serif;
+    font-weight:700;
+    font-size:.95rem;
+    text-align:center;
+    line-height:1;
+    color:var(--gold-light);
+    z-index:2;
+  }
+  .corner svg{width:16px;height:16px;display:block;margin:2px auto 0;}
+  .corner.tl{top:12px;left:12px;}
+  .corner.br{bottom:12px;right:12px;transform:rotate(180deg);}
+  .card-figure{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .card-label{
+    position:absolute;
+    bottom:13px;
+    left:0;right:0;
+    text-align:center;
+    font-family:'Cinzel', serif;
+    font-size:.62rem;
+    letter-spacing:.1em;
+    color:var(--gold-light);
+    z-index:2;
+    text-shadow:0 0 6px rgba(0,0,0,.9);
+  }
+  .card-caption{
+    text-align:center;
+    margin-top:12px;
+    font-size:.88rem;
+    color:#cbbf9c;
+    font-style:italic;
+    max-width:250px;
+  }
+  .card-block{display:flex;flex-direction:column;align-items:center;}
+
+  footer{
+    text-align:center;
+    margin-top:70px;
+    font-size:.8rem;
+    color:var(--gold);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back-link" href="../../index.html">← Volver a las 10 propuestas</a>
+  <h1>09 · <span class="frak">V</span>itral</h1>
+  <p class="tagline">Fragmentos luminosos</p>
+  <p class="desc">Cada pinta queda emplomada como un rosetón de catedral: facetas de vidrio en tonos joya — zafiro, rubí, esmeralda y ámbar — separadas por gruesas líneas de plomo negro sobre un fondo oscuro que simula la luz pasando a través del vidrio. El dorso retoma un rosetón de 8 pétalos, uno por cada pinta de la familia. Pensado para imprimirse con negros densos de alto contraste y tintas saturadas que "retroiluminen" cada carta.</p>
+</header>
+
+<h2 class="section-title">Las 8 pintas</h2>
+<div class="suit-grid">
+
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#v-club"/></svg>
+    <span class="suit-name">Tréboles</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#v-diamond"/></svg>
+    <span class="suit-name">Diamantes</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#v-star"/></svg>
+    <span class="suit-name">Estrella</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#v-moon"/></svg>
+    <span class="suit-name">Luna</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#v-spade"/></svg>
+    <span class="suit-name">Picas</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#v-heart"/></svg>
+    <span class="suit-name">Corazones</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#v-bolt"/></svg>
+    <span class="suit-name">Rayo</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#v-cross"/></svg>
+    <span class="suit-name">Aspa</span>
+  </div>
+
+</div>
+
+<!-- shared vitral defs: gradients, patterns, suit symbols, figure parts -->
+<svg width="0" height="0" style="position:absolute">
+<defs>
+
+  <!-- ===== jewel-tone gradients, 4 families ===== -->
+  <linearGradient id="g-black-a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1b1430"/><stop offset="1" stop-color="#4a3570"/></linearGradient>
+  <linearGradient id="g-black-b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0a0714"/><stop offset="1" stop-color="#2a1f3d"/></linearGradient>
+  <linearGradient id="g-black-c" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#241a3d"/><stop offset="1" stop-color="#6b4a9e"/></linearGradient>
+  <radialGradient id="g-black-hl" cx=".4" cy=".35" r=".65"><stop offset="0" stop-color="#b79eea" stop-opacity=".9"/><stop offset="1" stop-color="#6b4a9e" stop-opacity="0"/></radialGradient>
+
+  <linearGradient id="g-red-a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a0712" stop-opacity=".2"/><stop offset="0" stop-color="#5c0f1e"/><stop offset="1" stop-color="#9c1f33"/></linearGradient>
+  <linearGradient id="g-red-b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2e0510"/><stop offset="1" stop-color="#6b1020"/></linearGradient>
+  <linearGradient id="g-red-c" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#6b1020"/><stop offset="1" stop-color="#e84b63"/></linearGradient>
+  <radialGradient id="g-red-hl" cx=".4" cy=".35" r=".65"><stop offset="0" stop-color="#ff9aab" stop-opacity=".9"/><stop offset="1" stop-color="#9c1f33" stop-opacity="0"/></radialGradient>
+
+  <linearGradient id="g-green-a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0a4330"/><stop offset="1" stop-color="#157a52"/></linearGradient>
+  <linearGradient id="g-green-b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#042018"/><stop offset="1" stop-color="#0a4330"/></linearGradient>
+  <linearGradient id="g-green-c" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#0a4330"/><stop offset="1" stop-color="#4fcb94"/></linearGradient>
+  <radialGradient id="g-green-hl" cx=".4" cy=".35" r=".65"><stop offset="0" stop-color="#a7f4cf" stop-opacity=".9"/><stop offset="1" stop-color="#157a52" stop-opacity="0"/></radialGradient>
+
+  <linearGradient id="g-blue-a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f2a5c"/><stop offset="1" stop-color="#1f4f9e"/></linearGradient>
+  <linearGradient id="g-blue-b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#06142e"/><stop offset="1" stop-color="#0f2a5c"/></linearGradient>
+  <linearGradient id="g-blue-c" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#0f2a5c"/><stop offset="1" stop-color="#6fa8e8"/></linearGradient>
+  <radialGradient id="g-blue-hl" cx=".4" cy=".35" r=".65"><stop offset="0" stop-color="#bddcff" stop-opacity=".9"/><stop offset="1" stop-color="#1f4f9e" stop-opacity="0"/></radialGradient>
+
+  <linearGradient id="g-gold-a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7a5a12"/><stop offset=".5" stop-color="#d9a53c"/><stop offset="1" stop-color="#f6e2a0"/></linearGradient>
+  <radialGradient id="g-gold-hl" cx=".4" cy=".3" r=".7"><stop offset="0" stop-color="#fff3cf" stop-opacity=".95"/><stop offset="1" stop-color="#d9a53c" stop-opacity="0"/></radialGradient>
+  <radialGradient id="g-skin" cx=".38" cy=".3" r=".75"><stop offset="0" stop-color="#f6ddb0"/><stop offset="1" stop-color="#d9a35c"/></radialGradient>
+
+  <!-- harlequin diamond pattern for joker costume -->
+  <pattern id="harlequin" width="40" height="40" patternUnits="userSpaceOnUse">
+    <rect width="40" height="40" fill="#0a0714"/>
+    <polygon points="0,0 40,0 20,20" fill="url(#g-red-a)"/>
+    <polygon points="40,0 40,40 20,20" fill="url(#g-blue-a)"/>
+    <polygon points="40,40 0,40 20,20" fill="url(#g-green-a)"/>
+    <polygon points="0,40 0,0 20,20" fill="url(#g-black-a)"/>
+    <g stroke="#07070b" stroke-width="3" fill="none">
+      <rect x="1.5" y="1.5" width="37" height="37"/>
+      <line x1="0" y1="0" x2="40" y2="40"/>
+      <line x1="40" y1="0" x2="0" y2="40"/>
+    </g>
+  </pattern>
+
+  <!-- rosette halo, reused behind heads -->
+  <g id="halo-radiant">
+    <circle r="50" fill="none" stroke="#07070b" stroke-width="3"/>
+    <circle r="50" fill="url(#g-gold-hl)" opacity=".7"/>
+    <g fill="url(#g-gold-a)" stroke="#07070b" stroke-width="2">
+      <polygon points="0,-50 8,-27 -8,-27" transform="rotate(0)"/>
+      <polygon points="0,-50 8,-27 -8,-27" transform="rotate(30)"/>
+      <polygon points="0,-50 8,-27 -8,-27" transform="rotate(60)"/>
+      <polygon points="0,-50 8,-27 -8,-27" transform="rotate(90)"/>
+      <polygon points="0,-50 8,-27 -8,-27" transform="rotate(120)"/>
+      <polygon points="0,-50 8,-27 -8,-27" transform="rotate(150)"/>
+      <polygon points="0,-50 8,-27 -8,-27" transform="rotate(180)"/>
+      <polygon points="0,-50 8,-27 -8,-27" transform="rotate(210)"/>
+      <polygon points="0,-50 8,-27 -8,-27" transform="rotate(240)"/>
+      <polygon points="0,-50 8,-27 -8,-27" transform="rotate(270)"/>
+      <polygon points="0,-50 8,-27 -8,-27" transform="rotate(300)"/>
+      <polygon points="0,-50 8,-27 -8,-27" transform="rotate(330)"/>
+    </g>
+    <circle r="27" fill="none" stroke="#07070b" stroke-width="2.5"/>
+    <circle r="27" fill="none" stroke="var(--gold)" stroke-width="1" opacity=".7"/>
+  </g>
+
+  <!-- gothic pointed-arch frame, reused for joker & king -->
+  <path id="gothic-arch" d="M20,272 L20,106 C20,58 44,32 66,20 L100,5 L134,20 C156,32 180,58 180,106 L180,272"
+        fill="none" stroke="var(--gold)" stroke-width="2.5"/>
+  <path id="gothic-arch-inner" d="M28,268 L28,110 C28,66 50,42 70,30 L100,16 L130,30 C150,42 172,66 172,110 L172,268"
+        fill="none" stroke="var(--gold)" stroke-width="1" opacity=".5"/>
+
+  <!-- ===== facet overlay patterns (two variants reused across the 4 color families) ===== -->
+  <g id="facet1-black">
+    <rect x="0" y="0" width="100" height="100" fill="url(#g-black-b)"/>
+    <polygon points="0,0 100,0 100,100" fill="url(#g-black-a)" opacity=".88"/>
+    <polygon points="0,100 100,100 60,40" fill="url(#g-black-c)" opacity=".6"/>
+    <circle cx="50" cy="38" r="26" fill="url(#g-black-hl)" opacity=".55"/>
+    <g stroke="#07070b" stroke-width="3" fill="none" stroke-linecap="round">
+      <line x1="0" y1="0" x2="100" y2="100"/><line x1="100" y1="0" x2="0" y2="100"/>
+      <line x1="0" y1="100" x2="60" y2="40"/><line x1="100" y1="100" x2="60" y2="40"/>
+      <line x1="50" y1="0" x2="50" y2="40"/>
+    </g>
+    <g fill="#07070b"><circle cx="50" cy="50" r="2.6"/><circle cx="60" cy="40" r="2.2"/></g>
+  </g>
+  <g id="facet2-black">
+    <rect x="0" y="0" width="100" height="45" fill="url(#g-black-b)"/>
+    <rect x="0" y="45" width="100" height="30" fill="url(#g-black-a)" opacity=".92"/>
+    <rect x="0" y="75" width="100" height="25" fill="url(#g-black-c)" opacity=".7"/>
+    <circle cx="50" cy="55" r="24" fill="url(#g-black-hl)" opacity=".5"/>
+    <g stroke="#07070b" stroke-width="3" fill="none" stroke-linecap="round">
+      <line x1="0" y1="45" x2="100" y2="45"/><line x1="0" y1="75" x2="100" y2="75"/>
+      <line x1="25" y1="0" x2="25" y2="100"/><line x1="75" y1="0" x2="75" y2="100"/><line x1="50" y1="0" x2="50" y2="100"/>
+    </g>
+    <g fill="#07070b"><circle cx="25" cy="45" r="2.4"/><circle cx="75" cy="45" r="2.4"/><circle cx="50" cy="75" r="2.4"/></g>
+  </g>
+
+  <g id="facet1-red">
+    <rect x="0" y="0" width="100" height="100" fill="url(#g-red-b)"/>
+    <polygon points="0,0 100,0 100,100" fill="url(#g-red-a)" opacity=".88"/>
+    <polygon points="0,100 100,100 60,40" fill="url(#g-red-c)" opacity=".6"/>
+    <circle cx="50" cy="38" r="26" fill="url(#g-red-hl)" opacity=".55"/>
+    <g stroke="#07070b" stroke-width="3" fill="none" stroke-linecap="round">
+      <line x1="0" y1="0" x2="100" y2="100"/><line x1="100" y1="0" x2="0" y2="100"/>
+      <line x1="0" y1="100" x2="60" y2="40"/><line x1="100" y1="100" x2="60" y2="40"/>
+      <line x1="50" y1="0" x2="50" y2="40"/>
+    </g>
+    <g fill="#07070b"><circle cx="50" cy="50" r="2.6"/><circle cx="60" cy="40" r="2.2"/></g>
+  </g>
+  <g id="facet2-red">
+    <rect x="0" y="0" width="100" height="45" fill="url(#g-red-b)"/>
+    <rect x="0" y="45" width="100" height="30" fill="url(#g-red-a)" opacity=".92"/>
+    <rect x="0" y="75" width="100" height="25" fill="url(#g-red-c)" opacity=".7"/>
+    <circle cx="50" cy="55" r="24" fill="url(#g-red-hl)" opacity=".5"/>
+    <g stroke="#07070b" stroke-width="3" fill="none" stroke-linecap="round">
+      <line x1="0" y1="45" x2="100" y2="45"/><line x1="0" y1="75" x2="100" y2="75"/>
+      <line x1="25" y1="0" x2="25" y2="100"/><line x1="75" y1="0" x2="75" y2="100"/><line x1="50" y1="0" x2="50" y2="100"/>
+    </g>
+    <g fill="#07070b"><circle cx="25" cy="45" r="2.4"/><circle cx="75" cy="45" r="2.4"/><circle cx="50" cy="75" r="2.4"/></g>
+  </g>
+
+  <g id="facet1-green">
+    <rect x="0" y="0" width="100" height="100" fill="url(#g-green-b)"/>
+    <polygon points="0,0 100,0 100,100" fill="url(#g-green-a)" opacity=".88"/>
+    <polygon points="0,100 100,100 60,40" fill="url(#g-green-c)" opacity=".6"/>
+    <circle cx="50" cy="38" r="26" fill="url(#g-green-hl)" opacity=".55"/>
+    <g stroke="#07070b" stroke-width="3" fill="none" stroke-linecap="round">
+      <line x1="0" y1="0" x2="100" y2="100"/><line x1="100" y1="0" x2="0" y2="100"/>
+      <line x1="0" y1="100" x2="60" y2="40"/><line x1="100" y1="100" x2="60" y2="40"/>
+      <line x1="50" y1="0" x2="50" y2="40"/>
+    </g>
+    <g fill="#07070b"><circle cx="50" cy="50" r="2.6"/><circle cx="60" cy="40" r="2.2"/></g>
+  </g>
+  <g id="facet2-green">
+    <rect x="0" y="0" width="100" height="45" fill="url(#g-green-b)"/>
+    <rect x="0" y="45" width="100" height="30" fill="url(#g-green-a)" opacity=".92"/>
+    <rect x="0" y="75" width="100" height="25" fill="url(#g-green-c)" opacity=".7"/>
+    <circle cx="50" cy="55" r="24" fill="url(#g-green-hl)" opacity=".5"/>
+    <g stroke="#07070b" stroke-width="3" fill="none" stroke-linecap="round">
+      <line x1="0" y1="45" x2="100" y2="45"/><line x1="0" y1="75" x2="100" y2="75"/>
+      <line x1="25" y1="0" x2="25" y2="100"/><line x1="75" y1="0" x2="75" y2="100"/><line x1="50" y1="0" x2="50" y2="100"/>
+    </g>
+    <g fill="#07070b"><circle cx="25" cy="45" r="2.4"/><circle cx="75" cy="45" r="2.4"/><circle cx="50" cy="75" r="2.4"/></g>
+  </g>
+
+  <g id="facet1-blue">
+    <rect x="0" y="0" width="100" height="100" fill="url(#g-blue-b)"/>
+    <polygon points="0,0 100,0 100,100" fill="url(#g-blue-a)" opacity=".88"/>
+    <polygon points="0,100 100,100 60,40" fill="url(#g-blue-c)" opacity=".6"/>
+    <circle cx="50" cy="38" r="26" fill="url(#g-blue-hl)" opacity=".55"/>
+    <g stroke="#07070b" stroke-width="3" fill="none" stroke-linecap="round">
+      <line x1="0" y1="0" x2="100" y2="100"/><line x1="100" y1="0" x2="0" y2="100"/>
+      <line x1="0" y1="100" x2="60" y2="40"/><line x1="100" y1="100" x2="60" y2="40"/>
+      <line x1="50" y1="0" x2="50" y2="40"/>
+    </g>
+    <g fill="#07070b"><circle cx="50" cy="50" r="2.6"/><circle cx="60" cy="40" r="2.2"/></g>
+  </g>
+  <g id="facet2-blue">
+    <rect x="0" y="0" width="100" height="45" fill="url(#g-blue-b)"/>
+    <rect x="0" y="45" width="100" height="30" fill="url(#g-blue-a)" opacity=".92"/>
+    <rect x="0" y="75" width="100" height="25" fill="url(#g-blue-c)" opacity=".7"/>
+    <circle cx="50" cy="55" r="24" fill="url(#g-blue-hl)" opacity=".5"/>
+    <g stroke="#07070b" stroke-width="3" fill="none" stroke-linecap="round">
+      <line x1="0" y1="45" x2="100" y2="45"/><line x1="0" y1="75" x2="100" y2="75"/>
+      <line x1="25" y1="0" x2="25" y2="100"/><line x1="75" y1="0" x2="75" y2="100"/><line x1="50" y1="0" x2="50" y2="100"/>
+    </g>
+    <g fill="#07070b"><circle cx="25" cy="45" r="2.4"/><circle cx="75" cy="45" r="2.4"/><circle cx="50" cy="75" r="2.4"/></g>
+  </g>
+
+  <!-- ===== the 8 suit symbols: canonical silhouette used as clip, filled with faceted glass, leaded outline on top ===== -->
+
+  <g id="v-club">
+    <clipPath id="clip-club">
+      <circle cx="50" cy="33" r="17"/><circle cx="34" cy="55" r="17"/><circle cx="66" cy="55" r="17"/>
+      <path d="M42,58 L58,58 L53,90 Q50,95 47,90 Z"/>
+    </clipPath>
+    <g clip-path="url(#clip-club)"><use href="#facet1-black"/></g>
+    <g fill="none" stroke="#07070b" stroke-width="3.2">
+      <circle cx="50" cy="33" r="17"/><circle cx="34" cy="55" r="17"/><circle cx="66" cy="55" r="17"/>
+      <path d="M42,58 L58,58 L53,90 Q50,95 47,90 Z"/>
+    </g>
+  </g>
+
+  <g id="v-diamond">
+    <clipPath id="clip-diamond"><path d="M50,6 C34,28 28,40 16,50 C28,60 34,72 50,94 C66,72 72,60 84,50 C72,40 66,28 50,6 Z"/></clipPath>
+    <g clip-path="url(#clip-diamond)"><use href="#facet1-red"/></g>
+    <path d="M50,6 C34,28 28,40 16,50 C28,60 34,72 50,94 C66,72 72,60 84,50 C72,40 66,28 50,6 Z" fill="none" stroke="#07070b" stroke-width="3.2"/>
+  </g>
+
+  <g id="v-star">
+    <clipPath id="clip-star"><path d="M50,5 L61,35 L95,35 L68,57 L78,91 L50,70 L22,91 L32,57 L5,35 L39,35 Z"/></clipPath>
+    <g clip-path="url(#clip-star)"><use href="#facet1-green"/></g>
+    <path d="M50,5 L61,35 L95,35 L68,57 L78,91 L50,70 L22,91 L32,57 L5,35 L39,35 Z" fill="none" stroke="#07070b" stroke-width="3.2"/>
+  </g>
+
+  <g id="v-moon">
+    <clipPath id="clip-moon" clip-rule="evenodd">
+      <path d="M50,8 A42,42 0 1,0 50,92 A42,42 0 1,0 50,8 Z
+               M63,15 A33,33 0 1,0 63,81 A33,33 0 1,0 63,15 Z"/>
+    </clipPath>
+    <g clip-path="url(#clip-moon)">
+      <rect x="0" y="0" width="100" height="100" fill="url(#g-blue-a)"/>
+      <polygon points="8,8 52,8 52,92 8,92" fill="url(#g-blue-c)" opacity=".85"/>
+      <circle cx="26" cy="42" r="22" fill="url(#g-blue-hl)" opacity=".8"/>
+      <g stroke="#07070b" stroke-width="3" fill="none" stroke-linecap="round">
+        <line x1="20" y1="8" x2="16" y2="92"/>
+        <line x1="36" y1="8" x2="40" y2="92"/>
+        <line x1="6" y1="32" x2="48" y2="32"/>
+        <line x1="6" y1="64" x2="48" y2="64"/>
+      </g>
+      <g fill="#07070b"><circle cx="20" cy="32" r="2.2"/><circle cx="36" cy="32" r="2.2"/><circle cx="18" cy="64" r="2.2"/></g>
+    </g>
+    <path fill-rule="evenodd" d="M50,8 A42,42 0 1,0 50,92 A42,42 0 1,0 50,8 Z
+             M63,15 A33,33 0 1,0 63,81 A33,33 0 1,0 63,15 Z" fill="none" stroke="#07070b" stroke-width="3.2"/>
+  </g>
+
+  <g id="v-spade">
+    <clipPath id="clip-spade"><path d="M50,8 C24,36 13,52 13,66 C13,80 25,88 37,82 C41,80 45,75 47,70
+             C45,84 39,91 28,94 L72,94 C61,91 55,84 53,70
+             C55,75 59,80 63,82 C75,88 87,80 87,66 C87,52 76,36 50,8 Z"/></clipPath>
+    <g clip-path="url(#clip-spade)"><use href="#facet2-black"/></g>
+    <path d="M50,8 C24,36 13,52 13,66 C13,80 25,88 37,82 C41,80 45,75 47,70
+             C45,84 39,91 28,94 L72,94 C61,91 55,84 53,70
+             C55,75 59,80 63,82 C75,88 87,80 87,66 C87,52 76,36 50,8 Z" fill="none" stroke="#07070b" stroke-width="3.2"/>
+  </g>
+
+  <g id="v-heart">
+    <clipPath id="clip-heart"><path d="M50,88 C10,58 8,28 28,16 C40,9 50,20 50,32 C50,20 60,9 72,16 C92,28 90,58 50,88 Z"/></clipPath>
+    <g clip-path="url(#clip-heart)"><use href="#facet2-red"/></g>
+    <path d="M50,88 C10,58 8,28 28,16 C40,9 50,20 50,32 C50,20 60,9 72,16 C92,28 90,58 50,88 Z" fill="none" stroke="#07070b" stroke-width="3.2"/>
+  </g>
+
+  <g id="v-bolt">
+    <clipPath id="clip-bolt"><path d="M58,4 C44,22 34,38 28,52 C34,52 40,52 46,52 C38,68 32,82 30,96
+             C50,74 64,56 74,42 C66,42 60,42 54,42 C62,28 68,16 70,6
+             C66,8 62,8 58,4 Z"/></clipPath>
+    <g clip-path="url(#clip-bolt)"><use href="#facet2-green"/></g>
+    <path d="M58,4 C44,22 34,38 28,52 C34,52 40,52 46,52 C38,68 32,82 30,96
+             C50,74 64,56 74,42 C66,42 60,42 54,42 C62,28 68,16 70,6
+             C66,8 62,8 58,4 Z" fill="none" stroke="#07070b" stroke-width="3.2"/>
+  </g>
+
+  <g id="v-cross">
+    <clipPath id="clip-cross"><path d="M22,32 L38,16 L50,28 L62,16 L78,32 L66,44 L78,56 L62,72 L50,60 L38,72 L22,56 L34,44 Z"/></clipPath>
+    <g clip-path="url(#clip-cross)"><use href="#facet2-blue"/></g>
+    <path d="M22,32 L38,16 L50,28 L62,16 L78,32 L66,44 L78,56 L62,72 L50,60 L38,72 L22,56 L34,44 Z" fill="none" stroke="#07070b" stroke-width="3.2"/>
+  </g>
+
+</defs>
+</svg>
+
+<h2 class="section-title">Joker, Rey, Número y Reverso</h2>
+<div class="cards-row">
+
+  <!-- JOKER -->
+  <div class="card-block">
+    <div class="playing-card">
+      <div class="corner tl">JK<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#v-star"/></svg></div>
+      <div class="corner br">JK<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#v-star"/></svg></div>
+      <div class="card-figure">
+        <svg viewBox="0 0 200 280" width="170">
+          <use href="#gothic-arch"/>
+          <use href="#gothic-arch-inner"/>
+          <!-- halo -->
+          <use href="#halo-radiant" transform="translate(100,78) scale(1)"/>
+          <!-- cap points with bells, curling jester horns -->
+          <g stroke="#07070b" stroke-width="2.6">
+            <path d="M72,48 C50,42 32,26 32,2 C32,-10 42,-16 52,-10 C58,-6 58,4 50,10 C44,15 46,24 56,30 C64,35 72,40 82,48 Z" fill="url(#g-red-a)"/>
+            <path d="M94,42 C90,24 92,2 100,-16 C108,2 110,24 106,42 Z" fill="url(#g-green-a)"/>
+            <path d="M128,48 C150,42 168,26 168,2 C168,-10 158,-16 148,-10 C142,-6 142,4 150,10 C156,15 154,24 144,30 C136,35 128,40 118,48 Z" fill="url(#g-blue-a)"/>
+          </g>
+          <g fill="url(#g-gold-a)" stroke="#07070b" stroke-width="1.8">
+            <circle cx="44" cy="-10" r="6"/><circle cx="100" cy="-14" r="6"/><circle cx="156" cy="-10" r="6"/>
+          </g>
+          <!-- head -->
+          <circle cx="100" cy="78" r="27" fill="url(#g-skin)" stroke="#07070b" stroke-width="2.6"/>
+          <g fill="#c4283f" opacity=".3"><ellipse cx="82" cy="86" rx="6" ry="4"/><ellipse cx="118" cy="86" rx="6" ry="4"/></g>
+          <g stroke="#07070b" stroke-width="2.2" fill="none" stroke-linecap="round">
+            <path d="M80,68 Q86,63 92,68"/><path d="M108,68 Q114,63 120,68"/>
+            <path d="M96,80 L92,88 L100,90"/>
+            <path d="M84,96 Q100,106 116,96"/>
+          </g>
+          <g fill="#07070b"><circle cx="87" cy="76" r="2.4"/><circle cx="113" cy="76" r="2.4"/></g>
+          <!-- scalloped collar -->
+          <g stroke="#07070b" stroke-width="2.2">
+            <circle cx="62" cy="108" r="11" fill="url(#g-blue-a)"/>
+            <circle cx="82" cy="114" r="11" fill="url(#g-red-a)"/>
+            <circle cx="100" cy="117" r="11" fill="url(#g-gold-a)"/>
+            <circle cx="118" cy="114" r="11" fill="url(#g-green-a)"/>
+            <circle cx="138" cy="108" r="11" fill="url(#g-black-a)"/>
+          </g>
+          <!-- harlequin tunic -->
+          <path d="M58,112 C58,100 72,100 100,100 C128,100 142,100 142,112 L156,258 C114,272 86,272 44,258 Z"
+                fill="url(#harlequin)" stroke="#07070b" stroke-width="3.2"/>
+          <!-- sleeves -->
+          <path d="M58,116 C40,124 28,142 30,168 C38,166 48,158 54,146 Z" fill="url(#g-red-c)" stroke="#07070b" stroke-width="2.4"/>
+          <path d="M142,116 C160,124 172,142 170,168 C162,166 152,158 146,146 Z" fill="url(#g-blue-c)" stroke="#07070b" stroke-width="2.4"/>
+          <!-- scepter with star jewel -->
+          <path d="M34,172 L22,248" stroke="#07070b" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="36" cy="164" r="13" fill="url(#g-gold-a)" stroke="#07070b" stroke-width="2.2"/>
+          <g transform="translate(26,154) scale(.2)"><use href="#v-star"/></g>
+        </svg>
+      </div>
+      <div class="card-label">EL BUFÓN DE CRISTAL</div>
+    </div>
+    <p class="card-caption">Joker exclusivo — arlequín emplomado con rosetón-halo y gorro de tres puntas enjoyado.</p>
+  </div>
+
+  <!-- KING -->
+  <div class="card-block">
+    <div class="playing-card">
+      <div class="corner tl">R<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#v-diamond"/></svg></div>
+      <div class="corner br">R<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#v-diamond"/></svg></div>
+      <div class="card-figure">
+        <svg viewBox="0 0 200 280" width="170">
+          <use href="#gothic-arch"/>
+          <use href="#gothic-arch-inner"/>
+          <use href="#halo-radiant" transform="translate(100,92) scale(.95)"/>
+          <!-- jeweled crown -->
+          <path d="M66,66 L70,32 L86,52 L100,24 L114,52 L130,32 L134,66 Z"
+                fill="url(#g-gold-a)" stroke="#07070b" stroke-width="2.6"/>
+          <g stroke="#07070b" stroke-width="1.8">
+            <circle cx="100" cy="24" r="6" fill="url(#g-red-c)"/>
+            <circle cx="70" cy="32" r="5" fill="url(#g-blue-c)"/>
+            <circle cx="130" cy="32" r="5" fill="url(#g-green-c)"/>
+          </g>
+          <!-- face -->
+          <circle cx="100" cy="92" r="28" fill="url(#g-skin)" stroke="#07070b" stroke-width="2.6"/>
+          <g stroke="#07070b" stroke-width="2.2" fill="none" stroke-linecap="round">
+            <path d="M82,84 Q90,79 98,84"/><path d="M102,84 Q110,79 118,84"/>
+          </g>
+          <g fill="#07070b"><circle cx="90" cy="90" r="2.3"/><circle cx="110" cy="90" r="2.3"/></g>
+          <!-- beard, black family facet -->
+          <path d="M74,100 C74,124 86,134 100,134 C114,134 126,124 126,100
+                   C126,114 114,120 100,120 C86,120 74,114 74,100 Z"
+                fill="url(#g-black-a)" stroke="#07070b" stroke-width="2.4"/>
+          <g stroke="#07070b" stroke-width="1.6" fill="none">
+            <path d="M88,104 C88,118 92,128 98,132"/>
+            <path d="M112,104 C112,118 108,128 102,132"/>
+            <path d="M100,106 L100,130"/>
+          </g>
+          <!-- robe: leaded glass panels, ruby family with gold trim -->
+          <g>
+            <clipPath id="clip-king-robe">
+              <path d="M52,142 C52,126 70,122 100,122 C130,122 148,126 148,142
+                       L160,270 C120,282 80,282 40,270 Z"/>
+            </clipPath>
+            <g clip-path="url(#clip-king-robe)">
+              <rect x="20" y="110" width="160" height="180" fill="url(#g-red-b)"/>
+              <polygon points="20,290 180,290 140,160 60,160" fill="url(#g-red-a)" opacity=".85"/>
+              <polygon points="60,160 140,160 100,122" fill="url(#g-red-c)" opacity=".7"/>
+              <g stroke="#07070b" stroke-width="3" fill="none">
+                <line x1="100" y1="122" x2="100" y2="290"/>
+                <line x1="70" y1="130" x2="55" y2="280"/>
+                <line x1="130" y1="130" x2="145" y2="280"/>
+                <line x1="40" y1="200" x2="160" y2="200"/>
+                <line x1="48" y1="240" x2="152" y2="240"/>
+              </g>
+            </g>
+          </g>
+          <path d="M52,142 C52,126 70,122 100,122 C130,122 148,126 148,142
+                   L160,270 C120,282 80,282 40,270 Z" fill="none" stroke="#07070b" stroke-width="3.2"/>
+          <!-- diamond emblem -->
+          <circle cx="100" cy="182" r="18" fill="url(#g-gold-hl)" stroke="#07070b" stroke-width="2.4"/>
+          <g transform="translate(86,168) scale(.28)"><use href="#v-diamond"/></g>
+        </svg>
+      </div>
+      <div class="card-label">REY DE DIAMANTES</div>
+    </div>
+    <p class="card-caption">Rey con corona engastada y manto de grandes paños de vidrio rubí emplomados.</p>
+  </div>
+
+  <!-- NUMBER CARD -->
+  <div class="card-block">
+    <div class="playing-card">
+      <div class="corner tl">8<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#v-star"/></svg></div>
+      <div class="corner br">8<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#v-star"/></svg></div>
+      <div class="card-figure">
+        <svg viewBox="0 0 200 280" width="185">
+          <path d="M100,20 C56,56 36,86 100,136 C164,86 144,56 100,20"
+                fill="none" stroke="var(--gold)" stroke-width="1" opacity=".4"/>
+          <path d="M100,144 C56,180 36,210 100,260 C164,210 144,180 100,144"
+                fill="none" stroke="var(--gold)" stroke-width="1" opacity=".4"/>
+          <g>
+            <circle cx="62" cy="40" r="19" fill="url(#g-black-b)" stroke="#07070b" stroke-width="2.4"/>
+            <g transform="translate(46,24) scale(.32)"><use href="#v-star"/></g>
+          </g>
+          <g>
+            <circle cx="138" cy="40" r="19" fill="url(#g-black-b)" stroke="#07070b" stroke-width="2.4"/>
+            <g transform="translate(122,24) scale(.32)"><use href="#v-star"/></g>
+          </g>
+          <g>
+            <circle cx="62" cy="90" r="19" fill="url(#g-black-b)" stroke="#07070b" stroke-width="2.4"/>
+            <g transform="translate(46,74) scale(.32)"><use href="#v-star"/></g>
+          </g>
+          <g>
+            <circle cx="138" cy="90" r="19" fill="url(#g-black-b)" stroke="#07070b" stroke-width="2.4"/>
+            <g transform="translate(122,74) scale(.32)"><use href="#v-star"/></g>
+          </g>
+          <g>
+            <circle cx="62" cy="190" r="19" fill="url(#g-black-b)" stroke="#07070b" stroke-width="2.4"/>
+            <g transform="translate(46,174) scale(.32) rotate(180,16,16)"><use href="#v-star"/></g>
+          </g>
+          <g>
+            <circle cx="138" cy="190" r="19" fill="url(#g-black-b)" stroke="#07070b" stroke-width="2.4"/>
+            <g transform="translate(122,174) scale(.32) rotate(180,16,16)"><use href="#v-star"/></g>
+          </g>
+          <g>
+            <circle cx="62" cy="240" r="19" fill="url(#g-black-b)" stroke="#07070b" stroke-width="2.4"/>
+            <g transform="translate(46,224) scale(.32) rotate(180,16,16)"><use href="#v-star"/></g>
+          </g>
+          <g>
+            <circle cx="138" cy="240" r="19" fill="url(#g-black-b)" stroke="#07070b" stroke-width="2.4"/>
+            <g transform="translate(122,224) scale(.32) rotate(180,16,16)"><use href="#v-star"/></g>
+          </g>
+        </svg>
+      </div>
+      <div class="card-label">OCHO DE ESTRELLA</div>
+    </div>
+    <p class="card-caption">Ocho medallones emplomados, cada uno un pequeño rosetón con su propia estrella.</p>
+  </div>
+
+  <!-- BACK -->
+  <div class="card-block">
+    <div class="playing-card" style="background:radial-gradient(circle at 50% 45%, #171c3e 0%, var(--cream-dark) 60%, #040611 100%);">
+      <div class="card-figure">
+        <svg viewBox="0 0 200 280" width="190">
+          <rect x="14" y="14" width="172" height="252" rx="10" fill="none" stroke="var(--gold)" stroke-width="2.4"/>
+          <rect x="22" y="22" width="156" height="236" rx="6" fill="none" stroke="var(--gold)" stroke-width="1" opacity=".6"/>
+          <g transform="translate(100,140)">
+            <!-- 8-petal rose window, one color per suit around the circle -->
+            <g stroke="#07070b" stroke-width="2.6">
+              <path d="M0,0 C6,-18 6,-40 0,-56 C-6,-40 -6,-18 0,0 Z" fill="url(#g-black-a)" transform="rotate(0)"/>
+              <path d="M0,0 C6,-18 6,-40 0,-56 C-6,-40 -6,-18 0,0 Z" fill="url(#g-red-a)" transform="rotate(45)"/>
+              <path d="M0,0 C6,-18 6,-40 0,-56 C-6,-40 -6,-18 0,0 Z" fill="url(#g-green-a)" transform="rotate(90)"/>
+              <path d="M0,0 C6,-18 6,-40 0,-56 C-6,-40 -6,-18 0,0 Z" fill="url(#g-blue-a)" transform="rotate(135)"/>
+              <path d="M0,0 C6,-18 6,-40 0,-56 C-6,-40 -6,-18 0,0 Z" fill="url(#g-black-c)" transform="rotate(180)"/>
+              <path d="M0,0 C6,-18 6,-40 0,-56 C-6,-40 -6,-18 0,0 Z" fill="url(#g-red-c)" transform="rotate(225)"/>
+              <path d="M0,0 C6,-18 6,-40 0,-56 C-6,-40 -6,-18 0,0 Z" fill="url(#g-green-c)" transform="rotate(270)"/>
+              <path d="M0,0 C6,-18 6,-40 0,-56 C-6,-40 -6,-18 0,0 Z" fill="url(#g-blue-c)" transform="rotate(315)"/>
+            </g>
+            <g fill="none" stroke="var(--gold)" stroke-width="1" opacity=".6">
+              <circle r="56"/><circle r="38"/>
+            </g>
+            <g fill="url(#g-gold-a)" stroke="#07070b" stroke-width="1.6">
+              <circle cx="0" cy="-56" r="3"/><circle cx="40" cy="-40" r="3"/><circle cx="56" cy="0" r="3"/>
+              <circle cx="40" cy="40" r="3"/><circle cx="0" cy="56" r="3"/><circle cx="-40" cy="40" r="3"/>
+              <circle cx="-56" cy="0" r="3"/><circle cx="-40" cy="-40" r="3"/>
+            </g>
+            <circle r="16" fill="url(#g-gold-hl)" stroke="#07070b" stroke-width="2.6"/>
+            <circle r="16" fill="none" stroke="var(--gold)" stroke-width="1"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <p class="card-caption">Reverso: rosetón de 8 pétalos — un pétalo por pinta, dos por cada familia de color.</p>
+  </div>
+
+</div>
+
+<footer>Propuesta 9 de 10 — Mazo de 8 Pintas</footer>
+</body>
+</html>

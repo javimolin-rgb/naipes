@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Propuesta 08 · Acuarela Botánica — Mazo de 8 Pintas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#faf4e8;
+    --cream-dark:#f0e6d2;
+    --paper:#fffdf8;
+    --ink:#4a4030;
+    --accent:#b9935a;
+
+    --club:#504c42;
+    --spade:#403c34;
+    --diamond:#c2704f;
+    --heart:#cf8c92;
+    --star:#7f9b68;
+    --bolt:#5c8a5e;
+    --moon:#8fb3c9;
+    --cross:#6f9bb6;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 15% 0%, #fffdf6 0%, var(--cream) 42%, var(--cream-dark) 100%);
+    font-family:'Cormorant Garamond', serif;
+    color:var(--ink);
+    padding-bottom:80px;
+  }
+  header{
+    max-width:1100px;
+    margin:0 auto;
+    padding:40px 24px 20px;
+    text-align:center;
+  }
+  .back-link{
+    display:inline-block;
+    margin-bottom:18px;
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    color:var(--accent);
+    text-decoration:none;
+    border-bottom:1px solid var(--accent);
+  }
+  h1{
+    font-family:'Caveat', cursive;
+    font-weight:700;
+    font-size:3rem;
+    margin:0 0 2px;
+    color:var(--ink);
+  }
+  .tagline{
+    font-family:'Caveat', cursive;
+    font-weight:600;
+    color:var(--star);
+    font-size:1.6rem;
+    margin:0 0 14px;
+  }
+  .desc{
+    max-width:720px;
+    margin:0 auto;
+    line-height:1.65;
+    font-size:1.08rem;
+  }
+  h2.section-title{
+    text-align:center;
+    font-family:'Caveat', cursive;
+    font-weight:700;
+    font-size:2rem;
+    margin:56px 0 26px;
+    letter-spacing:.01em;
+    color:var(--ink);
+  }
+  h2.section-title:before, h2.section-title:after{
+    content:"🌿";
+    font-size:1.1rem;
+    margin:0 14px;
+    filter:none;
+  }
+
+  /* ---- Suit grid ---- */
+  .suit-grid{
+    max-width:980px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:18px;
+    padding:0 24px;
+  }
+  .suit-card{
+    background:var(--paper);
+    border:1px solid var(--cream-dark);
+    border-radius:12px;
+    padding:14px 10px 10px;
+    text-align:center;
+    box-shadow:0 3px 10px rgba(120,100,60,.10);
+  }
+  .suit-card svg{width:72px;height:72px;}
+  .suit-name{
+    display:block;
+    margin-top:6px;
+    font-family:'Cormorant Garamond',serif;
+    font-size:.88rem;
+    letter-spacing:.03em;
+    color:var(--ink);
+  }
+
+  /* ---- Cards section ---- */
+  .cards-row{
+    max-width:1100px;
+    margin:0 auto;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:36px;
+    padding:0 24px;
+  }
+  .playing-card{
+    width:250px;
+    aspect-ratio:63/88;
+    background:var(--paper);
+    border:2px solid var(--ink);
+    border-radius:16px;
+    position:relative;
+    box-shadow:0 8px 22px rgba(90,70,40,.20);
+    overflow:hidden;
+  }
+  .playing-card:before{
+    content:"";
+    position:absolute;
+    inset:8px;
+    border:1px solid var(--accent);
+    border-radius:10px;
+    pointer-events:none;
+    opacity:.6;
+  }
+  .corner{
+    position:absolute;
+    font-family:'Cormorant Garamond',serif;
+    font-weight:600;
+    font-size:.95rem;
+    text-align:center;
+    line-height:1;
+    color:var(--ink);
+  }
+  .corner svg{width:16px;height:16px;display:block;margin:2px auto 0;}
+  .corner.tl{top:12px;left:12px;}
+  .corner.br{bottom:12px;right:12px;transform:rotate(180deg);}
+  .card-figure{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .card-label{
+    position:absolute;
+    bottom:14px;
+    left:0;right:0;
+    text-align:center;
+    font-family:'Caveat', cursive;
+    font-weight:700;
+    font-size:1rem;
+    letter-spacing:.03em;
+    color:var(--accent);
+  }
+  .card-caption{
+    text-align:center;
+    margin-top:12px;
+    font-size:.88rem;
+    color:var(--ink);
+    font-style:italic;
+    max-width:250px;
+  }
+  .card-block{display:flex;flex-direction:column;align-items:center;}
+
+  footer{
+    text-align:center;
+    margin-top:70px;
+    font-family:'Caveat', cursive;
+    font-size:1.1rem;
+    color:var(--accent);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back-link" href="../../index.html">← Volver a las 10 propuestas</a>
+  <h1>08 · Acuarela Botánica</h1>
+  <p class="tagline">Naturaleza delicada</p>
+  <p class="desc">Pintas con textura de acuarela —veladuras moteadas y bordes de tinta que sangran apenas— envueltas en pequeñas ramas, hojas y capullos. Paleta pastel de jardín: salvia, rosa empolvado, azul pluma y terracota sobre papel cálido. Un pájaro posado y un gato enroscado se asoman entre dos de las pintas. El reverso es una corona de 8 hojas, una por cada pinta de la familia.</p>
+</header>
+
+<h2 class="section-title">Las 8 pintas</h2>
+<div class="suit-grid">
+
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#wb-club"/></svg>
+    <span class="suit-name">Tréboles</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#wb-diamond"/></svg>
+    <span class="suit-name">Diamantes</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#wb-star"/></svg>
+    <span class="suit-name">Estrella</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#wb-moon"/></svg>
+    <span class="suit-name">Luna</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#wb-spade"/></svg>
+    <span class="suit-name">Picas</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#wb-heart"/></svg>
+    <span class="suit-name">Corazones</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#wb-bolt"/></svg>
+    <span class="suit-name">Rayo</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#wb-cross"/></svg>
+    <span class="suit-name">Aspa</span>
+  </div>
+
+</div>
+
+<!-- shared defs: filters + botanical symbols + suit pips -->
+<svg width="0" height="0" style="position:absolute">
+<defs>
+
+  <!-- watercolor bleed: wobbly wet-edge fill -->
+  <filter id="wc-fill" x="-40%" y="-40%" width="180%" height="180%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.045 0.06" numOctaves="2" seed="7" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="6" xChannelSelector="R" yChannelSelector="G" result="disp"/>
+    <feGaussianBlur in="disp" stdDeviation="0.5" result="soft"/>
+    <feColorMatrix in="n" type="matrix"
+      values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.5 0.5 0.5 0 -0.25" result="mottle"/>
+    <feComposite in="mottle" in2="soft" operator="in" result="mottleClip"/>
+    <feMerge>
+      <feMergeNode in="soft"/>
+      <feMergeNode in="mottleClip"/>
+    </feMerge>
+  </filter>
+
+  <!-- loose ink outline wobble -->
+  <filter id="wc-ink" x="-30%" y="-30%" width="160%" height="160%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.25 0.3" numOctaves="2" seed="11" result="n2"/>
+    <feDisplacementMap in="SourceGraphic" in2="n2" scale="1.6" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+
+  <!-- botanical bits -->
+  <path id="wb-leaf" d="M0,0 C-7,-5 -9,-15 -4,-23 C-1,-27 4,-26 5,-21 C7,-13 4,-5 0,0 Z"/>
+  <path id="wb-leaf-vein" d="M0,0 C-1,-8 -1,-16 1,-22" fill="none" stroke-width=".7"/>
+  <path id="wb-bird" d="M-9,2 C-9,-4 -3,-7 4,-6 C7,-6 9,-4 9,-2 L14,-3.5 L9.5,0 C10.5,3 7,6.5 2,6.5 C-2.5,7.5 -7,6 -9,2 Z"/>
+  <path id="wb-cat" d="M-11,5 C-13,-3 -5,-10 3,-9 C5,-11 7,-11 7,-9 C13,-8 15,-3 13,2 C16,0 18,3 15,5 C11,8.5 3,8.5 -2,7 C-6,9.5 -11,9 -11,5 Z"/>
+
+  <g id="wb-club">
+    <g filter="url(#wc-fill)">
+      <circle cx="50" cy="33" r="17" fill="var(--club)"/>
+      <circle cx="34" cy="55" r="17" fill="var(--club)"/>
+      <circle cx="66" cy="55" r="17" fill="var(--club)"/>
+      <path d="M42,58 L58,58 L53,90 Q50,95 47,90 Z" fill="var(--club)"/>
+    </g>
+    <g filter="url(#wc-ink)" fill="none" stroke="var(--ink)" stroke-width="1.3" opacity=".7">
+      <circle cx="50" cy="33" r="17"/>
+      <circle cx="34" cy="55" r="17"/>
+      <circle cx="66" cy="55" r="17"/>
+      <path d="M42,58 L58,58 L53,90 Q50,95 47,90 Z"/>
+    </g>
+    <path d="M50,16 Q45,10 49,2" fill="none" stroke="var(--star)" stroke-width="1.1" opacity=".85"/>
+    <use href="#wb-leaf" fill="var(--star)" transform="translate(49,8) scale(.55) rotate(-10)"/>
+    <use href="#wb-leaf" fill="var(--star)" transform="translate(44,10) scale(.4) rotate(-55)"/>
+    <circle cx="53" cy="3" r="1.8" fill="var(--heart)" opacity=".85"/>
+  </g>
+
+  <g id="wb-diamond">
+    <g filter="url(#wc-fill)">
+      <path d="M50,6 C34,28 28,40 16,50 C28,60 34,72 50,94 C66,72 72,60 84,50 C72,40 66,28 50,6 Z" fill="var(--diamond)"/>
+    </g>
+    <path d="M50,6 C34,28 28,40 16,50 C28,60 34,72 50,94 C66,72 72,60 84,50 C72,40 66,28 50,6 Z"
+          fill="none" stroke="var(--ink)" stroke-width="1.3" opacity=".7" filter="url(#wc-ink)"/>
+    <path d="M50,8 Q45,2 50,-4" fill="none" stroke="var(--star)" stroke-width="1" opacity=".85" transform="translate(0,6)"/>
+    <use href="#wb-leaf" fill="var(--star)" transform="translate(50,8) scale(.5) rotate(5)"/>
+    <circle cx="44" cy="4" r="2.3" fill="var(--heart)" opacity=".8"/>
+    <circle cx="44" cy="4" r=".9" fill="var(--accent)"/>
+  </g>
+
+  <g id="wb-star">
+    <g filter="url(#wc-fill)">
+      <path d="M50,5 L61,35 L95,35 L68,57 L78,91 L50,70 L22,91 L32,57 L5,35 L39,35 Z" fill="var(--star)"/>
+    </g>
+    <path d="M50,5 L61,35 L95,35 L68,57 L78,91 L50,70 L22,91 L32,57 L5,35 L39,35 Z"
+          fill="none" stroke="var(--ink)" stroke-width="1.3" opacity=".7" filter="url(#wc-ink)"/>
+    <use href="#wb-bird" fill="var(--ink)" opacity=".8" transform="translate(50,-2) scale(.7)"/>
+    <use href="#wb-leaf" fill="var(--heart)" transform="translate(60,33) scale(.35) rotate(40)"/>
+  </g>
+
+  <g id="wb-moon">
+    <g filter="url(#wc-fill)">
+      <path fill-rule="evenodd" fill="var(--moon)"
+            d="M90,52 A38,38 0 1,1 14,52 A38,38 0 1,1 90,52 Z
+               M96,52 A30,30 0 1,1 36,52 A30,30 0 1,1 96,52 Z"/>
+    </g>
+    <path fill-rule="evenodd" fill="none" stroke="var(--ink)" stroke-width="1.3" opacity=".7" filter="url(#wc-ink)"
+          d="M90,52 A38,38 0 1,1 14,52 A38,38 0 1,1 90,52 Z
+             M96,52 A30,30 0 1,1 36,52 A30,30 0 1,1 96,52 Z"/>
+    <path d="M22,30 Q14,52 20,74 Q24,86 34,92" fill="none" stroke="var(--star)" stroke-width="1" opacity=".55"/>
+    <use href="#wb-leaf" fill="var(--star)" transform="translate(20,38) scale(.4) rotate(-30)"/>
+    <use href="#wb-leaf" fill="var(--star)" transform="translate(22,70) scale(.4) rotate(40)"/>
+    <use href="#wb-bird" fill="var(--ink)" opacity=".85" transform="translate(48,12) rotate(8) scale(.6)"/>
+  </g>
+
+  <g id="wb-spade">
+    <g filter="url(#wc-fill)">
+      <path d="M50,8 C24,36 13,52 13,66 C13,80 25,88 37,82 C41,80 45,75 47,70
+               C45,84 39,91 28,94 L72,94 C61,91 55,84 53,70
+               C55,75 59,80 63,82 C75,88 87,80 87,66 C87,52 76,36 50,8 Z" fill="var(--spade)"/>
+    </g>
+    <path d="M50,8 C24,36 13,52 13,66 C13,80 25,88 37,82 C41,80 45,75 47,70
+             C45,84 39,91 28,94 L72,94 C61,91 55,84 53,70
+             C55,75 59,80 63,82 C75,88 87,80 87,66 C87,52 76,36 50,8 Z"
+          fill="none" stroke="var(--ink)" stroke-width="1.3" opacity=".7" filter="url(#wc-ink)"/>
+    <path d="M50,14 Q44,8 48,1" fill="none" stroke="var(--star)" stroke-width="1" opacity=".85"/>
+    <use href="#wb-leaf" fill="var(--star)" transform="translate(48,6) scale(.45) rotate(-10)"/>
+    <use href="#wb-cat" fill="var(--heart)" opacity=".85" transform="translate(78,88) scale(.55)"/>
+  </g>
+
+  <g id="wb-heart">
+    <g filter="url(#wc-fill)">
+      <path d="M50,88 C10,58 8,28 28,16 C40,9 50,20 50,32 C50,20 60,9 72,16 C92,28 90,58 50,88 Z" fill="var(--heart)"/>
+    </g>
+    <path d="M50,88 C10,58 8,28 28,16 C40,9 50,20 50,32 C50,20 60,9 72,16 C92,28 90,58 50,88 Z"
+          fill="none" stroke="var(--ink)" stroke-width="1.3" opacity=".7" filter="url(#wc-ink)"/>
+    <use href="#wb-leaf" fill="var(--star)" transform="translate(29,16) rotate(-25) scale(.42)"/>
+    <use href="#wb-leaf" fill="var(--star)" transform="translate(71,16) rotate(25) scale(.42)"/>
+    <circle cx="50" cy="18" r="2.4" fill="var(--diamond)" opacity=".8"/>
+    <circle cx="50" cy="18" r=".9" fill="var(--accent)"/>
+  </g>
+
+  <g id="wb-bolt">
+    <g filter="url(#wc-fill)">
+      <path d="M58,4 C44,22 34,38 28,52 C34,52 40,52 46,52 C38,68 32,82 30,96
+               C50,74 64,56 74,42 C66,42 60,42 54,42 C62,28 68,16 70,6
+               C66,8 62,8 58,4 Z" fill="var(--bolt)"/>
+    </g>
+    <path d="M58,4 C44,22 34,38 28,52 C34,52 40,52 46,52 C38,68 32,82 30,96
+             C50,74 64,56 74,42 C66,42 60,42 54,42 C62,28 68,16 70,6
+             C66,8 62,8 58,4 Z" fill="none" stroke="var(--ink)" stroke-width="1.3" opacity=".7" filter="url(#wc-ink)"/>
+    <path d="M70,10 Q78,14 76,24" fill="none" stroke="var(--star)" stroke-width="1" opacity=".85"/>
+    <use href="#wb-leaf" fill="var(--star)" transform="translate(75,18) scale(.4) rotate(55)"/>
+    <use href="#wb-leaf" fill="var(--heart)" transform="translate(32,88) scale(.35) rotate(-20)"/>
+  </g>
+
+  <g id="wb-cross">
+    <g filter="url(#wc-fill)">
+      <path d="M22,32 L38,16 L50,28 L62,16 L78,32 L66,44 L78,56 L62,72 L50,60 L38,72 L22,56 L34,44 Z" fill="var(--cross)"/>
+    </g>
+    <path d="M22,32 L38,16 L50,28 L62,16 L78,32 L66,44 L78,56 L62,72 L50,60 L38,72 L22,56 L34,44 Z"
+          fill="none" stroke="var(--ink)" stroke-width="1.3" opacity=".7" filter="url(#wc-ink)"/>
+    <use href="#wb-leaf" fill="var(--star)" transform="translate(30,20) scale(.3) rotate(-40)"/>
+    <use href="#wb-leaf" fill="var(--star)" transform="translate(70,20) scale(.3) rotate(40)"/>
+    <use href="#wb-leaf" fill="var(--star)" transform="translate(30,68) scale(.3) rotate(-140)"/>
+    <use href="#wb-leaf" fill="var(--star)" transform="translate(70,68) scale(.3) rotate(140)"/>
+  </g>
+
+</defs>
+</svg>
+
+<h2 class="section-title">Comodín, Rey, Número y Reverso</h2>
+<div class="cards-row">
+
+  <!-- JOKER -->
+  <div class="card-block">
+    <div class="playing-card">
+      <div class="corner tl">JK<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#wb-star"/></svg></div>
+      <div class="corner br">JK<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#wb-star"/></svg></div>
+      <div class="card-figure">
+        <svg viewBox="0 0 200 280" width="172">
+          <!-- soft wash halo -->
+          <circle cx="100" cy="130" r="98" fill="var(--cream-dark)" opacity=".5" filter="url(#wc-fill)"/>
+
+          <!-- climbing vine frame -->
+          <path d="M26,270 C16,190 24,110 44,50 C52,28 66,14 80,10"
+                fill="none" stroke="var(--star)" stroke-width="2.2" opacity=".7"/>
+          <path d="M174,270 C184,190 176,110 156,50 C148,28 134,14 120,10"
+                fill="none" stroke="var(--star)" stroke-width="2.2" opacity=".7"/>
+          <g fill="var(--star)" opacity=".9">
+            <use href="#wb-leaf" transform="translate(30,220) scale(.75) rotate(-70)"/>
+            <use href="#wb-leaf" transform="translate(20,160) scale(.65) rotate(-100)"/>
+            <use href="#wb-leaf" transform="translate(34,90) scale(.7) rotate(-50)"/>
+            <use href="#wb-leaf" transform="translate(170,220) scale(.75) rotate(70)"/>
+            <use href="#wb-leaf" transform="translate(182,160) scale(.65) rotate(100)"/>
+            <use href="#wb-leaf" transform="translate(166,90) scale(.7) rotate(50)"/>
+          </g>
+          <circle cx="24" cy="190" r="3.4" fill="var(--heart)"/>
+          <circle cx="178" cy="130" r="3.4" fill="var(--diamond)"/>
+          <circle cx="40" cy="120" r="2.6" fill="var(--moon)"/>
+
+          <!-- flowing hair -->
+          <path d="M72,62 C40,80 32,120 44,158" fill="none" stroke="var(--ink)" stroke-width="3.6" stroke-linecap="round" opacity=".8"/>
+          <path d="M128,62 C160,80 168,120 156,158" fill="none" stroke="var(--ink)" stroke-width="3.6" stroke-linecap="round" opacity=".8"/>
+
+          <!-- leafy crown -->
+          <g fill="var(--star)" filter="url(#wc-fill)">
+            <use href="#wb-leaf" transform="translate(76,42) rotate(-35) scale(.6)"/>
+            <use href="#wb-leaf" transform="translate(88,32) rotate(-10) scale(.62)"/>
+            <use href="#wb-leaf" transform="translate(100,28) scale(.65)"/>
+            <use href="#wb-leaf" transform="translate(112,32) rotate(10) scale(.62)"/>
+            <use href="#wb-leaf" transform="translate(124,42) rotate(35) scale(.6)"/>
+          </g>
+          <circle cx="90" cy="38" r="2" fill="var(--heart)"/>
+          <circle cx="110" cy="38" r="2" fill="var(--diamond)"/>
+
+          <!-- head -->
+          <circle cx="100" cy="66" r="27" fill="#f1dcb8" filter="url(#wc-fill)"/>
+          <circle cx="100" cy="66" r="27" fill="none" stroke="var(--ink)" stroke-width="1.6" opacity=".7" filter="url(#wc-ink)"/>
+          <path d="M88,72 Q94,78 100,72" stroke="var(--ink)" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <circle cx="90" cy="60" r="2" fill="var(--ink)"/>
+          <circle cx="110" cy="60" r="2" fill="var(--ink)"/>
+          <path d="M80,56 Q85,50 92,52" stroke="var(--ink)" stroke-width="1.4" fill="none" opacity=".7"/>
+          <path d="M120,56 Q115,50 108,52" stroke="var(--ink)" stroke-width="1.4" fill="none" opacity=".7"/>
+
+          <!-- blouse / loose robe blending into vines -->
+          <path d="M58,104 C58,90 72,92 100,92 C128,92 142,90 142,104
+                    L154,250 C118,266 82,266 46,250 Z" fill="var(--diamond)" opacity=".85" filter="url(#wc-fill)"/>
+          <path d="M58,104 C58,90 72,92 100,92 C128,92 142,90 142,104
+                    L154,250 C118,266 82,266 46,250 Z" fill="none" stroke="var(--ink)" stroke-width="1.6" opacity=".65" filter="url(#wc-ink)"/>
+
+          <!-- sash of vine with leaves criss-crossing the robe -->
+          <path d="M56,120 C82,150 118,150 144,120" fill="none" stroke="var(--star)" stroke-width="2.4" opacity=".85"/>
+          <path d="M60,230 C86,206 114,206 140,230" fill="none" stroke="var(--star)" stroke-width="2.2" opacity=".75"/>
+          <use href="#wb-leaf" fill="var(--star)" transform="translate(76,140) scale(.5) rotate(-20)"/>
+          <use href="#wb-leaf" fill="var(--star)" transform="translate(124,140) scale(.5) rotate(20)"/>
+          <use href="#wb-leaf" fill="var(--heart)" transform="translate(100,228) scale(.45)"/>
+
+          <!-- bird perched on shoulder -->
+          <g filter="url(#wc-fill)">
+            <use href="#wb-bird" fill="var(--moon)" transform="translate(150,96) rotate(-8) scale(2)"/>
+          </g>
+          <use href="#wb-bird" fill="none" stroke="var(--ink)" stroke-width=".6" opacity=".6" transform="translate(150,96) rotate(-8) scale(2)"/>
+          <path d="M148,96 Q146,88 152,84" stroke="var(--ink)" stroke-width="1" fill="none" opacity=".6"/>
+        </svg>
+      </div>
+      <div class="card-label">EL JARDINERO ERRANTE</div>
+    </div>
+    <p class="card-caption">Comodín exclusivo — figura de acuarela que se funde con enredaderas, con un pájaro posado en el hombro.</p>
+  </div>
+
+  <!-- KING -->
+  <div class="card-block">
+    <div class="playing-card">
+      <div class="corner tl">R<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#wb-star"/></svg></div>
+      <div class="corner br">R<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#wb-star"/></svg></div>
+      <div class="card-figure">
+        <svg viewBox="0 0 200 280" width="172">
+          <!-- crown of branches and leaves -->
+          <path d="M70,66 L74,38 M100,60 L100,30 M130,66 L126,38" stroke="var(--ink)" stroke-width="2" opacity=".6" fill="none"/>
+          <g fill="var(--star)" filter="url(#wc-fill)">
+            <use href="#wb-leaf" transform="translate(70,40) rotate(-30) scale(.6)"/>
+            <use href="#wb-leaf" transform="translate(84,30) rotate(-8) scale(.65)"/>
+            <use href="#wb-leaf" transform="translate(100,26) scale(.7)"/>
+            <use href="#wb-leaf" transform="translate(116,30) rotate(8) scale(.65)"/>
+            <use href="#wb-leaf" transform="translate(130,40) rotate(30) scale(.6)"/>
+          </g>
+          <circle cx="100" cy="30" r="2.4" fill="var(--diamond)"/>
+          <circle cx="82" cy="36" r="1.8" fill="var(--heart)"/>
+          <circle cx="118" cy="36" r="1.8" fill="var(--heart)"/>
+
+          <!-- face -->
+          <circle cx="100" cy="92" r="27" fill="#f1dcb8" filter="url(#wc-fill)"/>
+          <circle cx="100" cy="92" r="27" fill="none" stroke="var(--ink)" stroke-width="1.6" opacity=".7" filter="url(#wc-ink)"/>
+          <circle cx="90" cy="88" r="2" fill="var(--ink)"/>
+          <circle cx="110" cy="88" r="2" fill="var(--ink)"/>
+
+          <!-- beard -->
+          <path d="M76,98 C76,120 87,130 100,130 C113,130 124,120 124,98
+                   C124,112 113,118 100,118 C87,118 76,112 76,98 Z"
+                fill="#e7e2d4" filter="url(#wc-fill)"/>
+          <path d="M76,98 C76,120 87,130 100,130 C113,130 124,120 124,98
+                   C124,112 113,118 100,118 C87,118 76,112 76,98 Z"
+                fill="none" stroke="var(--ink)" stroke-width="1.3" opacity=".6" filter="url(#wc-ink)"/>
+
+          <!-- robe with watercolor texture + small leaf motifs -->
+          <path d="M54,138 C54,122 72,118 100,118 C128,118 146,122 146,138
+                   L158,268 C120,280 80,280 42,268 Z" fill="var(--bolt)" opacity=".85" filter="url(#wc-fill)"/>
+          <path d="M54,138 C54,122 72,118 100,118 C128,118 146,122 146,138
+                   L158,268 C120,280 80,280 42,268 Z" fill="none" stroke="var(--ink)" stroke-width="1.6" opacity=".65" filter="url(#wc-ink)"/>
+          <use href="#wb-leaf" fill="var(--cream)" opacity=".7" transform="translate(80,160) scale(.35) rotate(-15)"/>
+          <use href="#wb-leaf" fill="var(--cream)" opacity=".7" transform="translate(120,160) scale(.35) rotate(15)"/>
+          <use href="#wb-leaf" fill="var(--cream)" opacity=".7" transform="translate(100,210) scale(.4)"/>
+
+          <!-- fox companion -->
+          <g transform="translate(158,222)">
+            <path d="M0,20 C-4,2 10,-10 26,-6 C34,-4 38,4 34,10 C40,8 44,14 38,18
+                     C30,24 16,26 6,22 C2,24 0,24 0,20 Z" fill="var(--diamond)" opacity=".9" filter="url(#wc-fill)"/>
+            <path d="M0,20 C-4,2 10,-10 26,-6 C34,-4 38,4 34,10 C40,8 44,14 38,18
+                     C30,24 16,26 6,22 C2,24 0,24 0,20 Z" fill="none" stroke="var(--ink)" stroke-width="1.2" opacity=".65"/>
+            <path d="M6,-4 L2,-14 L12,-6 Z" fill="var(--diamond)" stroke="var(--ink)" stroke-width="1"/>
+            <path d="M18,-7 L16,-16 L26,-9 Z" fill="var(--diamond)" stroke="var(--ink)" stroke-width="1"/>
+            <circle cx="30" cy="4" r="1.6" fill="var(--ink)"/>
+            <path d="M34,16 C42,22 44,32 36,34 C30,35 28,28 32,22" fill="var(--cream)" stroke="var(--ink)" stroke-width="1" opacity=".9"/>
+          </g>
+        </svg>
+      </div>
+      <div class="card-label">REY DE ESTRELLA</div>
+    </div>
+    <p class="card-caption">Rey del bosque con corona de hojas y un pequeño zorro de acuarela a su lado.</p>
+  </div>
+
+  <!-- NUMBER CARD -->
+  <div class="card-block">
+    <div class="playing-card">
+      <div class="corner tl">5<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#wb-moon"/></svg></div>
+      <div class="corner br">5<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#wb-moon"/></svg></div>
+      <div class="card-figure">
+        <svg viewBox="0 0 200 280" width="178">
+          <!-- light botanical branch running through background -->
+          <path d="M20,270 C50,210 40,150 70,110 C90,84 80,40 110,10"
+                fill="none" stroke="var(--star)" stroke-width="1.2" opacity=".4"/>
+          <g fill="var(--star)" opacity=".55">
+            <use href="#wb-leaf" transform="translate(32,230) scale(.5) rotate(-60)"/>
+            <use href="#wb-leaf" transform="translate(52,170) scale(.45) rotate(-30)"/>
+            <use href="#wb-leaf" transform="translate(78,120) scale(.5) rotate(-50)"/>
+            <use href="#wb-leaf" transform="translate(100,60) scale(.45) rotate(-20)"/>
+          </g>
+
+          <g transform="translate(70,55) scale(.46)"><use href="#wb-moon"/></g>
+          <g transform="translate(130,55) scale(.46)"><use href="#wb-moon"/></g>
+          <g transform="translate(100,140) scale(.5)"><use href="#wb-moon"/></g>
+          <g transform="translate(70,225) scale(.46) rotate(180)"><use href="#wb-moon"/></g>
+          <g transform="translate(130,225) scale(.46) rotate(180)"><use href="#wb-moon"/></g>
+        </svg>
+      </div>
+      <div class="card-label">CINCO DE LUNA</div>
+    </div>
+    <p class="card-caption">Pintas enlazadas por una rama delicada que atraviesa la carta de punta a punta.</p>
+  </div>
+
+  <!-- BACK -->
+  <div class="card-block">
+    <div class="playing-card" style="background:linear-gradient(160deg,var(--star),var(--moon));">
+      <div class="card-figure">
+        <svg viewBox="0 0 200 280" width="190">
+          <rect x="14" y="14" width="172" height="252" rx="14" fill="none" stroke="var(--cream)" stroke-width="2" opacity=".85"/>
+          <rect x="22" y="22" width="156" height="236" rx="10" fill="none" stroke="var(--cream)" stroke-width="1" opacity=".6"/>
+          <g transform="translate(100,140)">
+            <g fill="var(--cream)" opacity=".92">
+              <use href="#wb-leaf" transform="rotate(0) scale(1.5)"/>
+              <use href="#wb-leaf" transform="rotate(45) scale(1.5)"/>
+              <use href="#wb-leaf" transform="rotate(90) scale(1.5)"/>
+              <use href="#wb-leaf" transform="rotate(135) scale(1.5)"/>
+              <use href="#wb-leaf" transform="rotate(180) scale(1.5)"/>
+              <use href="#wb-leaf" transform="rotate(225) scale(1.5)"/>
+              <use href="#wb-leaf" transform="rotate(270) scale(1.5)"/>
+              <use href="#wb-leaf" transform="rotate(315) scale(1.5)"/>
+            </g>
+            <circle r="16" fill="var(--paper)" opacity=".9"/>
+            <circle r="16" fill="none" stroke="var(--cream)" stroke-width="1.4"/>
+            <use href="#wb-leaf" fill="var(--star)" transform="scale(.5) rotate(0)"/>
+            <use href="#wb-leaf" fill="var(--star)" transform="scale(.5) rotate(180)"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <p class="card-caption">Reverso: corona de 8 hojas en acuarela — una hoja por cada pinta de la familia, sin revelar información.</p>
+  </div>
+
+</div>
+
+<footer>Propuesta 8 de 10 — Mazo de 8 Pintas</footer>
+</body>
+</html>

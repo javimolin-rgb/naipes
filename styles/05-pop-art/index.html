@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Propuesta 05 · Pop Art — Mazo de 8 Pintas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bangers&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#fff8e8;
+    --ink:#111111;
+    --red:#ed1c24;
+    --yellow:#ffd500;
+    --blue:#1c4fd6;
+    --green:#1fae5b;
+    --white:#ffffff;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle, #00000018 2.4px, transparent 2.6px) 0 0/16px 16px,
+      var(--yellow);
+    font-family:'Archivo Black', sans-serif;
+    color:var(--ink);
+    padding-bottom:80px;
+  }
+  header{
+    max-width:1100px;
+    margin:0 auto;
+    padding:40px 24px 20px;
+    text-align:center;
+  }
+  .back-link{
+    display:inline-block;
+    margin-bottom:18px;
+    font-family:'Archivo Black', sans-serif;
+    font-size:.8rem;
+    color:var(--white);
+    text-decoration:none;
+    background:var(--ink);
+    padding:7px 16px;
+    border-radius:20px;
+    border:2.5px solid var(--ink);
+    box-shadow:3px 3px 0 var(--blue);
+  }
+  h1{
+    font-family:'Bangers', cursive;
+    font-size:3.4rem;
+    letter-spacing:.03em;
+    margin:0 0 4px;
+    color:var(--red);
+    -webkit-text-stroke:2.5px var(--ink);
+    text-shadow:4px 4px 0 var(--ink);
+  }
+  .tagline{
+    font-family:'Bangers', cursive;
+    color:var(--blue);
+    -webkit-text-stroke:1px var(--ink);
+    font-size:1.5rem;
+    margin:4px 0 16px;
+    letter-spacing:.02em;
+  }
+  .desc{
+    max-width:720px;
+    margin:0 auto;
+    line-height:1.7;
+    font-size:.78rem;
+    font-family:'Archivo Black', sans-serif;
+    background:var(--white);
+    border:3px solid var(--ink);
+    border-radius:10px;
+    padding:16px 20px;
+    box-shadow:5px 5px 0 var(--ink);
+  }
+  h2.section-title{
+    text-align:center;
+    font-family:'Bangers', cursive;
+    font-size:2rem;
+    color:var(--blue);
+    -webkit-text-stroke:1.5px var(--ink);
+    margin:60px 0 28px;
+    letter-spacing:.03em;
+  }
+  h2.section-title:before, h2.section-title:after{
+    content:"★";
+    color:var(--red);
+    -webkit-text-stroke:0;
+    margin:0 14px;
+  }
+
+  /* ---- Suit grid ---- */
+  .suit-grid{
+    max-width:980px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:20px;
+    padding:0 24px;
+  }
+  .suit-card{
+    background:var(--white);
+    border:3px solid var(--ink);
+    border-radius:10px;
+    padding:14px 10px 10px;
+    text-align:center;
+    box-shadow:5px 5px 0 var(--ink);
+  }
+  .suit-card svg{width:72px;height:72px;}
+  .suit-name{
+    display:block;
+    margin-top:8px;
+    font-size:.72rem;
+    letter-spacing:.03em;
+    color:var(--ink);
+    font-family:'Archivo Black', sans-serif;
+  }
+
+  /* ---- Cards section ---- */
+  .cards-row{
+    max-width:1100px;
+    margin:0 auto;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:36px;
+    padding:0 24px;
+  }
+  .playing-card{
+    width:250px;
+    aspect-ratio:63/88;
+    background:var(--white);
+    border:4px solid var(--ink);
+    border-radius:12px;
+    position:relative;
+    box-shadow:9px 9px 0 var(--ink);
+    overflow:hidden;
+  }
+  .playing-card:before{
+    content:"";
+    position:absolute;
+    inset:7px;
+    border:2.5px solid var(--blue);
+    border-radius:6px;
+    pointer-events:none;
+  }
+  .corner{
+    position:absolute;
+    font-family:'Archivo Black', sans-serif;
+    font-weight:400;
+    font-size:.9rem;
+    text-align:center;
+    line-height:1;
+    color:var(--ink);
+    z-index:2;
+  }
+  .corner svg{width:16px;height:16px;display:block;margin:2px auto 0;}
+  .corner.tl{top:12px;left:12px;}
+  .corner.br{bottom:12px;right:12px;transform:rotate(180deg);}
+  .card-figure{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .card-label{
+    position:absolute;
+    bottom:12px;
+    left:0;right:0;
+    text-align:center;
+    font-family:'Bangers', cursive;
+    font-size:.82rem;
+    letter-spacing:.08em;
+    color:var(--red);
+    -webkit-text-stroke:.6px var(--ink);
+    z-index:2;
+  }
+  .card-caption{
+    text-align:center;
+    margin-top:12px;
+    font-size:.74rem;
+    line-height:1.5;
+    color:var(--ink);
+    font-family:'Archivo Black', sans-serif;
+    max-width:250px;
+  }
+  .card-block{display:flex;flex-direction:column;align-items:center;}
+
+  footer{
+    text-align:center;
+    margin-top:70px;
+    font-family:'Bangers', cursive;
+    font-size:1.1rem;
+    color:var(--ink);
+    -webkit-text-stroke:.4px var(--ink);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back-link" href="../../index.html">&larr; Volver a las 10 propuestas</a>
+  <h1>05 · POP ART</h1>
+  <p class="tagline">¡Cómic y cultura popular!</p>
+  <p class="desc">Contornos negros gruesos, tramas de puntos Ben-Day y colores planos explosivos al estilo Lichtenstein &amp; Warhol. Cada pinta lleva su propia trama de puntos y una sombra de cómic desplazada; las figuras reales hablan en viñetas. Pensado para imprenta offset CMYK con negros bien saturados.</p>
+</header>
+
+<h2 class="section-title">Las 8 pintas</h2>
+<div class="suit-grid">
+
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#pop-club"/></svg>
+    <span class="suit-name">Tréboles</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#pop-diamond"/></svg>
+    <span class="suit-name">Diamantes</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#pop-star"/></svg>
+    <span class="suit-name">Estrella</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#pop-moon"/></svg>
+    <span class="suit-name">Luna</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#pop-spade"/></svg>
+    <span class="suit-name">Picas</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#pop-heart"/></svg>
+    <span class="suit-name">Corazones</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#pop-bolt"/></svg>
+    <span class="suit-name">Rayo</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#pop-cross"/></svg>
+    <span class="suit-name">Aspa</span>
+  </div>
+
+</div>
+
+<!-- shared suit symbol defs -->
+<svg width="0" height="0" style="position:absolute">
+<defs>
+
+  <!-- Ben-Day halftone dot patterns, one bright flat color per suit family -->
+  <pattern id="dots-black" width="8" height="8" patternUnits="userSpaceOnUse">
+    <rect width="8" height="8" fill="#fff"/>
+    <circle cx="4" cy="4" r="2.1" fill="#111111"/>
+  </pattern>
+  <pattern id="dots-red" width="8" height="8" patternUnits="userSpaceOnUse">
+    <rect width="8" height="8" fill="#fff"/>
+    <circle cx="4" cy="4" r="2.1" fill="#ed1c24"/>
+  </pattern>
+  <pattern id="dots-green" width="8" height="8" patternUnits="userSpaceOnUse">
+    <rect width="8" height="8" fill="#fff"/>
+    <circle cx="4" cy="4" r="2.1" fill="#1fae5b"/>
+  </pattern>
+  <pattern id="dots-blue" width="8" height="8" patternUnits="userSpaceOnUse">
+    <rect width="8" height="8" fill="#fff"/>
+    <circle cx="4" cy="4" r="2.1" fill="#1c4fd6"/>
+  </pattern>
+  <pattern id="dots-blue-sm" width="2.1" height="2.1" patternUnits="userSpaceOnUse">
+    <rect width="2.1" height="2.1" fill="#fff"/>
+    <circle cx="1.05" cy="1.05" r="0.55" fill="#1c4fd6"/>
+  </pattern>
+
+  <!-- bigger two-tone dot fills for costume / cape / background areas -->
+  <pattern id="dots-red-lg" width="13" height="13" patternUnits="userSpaceOnUse">
+    <rect width="13" height="13" fill="#ed1c24"/>
+    <circle cx="6.5" cy="6.5" r="3.4" fill="#ffffff" opacity=".9"/>
+  </pattern>
+  <pattern id="dots-blue-lg" width="13" height="13" patternUnits="userSpaceOnUse">
+    <rect width="13" height="13" fill="#1c4fd6"/>
+    <circle cx="6.5" cy="6.5" r="3.4" fill="#ffffff" opacity=".9"/>
+  </pattern>
+  <pattern id="dots-yellow-lg" width="13" height="13" patternUnits="userSpaceOnUse">
+    <rect width="13" height="13" fill="#ffd500"/>
+    <circle cx="6.5" cy="6.5" r="3.4" fill="#ffffff" opacity=".55"/>
+  </pattern>
+  <pattern id="dots-green-lg" width="13" height="13" patternUnits="userSpaceOnUse">
+    <rect width="13" height="13" fill="#1fae5b"/>
+    <circle cx="6.5" cy="6.5" r="3.4" fill="#ffffff" opacity=".85"/>
+  </pattern>
+  <pattern id="dots-skin" width="9" height="9" patternUnits="userSpaceOnUse">
+    <rect width="9" height="9" fill="#ffd7a8"/>
+    <circle cx="4.5" cy="4.5" r="1.5" fill="#ed1c24" opacity=".32"/>
+  </pattern>
+
+  <!-- ===================== SUIT PIPS ===================== -->
+  <!-- each pip: solid black silhouette offset behind (comic drop-shadow),
+       then the real shape filled with its family's halftone dots + thick black outline -->
+
+  <g id="pop-club">
+    <g transform="translate(6,6)" fill="#111">
+      <circle cx="50" cy="33" r="17"/><circle cx="34" cy="55" r="17"/><circle cx="66" cy="55" r="17"/>
+      <path d="M42,58 L58,58 L53,90 Q50,95 47,90 Z"/>
+    </g>
+    <g fill="url(#dots-black)" stroke="#111" stroke-width="5" stroke-linejoin="round">
+      <circle cx="50" cy="33" r="17"/><circle cx="34" cy="55" r="17"/><circle cx="66" cy="55" r="17"/>
+      <path d="M42,58 L58,58 L53,90 Q50,95 47,90 Z"/>
+    </g>
+  </g>
+
+  <g id="pop-diamond">
+    <path d="M50,6 C34,28 28,40 16,50 C28,60 34,72 50,94 C66,72 72,60 84,50 C72,40 66,28 50,6 Z"
+          transform="translate(6,6)" fill="#111"/>
+    <path d="M50,6 C34,28 28,40 16,50 C28,60 34,72 50,94 C66,72 72,60 84,50 C72,40 66,28 50,6 Z"
+          fill="url(#dots-red)" stroke="#111" stroke-width="5" stroke-linejoin="round"/>
+  </g>
+
+  <g id="pop-star">
+    <path d="M50,5 L61,35 L95,35 L68,57 L78,91 L50,70 L22,91 L32,57 L5,35 L39,35 Z"
+          transform="translate(6,6)" fill="#111"/>
+    <path d="M50,5 L61,35 L95,35 L68,57 L78,91 L50,70 L22,91 L32,57 L5,35 L39,35 Z"
+          fill="url(#dots-green)" stroke="#111" stroke-width="5" stroke-linejoin="round"/>
+  </g>
+
+  <g id="pop-moon">
+    <path d="M21,12.79 A9,9 0 1,1 11.21,3 A7,7 0 0,0 21,12.79 Z"
+          transform="translate(10,10) scale(3.8)" fill="#111"/>
+    <path d="M21,12.79 A9,9 0 1,1 11.21,3 A7,7 0 0,0 21,12.79 Z"
+          transform="translate(4,4) scale(3.8)" fill="url(#dots-blue-sm)" stroke="#111" stroke-width="1.3" stroke-linejoin="round"/>
+  </g>
+
+  <g id="pop-spade">
+    <path d="M50,8 C24,36 13,52 13,66 C13,80 25,88 37,82 C41,80 45,75 47,70
+             C45,84 39,91 28,94 L72,94 C61,91 55,84 53,70
+             C55,75 59,80 63,82 C75,88 87,80 87,66 C87,52 76,36 50,8 Z"
+          transform="translate(6,6)" fill="#111"/>
+    <path d="M50,8 C24,36 13,52 13,66 C13,80 25,88 37,82 C41,80 45,75 47,70
+             C45,84 39,91 28,94 L72,94 C61,91 55,84 53,70
+             C55,75 59,80 63,82 C75,88 87,80 87,66 C87,52 76,36 50,8 Z"
+          fill="url(#dots-black)" stroke="#111" stroke-width="5" stroke-linejoin="round"/>
+  </g>
+
+  <g id="pop-heart">
+    <path d="M50,88 C10,58 8,28 28,16 C40,9 50,20 50,32 C50,20 60,9 72,16 C92,28 90,58 50,88 Z"
+          transform="translate(6,6)" fill="#111"/>
+    <path d="M50,88 C10,58 8,28 28,16 C40,9 50,20 50,32 C50,20 60,9 72,16 C92,28 90,58 50,88 Z"
+          fill="url(#dots-red)" stroke="#111" stroke-width="5" stroke-linejoin="round"/>
+  </g>
+
+  <g id="pop-bolt">
+    <path d="M58,4 C44,22 34,38 28,52 C34,52 40,52 46,52 C38,68 32,82 30,96
+             C50,74 64,56 74,42 C66,42 60,42 54,42 C62,28 68,16 70,6
+             C66,8 62,8 58,4 Z"
+          transform="translate(6,6)" fill="#111"/>
+    <path d="M58,4 C44,22 34,38 28,52 C34,52 40,52 46,52 C38,68 32,82 30,96
+             C50,74 64,56 74,42 C66,42 60,42 54,42 C62,28 68,16 70,6
+             C66,8 62,8 58,4 Z"
+          fill="url(#dots-green)" stroke="#111" stroke-width="5" stroke-linejoin="round"/>
+  </g>
+
+  <g id="pop-cross">
+    <path d="M22,32 L38,16 L50,28 L62,16 L78,32 L66,44 L78,56 L62,72 L50,60 L38,72 L22,56 L34,44 Z"
+          transform="translate(6,6)" fill="#111"/>
+    <path d="M22,32 L38,16 L50,28 L62,16 L78,32 L66,44 L78,56 L62,72 L50,60 L38,72 L22,56 L34,44 Z"
+          fill="url(#dots-blue)" stroke="#111" stroke-width="5" stroke-linejoin="round"/>
+  </g>
+
+  <!-- reusable 14-spike starburst (Joker) -->
+  <polygon id="burst-joker" points="100,-40 122.3,12.5 165.1,-25.1 162.3,31.8 217.3,16.5 190.1,66.6 246.2,76.6 200,110 246.2,143.4 190.1,153.4 217.3,203.5 162.3,188.2 165.1,245.1 122.3,207.5 100,260 77.7,207.5 34.9,245.1 37.7,188.2 -17.3,203.5 9.9,153.4 -46.2,143.4 0,110 -46.2,76.6 9.9,66.6 -17.3,16.5 37.7,31.8 34.9,-25.1 77.7,12.5"/>
+
+  <!-- reusable 16-spike starburst (King) -->
+  <polygon id="burst-king" points="100,-60 116.6,-13.4 149.7,-50.1 147.2,-0.7 191.9,-21.9 170.7,22.8 220.1,20.3 183.4,53.4 230,70 183.4,86.6 220.1,119.7 170.7,117.2 191.9,161.9 147.2,140.7 149.7,190.1 116.6,153.4 100,200 83.4,153.4 50.3,190.1 52.8,140.7 8.1,161.9 29.3,117.2 -20.1,119.7 16.6,86.6 -30,70 16.6,53.4 -20.1,20.3 29.3,22.8 8.1,-21.9 52.8,-0.7 50.3,-50.1 83.4,-13.4"/>
+
+  <!-- reusable 20-spike starburst (Back) -->
+  <polygon id="burst-back" points="100,12 115,45.2 139.6,18.3 143.6,54.5 175.2,36.4 167.9,72.1 203.6,64.8 185.5,96.4 221.7,100.4 194.8,125 228,140 194.8,155 221.7,179.6 185.5,183.6 203.6,215.2 167.9,207.9 175.2,243.6 143.6,225.5 139.6,261.7 115,234.8 100,268 85,234.8 60.4,261.7 56.4,225.5 24.8,243.6 32.1,207.9 -3.6,215.2 14.5,183.6 -21.7,179.6 5.2,155 -28,140 5.2,125 -21.7,100.4 14.5,96.4 -3.6,64.8 32.1,72.1 24.8,36.4 56.4,54.5 60.4,18.3 85,45.2"/>
+
+</defs>
+</svg>
+
+<h2 class="section-title">Joker, Rey, Número y Reverso</h2>
+<div class="cards-row">
+
+  <!-- JOKER -->
+  <div class="card-block">
+    <div class="playing-card">
+      <div class="corner tl">JK<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#pop-star"/></svg></div>
+      <div class="corner br">JK<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#pop-star"/></svg></div>
+      <div class="card-figure">
+        <svg viewBox="0 0 200 280" width="172">
+          <g transform="translate(0,16)">
+          <!-- starburst backdrop -->
+          <use href="#burst-joker" fill="var(--yellow)" stroke="#111" stroke-width="3" opacity=".95"/>
+
+          <!-- scepter -->
+          <path d="M152,150 L172,222" stroke="#111" stroke-width="7" stroke-linecap="round"/>
+          <g transform="translate(176,206) scale(.34)"><use href="#pop-star"/></g>
+
+          <!-- harlequin torso -->
+          <path d="M58,124 C58,110 76,104 100,104 C124,104 142,110 142,124
+                   L156,246 Q100,268 44,246 Z"
+                fill="url(#dots-blue-lg)" stroke="#111" stroke-width="5"/>
+          <!-- diamond motif badges on chest -->
+          <g transform="translate(78,150) scale(.4)"><use href="#pop-diamond"/></g>
+          <g transform="translate(112,168) scale(.34)"><use href="#pop-heart"/></g>
+
+          <!-- ruffled collar -->
+          <path d="M54,116 L66,128 L78,114 L90,128 L100,114 L110,128 L122,114 L134,128 L146,116
+                   L146,132 L54,132 Z"
+                fill="var(--white)" stroke="#111" stroke-width="5" stroke-linejoin="round"/>
+
+          <!-- neck + head -->
+          <rect x="90" y="96" width="20" height="18" fill="url(#dots-skin)" stroke="#111" stroke-width="4"/>
+          <circle cx="100" cy="74" r="32" fill="url(#dots-skin)" stroke="#111" stroke-width="5"/>
+
+          <!-- jester cap, 3 wide triangular points with bells -->
+          <path d="M57,58 C57,50 60,44 64,40 L47,8 C42,26 42,44 50,58 Z" fill="url(#dots-red)" stroke="#111" stroke-width="5" stroke-linejoin="round"/>
+          <circle cx="47" cy="8" r="8" fill="var(--yellow)" stroke="#111" stroke-width="4.5"/>
+          <path d="M83,50 C83,38 90,28 100,24 C110,28 117,38 117,50 C110,44 105,42 100,42 C95,42 90,44 83,50 Z" fill="var(--yellow)" stroke="#111" stroke-width="5" stroke-linejoin="round"/>
+          <circle cx="100" cy="10" r="8" fill="var(--red)" stroke="#111" stroke-width="4.5"/>
+          <path d="M100,24 L97,10 L103,10 Z" fill="var(--yellow)" stroke="#111" stroke-width="5" stroke-linejoin="round"/>
+          <path d="M143,58 C143,50 140,44 136,40 L153,8 C158,26 158,44 150,58 Z" fill="url(#dots-blue)" stroke="#111" stroke-width="5" stroke-linejoin="round"/>
+          <circle cx="153" cy="8" r="8" fill="var(--yellow)" stroke="#111" stroke-width="4.5"/>
+
+          <!-- eyebrows -->
+          <path d="M80,62 Q87,56 94,61" stroke="#111" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M106,61 Q113,56 120,62" stroke="#111" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <!-- eyes -->
+          <circle cx="88" cy="70" r="8.5" fill="var(--white)" stroke="#111" stroke-width="3.5"/>
+          <circle cx="112" cy="70" r="8.5" fill="var(--white)" stroke="#111" stroke-width="3.5"/>
+          <circle cx="90" cy="72" r="3.4" fill="#111"/>
+          <circle cx="114" cy="72" r="3.4" fill="#111"/>
+          <!-- blush -->
+          <circle cx="78" cy="84" r="5" fill="var(--red)" opacity=".55"/>
+          <circle cx="122" cy="84" r="5" fill="var(--red)" opacity=".55"/>
+          <!-- big laughing mouth -->
+          <path d="M78,88 Q100,112 122,88 Q100,100 78,88 Z" fill="#111"/>
+          <path d="M83,90 Q100,100 117,90" fill="var(--white)" stroke="none"/>
+          <path d="M100,92 Q100,100 100,104" stroke="var(--red)" stroke-width="5" fill="none" stroke-linecap="round" opacity=".8"/>
+
+          <!-- speech bubble -->
+          <path d="M140,2 h48 a8,8 0 0 1 8,8 v22 a8,8 0 0 1 -8,8 h-18 l-17,16 l4,-16 h-17 a8,8 0 0 1 -8,-8 v-22 a8,8 0 0 1 8,-8 Z"
+                fill="var(--white)" stroke="#111" stroke-width="4.5" stroke-linejoin="round"/>
+          <text x="164" y="24" text-anchor="middle" font-family="Bangers" font-size="24" fill="var(--red)" stroke="#111" stroke-width="1">¡JA!</text>
+          </g>
+        </svg>
+      </div>
+      <div class="card-label">EL BUFÓN POP</div>
+    </div>
+    <p class="card-caption">Joker exclusivo — jester cómic con gorro de tres puntas, trama Ben-Day y globo de diálogo "¡JA!".</p>
+  </div>
+
+  <!-- KING -->
+  <div class="card-block">
+    <div class="playing-card">
+      <div class="corner tl">R<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#pop-heart"/></svg></div>
+      <div class="corner br">R<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#pop-heart"/></svg></div>
+      <div class="card-figure">
+        <svg viewBox="0 0 200 280" width="172">
+          <!-- action starburst behind shoulder -->
+          <use href="#burst-king" fill="var(--yellow)" stroke="#111" stroke-width="3" opacity=".9" transform="translate(18,6) scale(.82)"/>
+
+          <!-- cape, dynamic flare -->
+          <path d="M46,128 C20,150 10,210 26,256 C56,268 100,272 100,272
+                   C100,272 144,268 174,256 C190,210 180,150 154,128
+                   C154,148 150,170 136,176 C140,150 132,130 118,122
+                   C118,146 112,166 100,170 C88,166 82,146 82,122
+                   C68,130 60,150 64,176 C50,170 46,148 46,128 Z"
+                fill="url(#dots-red-lg)" stroke="#111" stroke-width="5" stroke-linejoin="round"/>
+
+          <!-- raised arm with fist -->
+          <path d="M138,140 C160,128 174,108 176,86" fill="none" stroke="#111" stroke-width="22" stroke-linecap="round"/>
+          <path d="M138,140 C160,128 174,108 176,86" fill="none" stroke="url(#dots-red-lg)" stroke-width="15" stroke-linecap="round"/>
+          <circle cx="178" cy="80" r="13" fill="url(#dots-skin)" stroke="#111" stroke-width="5"/>
+
+          <!-- tunic with heart emblem -->
+          <path d="M66,128 C66,114 82,108 100,108 C118,108 134,114 134,128
+                   L140,210 Q100,226 60,210 Z" fill="var(--white)" stroke="#111" stroke-width="5"/>
+          <g transform="translate(82,140) scale(.42)"><use href="#pop-heart"/></g>
+          <path d="M66,128 C78,150 122,150 134,128" fill="none" stroke="#111" stroke-width="3.5" opacity=".7"/>
+
+          <!-- neck + head -->
+          <rect x="90" y="88" width="20" height="16" fill="url(#dots-skin)" stroke="#111" stroke-width="4"/>
+          <circle cx="100" cy="68" r="30" fill="url(#dots-skin)" stroke="#111" stroke-width="5"/>
+
+          <!-- crown -->
+          <path d="M66,48 L72,16 L86,36 L100,10 L114,36 L128,16 L134,48 Z"
+                fill="var(--yellow)" stroke="#111" stroke-width="5" stroke-linejoin="round"/>
+          <circle cx="72" cy="16" r="4.5" fill="var(--red)" stroke="#111" stroke-width="2"/>
+          <circle cx="100" cy="10" r="4.5" fill="var(--red)" stroke="#111" stroke-width="2"/>
+          <circle cx="128" cy="16" r="4.5" fill="var(--red)" stroke="#111" stroke-width="2"/>
+          <rect x="66" y="46" width="68" height="10" fill="var(--yellow)" stroke="#111" stroke-width="5"/>
+
+          <!-- eyebrows / eyes -->
+          <path d="M82,62 Q90,56 98,61" stroke="#111" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M102,61 Q110,56 118,62" stroke="#111" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <circle cx="90" cy="68" r="3" fill="#111"/>
+          <circle cx="110" cy="68" r="3" fill="#111"/>
+
+          <!-- triangular hero beard -->
+          <path d="M76,78 C76,96 88,108 100,108 C112,108 124,96 124,78
+                   C124,92 112,100 100,100 C88,100 76,92 76,78 Z" fill="#111"/>
+        </svg>
+      </div>
+      <div class="card-label">REY DE CORAZONES</div>
+    </div>
+    <p class="card-caption">Héroe de cómic con capa de puntos y emblema de corazón — puño en alto, pose dinámica de portada.</p>
+  </div>
+
+  <!-- NUMBER CARD -->
+  <div class="card-block">
+    <div class="playing-card">
+      <div class="corner tl">6<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#pop-bolt"/></svg></div>
+      <div class="corner br">6<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#pop-bolt"/></svg></div>
+      <div class="card-figure">
+        <svg viewBox="0 0 200 280" width="186">
+          <rect x="6" y="6" width="188" height="268" fill="url(#dots-green)"/>
+          <!-- comic panel gutters -->
+          <line x1="6" y1="140" x2="194" y2="140" stroke="#111" stroke-width="4"/>
+          <line x1="100" y1="6" x2="100" y2="274" stroke="#111" stroke-width="4"/>
+          <rect x="6" y="6" width="188" height="268" fill="none" stroke="#111" stroke-width="7"/>
+
+          <g transform="translate(55,46) scale(.46)"><use href="#pop-bolt"/></g>
+          <g transform="translate(118,46) scale(.46)"><use href="#pop-bolt"/></g>
+          <g transform="translate(55,112) scale(.46)"><use href="#pop-bolt"/></g>
+          <g transform="translate(118,112) scale(.46)"><use href="#pop-bolt"/></g>
+          <g transform="translate(55,178) scale(.46) rotate(180 23 23)"><use href="#pop-bolt"/></g>
+          <g transform="translate(118,178) scale(.46) rotate(180 23 23)"><use href="#pop-bolt"/></g>
+        </svg>
+      </div>
+      <div class="card-label">SEIS DE RAYO</div>
+    </div>
+    <p class="card-caption">Rejilla tipo viñeta de cómic con fondo de trama verde — seis rayos repartidos en dos columnas.</p>
+  </div>
+
+  <!-- BACK -->
+  <div class="card-block">
+    <div class="playing-card" style="background:var(--ink);">
+      <div class="card-figure">
+        <svg viewBox="0 0 200 280" width="196">
+          <rect x="4" y="4" width="192" height="272" rx="10" fill="url(#dots-black)"/>
+          <rect x="4" y="4" width="192" height="272" rx="10" fill="none" stroke="var(--red)" stroke-width="5"/>
+          <rect x="14" y="14" width="172" height="252" rx="6" fill="none" stroke="var(--white)" stroke-width="2.5"/>
+
+          <use href="#burst-back" fill="var(--yellow)" stroke="#111" stroke-width="4"/>
+          <circle cx="100" cy="140" r="58" fill="var(--white)" stroke="#111" stroke-width="5"/>
+          <text x="100" y="160" text-anchor="middle" font-family="Archivo Black" font-size="76" fill="var(--red)" stroke="#111" stroke-width="2">8</text>
+
+          <!-- symmetric corner mini-bursts -->
+          <g fill="var(--red)" stroke="#111" stroke-width="2.5">
+            <polygon points="26,26 32,34 42,30 36,40 46,44 34,46 36,56 26,50 16,56 18,46 6,44 16,40 10,30 20,34" transform="translate(0,0)"/>
+            <polygon points="26,26 32,34 42,30 36,40 46,44 34,46 36,56 26,50 16,56 18,46 6,44 16,40 10,30 20,34" transform="translate(148,0)"/>
+            <polygon points="26,26 32,34 42,30 36,40 46,44 34,46 36,56 26,50 16,56 18,46 6,44 16,40 10,30 20,34" transform="translate(0,224)"/>
+            <polygon points="26,26 32,34 42,30 36,40 46,44 34,46 36,56 26,50 16,56 18,46 6,44 16,40 10,30 20,34" transform="translate(148,224)"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <p class="card-caption">Reverso: trama de puntos + gran destello cómic alrededor de un "8" simétrico — no revela ninguna pinta.</p>
+  </div>
+
+</div>
+
+<footer>Propuesta 5 de 10 — Mazo de 8 Pintas</footer>
+</body>
+</html>
