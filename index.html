@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mazo de 8 Pintas — 10 Propuestas Visuales</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,900;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#121214;
+    --panel:#1b1b1f;
+    --ink:#f3f1ec;
+    --muted:#9a968d;
+    --accent:#d8b24a;
+    --black:#2b2318;
+    --red:#9c3b3b;
+    --green:#5c7a52;
+    --blue:#3a6b73;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+  }
+  header{
+    max-width:980px;
+    margin:0 auto;
+    padding:64px 24px 10px;
+    text-align:center;
+  }
+  h1{
+    font-family:'Playfair Display', serif;
+    font-weight:900;
+    font-size:2.8rem;
+    margin:0 0 10px;
+    letter-spacing:.01em;
+  }
+  h1 span{color:var(--accent);}
+  .subtitle{
+    color:var(--muted);
+    font-size:1.1rem;
+    max-width:680px;
+    margin:0 auto 28px;
+    line-height:1.6;
+  }
+
+  /* 8 pintas legend */
+  .legend{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:14px;
+    margin:0 auto 10px;
+    max-width:760px;
+  }
+  .legend-item{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    background:var(--panel);
+    border:1px solid #2d2d32;
+    border-radius:999px;
+    padding:6px 14px 6px 10px;
+    font-size:.82rem;
+    color:var(--muted);
+  }
+  .legend-dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
+
+  .note{
+    max-width:720px;
+    margin:28px auto 0;
+    text-align:center;
+    color:var(--muted);
+    font-size:.92rem;
+    line-height:1.6;
+    border-top:1px solid #2d2d32;
+    padding-top:22px;
+  }
+  .note strong{color:var(--ink);}
+
+  /* Gallery grid */
+  .gallery{
+    max-width:1200px;
+    margin:50px auto 100px;
+    padding:0 24px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+    gap:30px;
+  }
+  .proposal-card{
+    background:var(--panel);
+    border:1px solid #2d2d32;
+    border-radius:14px;
+    overflow:hidden;
+    text-decoration:none;
+    color:var(--ink);
+    display:block;
+    transition:transform .18s ease, border-color .18s ease;
+  }
+  .proposal-card:hover{
+    transform:translateY(-4px);
+    border-color:var(--accent);
+  }
+  .preview{
+    position:relative;
+    width:100%;
+    height:200px;
+    overflow:hidden;
+    background:#0c0c0e;
+  }
+  .preview iframe{
+    position:absolute;
+    top:0; left:0;
+    width:1180px;
+    height:1040px;
+    border:0;
+    transform:scale(.237);
+    transform-origin:top left;
+    pointer-events:none;
+  }
+  .preview:after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(to bottom, rgba(0,0,0,0) 60%, rgba(0,0,0,.35) 100%);
+  }
+  .proposal-meta{
+    padding:16px 18px 20px;
+  }
+  .proposal-num{
+    font-family:'Playfair Display', serif;
+    font-weight:900;
+    font-size:.85rem;
+    color:var(--accent);
+    letter-spacing:.08em;
+  }
+  .proposal-title{
+    font-family:'Playfair Display', serif;
+    font-size:1.35rem;
+    font-weight:600;
+    margin:2px 0 4px;
+  }
+  .proposal-tag{
+    font-size:.85rem;
+    color:var(--muted);
+    font-style:italic;
+  }
+
+  footer{
+    text-align:center;
+    padding:30px 24px 60px;
+    color:var(--muted);
+    font-size:.85rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Mazo de <span>8 Pintas</span></h1>
+  <p class="subtitle">
+    Un naipe propio para una familia de 5, pensado para que cualquier juego que pida
+    "una pinta por jugador" tenga margen de sobra. 10 propuestas de dirección de arte
+    muy distintas entre sí — cada una con sus 8 símbolos de pinta rediseñados, su propio
+    personaje de Joker, un Rey, una carta numérica de ejemplo y el reverso del mazo.
+  </p>
+
+  <div class="legend">
+    <span class="legend-item"><span class="legend-dot" style="background:var(--black)"></span>Tréboles · Picas</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>Diamantes · Corazones</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--green)"></span>Estrella · Rayo</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--blue)"></span>Luna · Aspa</span>
+  </div>
+
+  <p class="note">
+    Elegimos 10 de los 20 estilos que propusiste, buscando el <strong>máximo contraste técnico</strong>
+    entre sí: orgánico vs. geométrico, pictórico vs. gráfico, artesanal vs. digital — para que la
+    comparación entre propuestas sea lo más clara posible antes de producir el mazo completo.
+    Todo está construido en <strong>SVG vectorial</strong> (ideal para imprenta: escala sin perder calidad
+    y es compatible con separación de tintas), dentro de una maqueta HTML pensada para revisarse
+    cómodamente desde GitHub Pages.
+  </p>
+</header>
+
+<div class="gallery">
+
+  <a class="proposal-card" href="styles/01-art-nouveau/index.html">
+    <div class="preview"><iframe src="styles/01-art-nouveau/index.html" loading="lazy"></iframe></div>
+    <div class="proposal-meta">
+      <div class="proposal-num">PROPUESTA 01</div>
+      <div class="proposal-title">Art Nouveau</div>
+      <div class="proposal-tag">Curvas y flores</div>
+    </div>
+  </a>
+
+  <a class="proposal-card" href="styles/02-art-deco/index.html">
+    <div class="preview"><iframe src="styles/02-art-deco/index.html" loading="lazy"></iframe></div>
+    <div class="proposal-meta">
+      <div class="proposal-num">PROPUESTA 02</div>
+      <div class="proposal-title">Art Déco</div>
+      <div class="proposal-tag">Lujo geométrico</div>
+    </div>
+  </a>
+
+  <a class="proposal-card" href="styles/03-cubismo/index.html">
+    <div class="preview"><iframe src="styles/03-cubismo/index.html" loading="lazy"></iframe></div>
+    <div class="proposal-meta">
+      <div class="proposal-num">PROPUESTA 03</div>
+      <div class="proposal-title">Cubismo</div>
+      <div class="proposal-tag">Fragmentación</div>
+    </div>
+  </a>
+
+  <a class="proposal-card" href="styles/04-surrealismo/index.html">
+    <div class="preview"><iframe src="styles/04-surrealismo/index.html" loading="lazy"></iframe></div>
+    <div class="proposal-meta">
+      <div class="proposal-num">PROPUESTA 04</div>
+      <div class="proposal-title">Surrealismo</div>
+      <div class="proposal-tag">Sueños imposibles</div>
+    </div>
+  </a>
+
+  <a class="proposal-card" href="styles/05-pop-art/index.html">
+    <div class="preview"><iframe src="styles/05-pop-art/index.html" loading="lazy"></iframe></div>
+    <div class="proposal-meta">
+      <div class="proposal-num">PROPUESTA 05</div>
+      <div class="proposal-title">Pop Art</div>
+      <div class="proposal-tag">Cómic y cultura popular</div>
+    </div>
+  </a>
+
+  <a class="proposal-card" href="styles/06-ukiyo-e/index.html">
+    <div class="preview"><iframe src="styles/06-ukiyo-e/index.html" loading="lazy"></iframe></div>
+    <div class="proposal-meta">
+      <div class="proposal-num">PROPUESTA 06</div>
+      <div class="proposal-title">Ukiyo-e</div>
+      <div class="proposal-tag">Grabado japonés</div>
+    </div>
+  </a>
+
+  <a class="proposal-card" href="styles/07-bauhaus/index.html">
+    <div class="preview"><iframe src="styles/07-bauhaus/index.html" loading="lazy"></iframe></div>
+    <div class="proposal-meta">
+      <div class="proposal-num">PROPUESTA 07</div>
+      <div class="proposal-title">Bauhaus</div>
+      <div class="proposal-tag">Geometría funcional</div>
+    </div>
+  </a>
+
+  <a class="proposal-card" href="styles/08-acuarela-botanica/index.html">
+    <div class="preview"><iframe src="styles/08-acuarela-botanica/index.html" loading="lazy"></iframe></div>
+    <div class="proposal-meta">
+      <div class="proposal-num">PROPUESTA 08</div>
+      <div class="proposal-title">Acuarela Botánica</div>
+      <div class="proposal-tag">Naturaleza delicada</div>
+    </div>
+  </a>
+
+  <a class="proposal-card" href="styles/09-vitral/index.html">
+    <div class="preview"><iframe src="styles/09-vitral/index.html" loading="lazy"></iframe></div>
+    <div class="proposal-meta">
+      <div class="proposal-num">PROPUESTA 09</div>
+      <div class="proposal-title">Vitral</div>
+      <div class="proposal-tag">Fragmentos luminosos</div>
+    </div>
+  </a>
+
+  <a class="proposal-card" href="styles/10-pixel-art/index.html">
+    <div class="preview"><iframe src="styles/10-pixel-art/index.html" loading="lazy"></iframe></div>
+    <div class="proposal-meta">
+      <div class="proposal-num">PROPUESTA 10</div>
+      <div class="proposal-title">Pixel Art</div>
+      <div class="proposal-tag">Píxeles retro</div>
+    </div>
+  </a>
+
+</div>
+
+<footer>Mazo de 8 Pintas — propuestas de dirección de arte · hecho para imprenta</footer>
+</body>
+</html>
