@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Propuesta 01 · Art Nouveau — Mazo de 8 Pintas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#f6ecd9;
+    --cream-dark:#efe2c4;
+    --ink:#3a2c18;
+    --gold:#b8860b;
+    --gold-light:#d8b24a;
+    --black:#2b2318;
+    --red:#9c3b3b;
+    --green:#5c7a52;
+    --blue:#3a6b73;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 20% 10%, #fffaf0 0%, var(--cream) 45%, var(--cream-dark) 100%);
+    font-family:'EB Garamond', serif;
+    color:var(--ink);
+    padding-bottom:80px;
+  }
+  header{
+    max-width:1100px;
+    margin:0 auto;
+    padding:40px 24px 20px;
+    text-align:center;
+  }
+  .back-link{
+    display:inline-block;
+    margin-bottom:18px;
+    font-family:'EB Garamond',serif;
+    font-style:italic;
+    color:var(--gold);
+    text-decoration:none;
+    border-bottom:1px solid var(--gold);
+  }
+  h1{
+    font-family:'Cinzel Decorative', serif;
+    font-size:2.4rem;
+    margin:0 0 6px;
+    color:var(--ink);
+  }
+  .tagline{
+    font-style:italic;
+    color:var(--gold);
+    font-size:1.2rem;
+    margin:0 0 14px;
+  }
+  .desc{
+    max-width:720px;
+    margin:0 auto;
+    line-height:1.6;
+    font-size:1.05rem;
+  }
+  h2.section-title{
+    text-align:center;
+    font-family:'Cinzel Decorative', serif;
+    font-size:1.3rem;
+    margin:60px 0 28px;
+    letter-spacing:.04em;
+  }
+  h2.section-title:before, h2.section-title:after{
+    content:"❧";
+    color:var(--gold);
+    margin:0 14px;
+  }
+
+  /* ---- Suit grid ---- */
+  .suit-grid{
+    max-width:980px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:18px;
+    padding:0 24px;
+  }
+  .suit-card{
+    background:var(--cream);
+    border:1px solid var(--gold);
+    border-radius:8px;
+    padding:14px 10px 10px;
+    text-align:center;
+    box-shadow:0 2px 6px rgba(80,60,20,.12);
+  }
+  .suit-card svg{width:72px;height:72px;}
+  .suit-name{
+    display:block;
+    margin-top:6px;
+    font-size:.85rem;
+    letter-spacing:.03em;
+    color:var(--ink);
+  }
+
+  /* ---- Cards section ---- */
+  .cards-row{
+    max-width:1100px;
+    margin:0 auto;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:36px;
+    padding:0 24px;
+  }
+  .playing-card{
+    width:250px;
+    aspect-ratio:63/88;
+    background:var(--cream);
+    border:2.5px solid var(--ink);
+    border-radius:14px;
+    position:relative;
+    box-shadow:0 8px 22px rgba(60,40,10,.25);
+    overflow:hidden;
+  }
+  .playing-card:before{
+    content:"";
+    position:absolute;
+    inset:8px;
+    border:1px solid var(--gold);
+    border-radius:8px;
+    pointer-events:none;
+  }
+  .corner{
+    position:absolute;
+    font-family:'EB Garamond',serif;
+    font-weight:600;
+    font-size:.95rem;
+    text-align:center;
+    line-height:1;
+    color:var(--ink);
+  }
+  .corner svg{width:16px;height:16px;display:block;margin:2px auto 0;}
+  .corner.tl{top:12px;left:12px;}
+  .corner.br{bottom:12px;right:12px;transform:rotate(180deg);}
+  .card-figure{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .card-label{
+    position:absolute;
+    bottom:14px;
+    left:0;right:0;
+    text-align:center;
+    font-family:'Cinzel Decorative', serif;
+    font-size:.7rem;
+    letter-spacing:.12em;
+    color:var(--gold);
+  }
+  .card-caption{
+    text-align:center;
+    margin-top:12px;
+    font-size:.85rem;
+    color:var(--ink);
+    font-style:italic;
+    max-width:250px;
+  }
+  .card-block{display:flex;flex-direction:column;align-items:center;}
+
+  footer{
+    text-align:center;
+    margin-top:70px;
+    font-size:.8rem;
+    color:var(--gold);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back-link" href="../../index.html">← Volver a las 10 propuestas</a>
+  <h1>01 · Art Nouveau</h1>
+  <p class="tagline">Curvas y flores</p>
+  <p class="desc">Líneas serpenteantes "whiplash", siluetas orgánicas y una paleta de joyería inspirada en Alphonse Mucha. El dorso del mazo retoma la flor de 8 pétalos como guiño directo a las 8 pintas de la familia. Pensado para impresión offset con tintas plana + dorado.</p>
+</header>
+
+<h2 class="section-title">Las 8 pintas</h2>
+<div class="suit-grid">
+
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#an-club"/></svg>
+    <span class="suit-name">Tréboles</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#an-diamond"/></svg>
+    <span class="suit-name">Diamantes</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#an-star"/></svg>
+    <span class="suit-name">Estrella</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#an-moon"/></svg>
+    <span class="suit-name">Luna</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#an-spade"/></svg>
+    <span class="suit-name">Picas</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#an-heart"/></svg>
+    <span class="suit-name">Corazones</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#an-bolt"/></svg>
+    <span class="suit-name">Rayo</span>
+  </div>
+  <div class="suit-card">
+    <svg viewBox="0 0 100 100"><use href="#an-cross"/></svg>
+    <span class="suit-name">Aspa</span>
+  </div>
+
+</div>
+
+<!-- shared suit symbol defs -->
+<svg width="0" height="0" style="position:absolute">
+<defs>
+  <path id="leaf" d="M0,0 Q10,-7 13,-19 Q15,-27 9,-35 Q1,-28 -3,-18 Q-5,-8 0,0 Z"/>
+
+  <g id="an-club" fill="var(--black)">
+    <circle cx="50" cy="33" r="17"/>
+    <circle cx="34" cy="55" r="17"/>
+    <circle cx="66" cy="55" r="17"/>
+    <path d="M42,58 L58,58 L53,90 Q50,95 47,90 Z"/>
+    <g stroke="var(--gold)" stroke-width="1.3" fill="none" opacity=".85">
+      <circle cx="50" cy="33" r="17"/>
+      <circle cx="34" cy="55" r="17"/>
+      <circle cx="66" cy="55" r="17"/>
+    </g>
+    <use href="#leaf" fill="var(--gold)" transform="translate(50,16) scale(.7)"/>
+  </g>
+
+  <g id="an-diamond" fill="var(--red)">
+    <path d="M50,6 C34,28 28,40 16,50 C28,60 34,72 50,94 C66,72 72,60 84,50 C72,40 66,28 50,6 Z"/>
+    <path d="M50,6 C34,28 28,40 16,50 C28,60 34,72 50,94 C66,72 72,60 84,50 C72,40 66,28 50,6 Z"
+          fill="none" stroke="var(--gold)" stroke-width="1.3" opacity=".85"/>
+    <use href="#leaf" fill="var(--gold)" transform="translate(50,10) scale(.6) rotate(180)"/>
+  </g>
+
+  <g id="an-star" fill="var(--green)">
+    <g>
+      <use href="#leaf" transform="translate(50,50) rotate(0) scale(1.3)"/>
+      <use href="#leaf" transform="translate(50,50) rotate(72) scale(1.3)"/>
+      <use href="#leaf" transform="translate(50,50) rotate(144) scale(1.3)"/>
+      <use href="#leaf" transform="translate(50,50) rotate(216) scale(1.3)"/>
+      <use href="#leaf" transform="translate(50,50) rotate(288) scale(1.3)"/>
+    </g>
+    <circle cx="50" cy="50" r="7" fill="var(--gold)"/>
+  </g>
+
+  <g id="an-moon" fill="var(--blue)">
+    <path d="M60,8 A42,42 0 1,0 60,92 A33,33 0 1,1 60,8 Z"/>
+    <path d="M60,8 A42,42 0 1,0 60,92 A33,33 0 1,1 60,8 Z" fill="none" stroke="var(--gold)" stroke-width="1.3" opacity=".85"/>
+    <use href="#leaf" fill="var(--gold)" transform="translate(70,20) rotate(40) scale(.55)"/>
+  </g>
+
+  <g id="an-spade" fill="var(--black)">
+    <path d="M50,8 C24,36 13,52 13,66 C13,80 25,88 37,82 C41,80 45,75 47,70
+             C45,84 39,91 28,94 L72,94 C61,91 55,84 53,70
+             C55,75 59,80 63,82 C75,88 87,80 87,66 C87,52 76,36 50,8 Z"/>
+    <path d="M50,8 C24,36 13,52 13,66 C13,80 25,88 37,82 C41,80 45,75 47,70
+             C45,84 39,91 28,94 L72,94 C61,91 55,84 53,70
+             C55,75 59,80 63,82 C75,88 87,80 87,66 C87,52 76,36 50,8 Z"
+          fill="none" stroke="var(--gold)" stroke-width="1.3" opacity=".85"/>
+    <use href="#leaf" fill="var(--gold)" transform="translate(50,14) scale(.6)"/>
+  </g>
+
+  <g id="an-heart" fill="var(--red)">
+    <path d="M50,88 C10,58 8,28 28,16 C40,9 50,20 50,32 C50,20 60,9 72,16 C92,28 90,58 50,88 Z"/>
+    <path d="M50,88 C10,58 8,28 28,16 C40,9 50,20 50,32 C50,20 60,9 72,16 C92,28 90,58 50,88 Z"
+          fill="none" stroke="var(--gold)" stroke-width="1.3" opacity=".85"/>
+    <use href="#leaf" fill="var(--gold)" transform="translate(30,16) rotate(-20) scale(.5)"/>
+    <use href="#leaf" fill="var(--gold)" transform="translate(70,16) rotate(20) scale(.5)"/>
+  </g>
+
+  <g id="an-bolt" fill="var(--green)">
+    <path d="M58,4 C44,22 34,38 28,52 C34,52 40,52 46,52 C38,68 32,82 30,96
+             C50,74 64,56 74,42 C66,42 60,42 54,42 C62,28 68,16 70,6
+             C66,8 62,8 58,4 Z"/>
+    <path d="M58,4 C44,22 34,38 28,52 C34,52 40,52 46,52 C38,68 32,82 30,96
+             C50,74 64,56 74,42 C66,42 60,42 54,42 C62,28 68,16 70,6
+             C66,8 62,8 58,4 Z" fill="none" stroke="var(--gold)" stroke-width="1.3" opacity=".85"/>
+    <use href="#leaf" fill="var(--gold)" transform="translate(66,10) rotate(30) scale(.5)"/>
+  </g>
+
+  <g id="an-cross" fill="var(--blue)">
+    <path d="M22,32 L38,16 L50,28 L62,16 L78,32 L66,44 L78,56 L62,72 L50,60 L38,72 L22,56 L34,44 Z"/>
+    <path d="M22,32 L38,16 L50,28 L62,16 L78,32 L66,44 L78,56 L62,72 L50,60 L38,72 L22,56 L34,44 Z"
+          fill="none" stroke="var(--gold)" stroke-width="1.3" opacity=".85"/>
+    <use href="#leaf" fill="var(--gold)" transform="translate(50,44) scale(.55)"/>
+  </g>
+</defs>
+</svg>
+
+<h2 class="section-title">Joker, Rey, Número y Reverso</h2>
+<div class="cards-row">
+
+  <!-- JOKER -->
+  <div class="card-block">
+    <div class="playing-card">
+      <div class="corner tl">JK<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#an-star"/></svg></div>
+      <div class="corner br">JK<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#an-star"/></svg></div>
+      <div class="card-figure">
+        <svg viewBox="0 0 200 280" width="170">
+          <!-- arch frame -->
+          <path d="M20,270 L20,90 C20,30 60,8 100,8 C140,8 180,30 180,90 L180,270 Z"
+                fill="none" stroke="var(--gold)" stroke-width="2"/>
+          <!-- flower crown -->
+          <g fill="var(--green)">
+            <circle cx="60" cy="38" r="7"/>
+            <circle cx="78" cy="26" r="7"/>
+            <circle cx="100" cy="20" r="7"/>
+            <circle cx="122" cy="26" r="7"/>
+            <circle cx="140" cy="38" r="7"/>
+          </g>
+          <g fill="var(--gold)">
+            <circle cx="60" cy="38" r="2.4"/><circle cx="78" cy="26" r="2.4"/>
+            <circle cx="100" cy="20" r="2.4"/><circle cx="122" cy="26" r="2.4"/>
+            <circle cx="140" cy="38" r="2.4"/>
+          </g>
+          <!-- flowing hair -->
+          <path d="M66,60 C30,80 24,130 40,170 C30,190 34,210 50,214"
+                fill="none" stroke="var(--ink)" stroke-width="4" stroke-linecap="round"/>
+          <path d="M134,60 C170,80 176,130 160,170 C170,190 166,210 150,214"
+                fill="none" stroke="var(--ink)" stroke-width="4" stroke-linecap="round"/>
+          <!-- head -->
+          <circle cx="100" cy="66" r="30" fill="#f1dcb5" stroke="var(--ink)" stroke-width="2.5"/>
+          <path d="M84,70 Q92,78 100,70" stroke="var(--ink)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <circle cx="86" cy="60" r="2.3" fill="var(--ink)"/>
+          <circle cx="114" cy="60" r="2.3" fill="var(--ink)"/>
+          <!-- robe -->
+          <path d="M55,110 C55,96 70,96 100,96 C130,96 145,96 145,110
+                    L160,255 C120,270 80,270 40,255 Z" fill="var(--blue)" stroke="var(--ink)" stroke-width="2.5"/>
+          <path d="M100,96 C90,140 90,200 100,255 M70,100 C66,150 70,200 78,250
+                    M130,100 C134,150 130,200 122,250"
+                fill="none" stroke="var(--gold)" stroke-width="1.4" opacity=".8"/>
+          <!-- sash with suit pips -->
+          <path d="M60,120 C90,150 110,150 140,120" fill="none" stroke="var(--gold)" stroke-width="3"/>
+          <g transform="translate(92,150) scale(.26)"><use href="#an-heart"/></g>
+          <g transform="translate(112,160) scale(.22)"><use href="#an-moon"/></g>
+          <!-- scepter -->
+          <path d="M40,180 L20,250" stroke="var(--ink)" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(16,170) scale(.3)"><use href="#an-star"/></g>
+          <path d="M22,200 C10,205 8,215 16,222 C24,228 30,220 26,212" fill="none" stroke="var(--gold)" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="card-label">EL BUFÓN DE LAS FLORES</div>
+    </div>
+    <p class="card-caption">Joker exclusivo — personaje propio con corona floral y cetro de estrella.</p>
+  </div>
+
+  <!-- KING -->
+  <div class="card-block">
+    <div class="playing-card">
+      <div class="corner tl">R<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#an-spade"/></svg></div>
+      <div class="corner br">R<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#an-spade"/></svg></div>
+      <div class="card-figure">
+        <svg viewBox="0 0 200 280" width="170">
+          <g id="an-king-half">
+            <!-- crown -->
+            <path d="M68,70 L72,40 L86,58 L100,34 L114,58 L128,40 L132,70 Z"
+                  fill="var(--gold)" stroke="var(--ink)" stroke-width="2"/>
+            <circle cx="100" cy="34" r="4" fill="var(--green)"/>
+            <!-- face -->
+            <circle cx="100" cy="92" r="28" fill="#f1dcb5" stroke="var(--ink)" stroke-width="2.5"/>
+            <circle cx="90" cy="88" r="2.2" fill="var(--ink)"/>
+            <circle cx="110" cy="88" r="2.2" fill="var(--ink)"/>
+            <!-- beard -->
+            <path d="M74,98 C74,122 86,132 100,132 C114,132 126,122 126,98
+                     C126,112 114,118 100,118 C86,118 74,112 74,98 Z"
+                  fill="var(--ink)"/>
+            <!-- robe -->
+            <path d="M52,140 C52,124 70,120 100,120 C130,120 148,124 148,140
+                     L160,270 C120,282 80,282 40,270 Z" fill="var(--black)" stroke="var(--gold)" stroke-width="2"/>
+            <path d="M100,120 C92,170 92,230 100,270 M70,126 C64,172 68,226 76,268
+                     M130,126 C136,172 132,226 124,268"
+                  fill="none" stroke="var(--gold)" stroke-width="1.3" opacity=".75"/>
+          </g>
+        </svg>
+      </div>
+      <div class="card-label">REY DE PICAS</div>
+    </div>
+    <p class="card-caption">Rey con corona vegetal y barba estilizada en tinta — orientación tradicional en espejo.</p>
+  </div>
+
+  <!-- NUMBER CARD -->
+  <div class="card-block">
+    <div class="playing-card">
+      <div class="corner tl">7<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#an-heart"/></svg></div>
+      <div class="corner br">7<br><svg viewBox="0 0 100 100" style="width:14px;height:14px"><use href="#an-heart"/></svg></div>
+      <div class="card-figure">
+        <svg viewBox="0 0 200 280" width="180">
+          <path d="M100,24 C60,60 40,90 100,130 C160,90 140,60 100,24"
+                fill="none" stroke="var(--gold)" stroke-width="1" opacity=".5"/>
+          <g transform="translate(70,40) scale(.42)"><use href="#an-heart"/></g>
+          <g transform="translate(118,40) scale(.42)"><use href="#an-heart"/></g>
+          <g transform="translate(94,90) scale(.42)"><use href="#an-heart"/></g>
+          <g transform="translate(70,140) scale(.42)"><use href="#an-heart"/></g>
+          <g transform="translate(118,140) scale(.42)"><use href="#an-heart"/></g>
+          <g transform="translate(70,190) scale(.42) rotate(180)"><use href="#an-heart"/></g>
+          <g transform="translate(118,190) scale(.42) rotate(180)"><use href="#an-heart"/></g>
+          <path d="M100,150 C60,186 40,216 100,256 C160,216 140,186 100,150"
+                fill="none" stroke="var(--gold)" stroke-width="1" opacity=".5"/>
+        </svg>
+      </div>
+      <div class="card-label">SIETE DE CORAZONES</div>
+    </div>
+    <p class="card-caption">Pips enlazados por una enredadera dorada sutil — legible a tamaño de mano.</p>
+  </div>
+
+  <!-- BACK -->
+  <div class="card-block">
+    <div class="playing-card" style="background:var(--blue);">
+      <div class="card-figure">
+        <svg viewBox="0 0 200 280" width="190">
+          <rect x="14" y="14" width="172" height="252" rx="10" fill="none" stroke="var(--gold)" stroke-width="2"/>
+          <rect x="22" y="22" width="156" height="236" rx="6" fill="none" stroke="var(--gold)" stroke-width="1"/>
+          <g transform="translate(100,140)">
+            <g fill="none" stroke="var(--gold)" stroke-width="1.6">
+              <use href="#leaf" transform="rotate(0) scale(1.6)"/>
+              <use href="#leaf" transform="rotate(45) scale(1.6)"/>
+              <use href="#leaf" transform="rotate(90) scale(1.6)"/>
+              <use href="#leaf" transform="rotate(135) scale(1.6)"/>
+              <use href="#leaf" transform="rotate(180) scale(1.6)"/>
+              <use href="#leaf" transform="rotate(225) scale(1.6)"/>
+              <use href="#leaf" transform="rotate(270) scale(1.6)"/>
+              <use href="#leaf" transform="rotate(315) scale(1.6)"/>
+            </g>
+            <circle r="14" fill="var(--cream)" stroke="var(--gold)" stroke-width="2"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <p class="card-caption">Reverso: flor de 8 pétalos — un pétalo por pinta de la familia.</p>
+  </div>
+
+</div>
+
+<footer>Propuesta 1 de 10 — Mazo de 8 Pintas</footer>
+</body>
+</html>
