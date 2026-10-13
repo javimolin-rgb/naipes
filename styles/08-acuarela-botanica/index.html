@@ -310,16 +310,16 @@
   <g id="wb-moon">
     <g filter="url(#wc-fill)">
       <path fill-rule="evenodd" fill="var(--moon)"
-            d="M90,52 A40,40 0 1,1 10,52 A40,40 0 1,1 90,52 Z
-               M88,52 A28,28 0 1,1 32,52 A28,28 0 1,1 88,52 Z"/>
+            d="M90,52 A38,38 0 1,1 14,52 A38,38 0 1,1 90,52 Z
+               M96,52 A30,30 0 1,1 36,52 A30,30 0 1,1 96,52 Z"/>
     </g>
     <path fill-rule="evenodd" fill="none" stroke="var(--ink)" stroke-width="1.3" opacity=".7" filter="url(#wc-ink)"
-          d="M90,52 A40,40 0 1,1 10,52 A40,40 0 1,1 90,52 Z
-             M88,52 A28,28 0 1,1 32,52 A28,28 0 1,1 88,52 Z"/>
+          d="M90,52 A38,38 0 1,1 14,52 A38,38 0 1,1 90,52 Z
+             M96,52 A30,30 0 1,1 36,52 A30,30 0 1,1 96,52 Z"/>
     <path d="M22,30 Q14,52 20,74 Q24,86 34,92" fill="none" stroke="var(--star)" stroke-width="1" opacity=".55"/>
     <use href="#wb-leaf" fill="var(--star)" transform="translate(20,38) scale(.4) rotate(-30)"/>
     <use href="#wb-leaf" fill="var(--star)" transform="translate(22,70) scale(.4) rotate(40)"/>
-    <use href="#wb-bird" fill="var(--ink)" opacity=".85" transform="translate(58,14) rotate(8) scale(.6)"/>
+    <use href="#wb-bird" fill="var(--ink)" opacity=".85" transform="translate(48,12) rotate(8) scale(.6)"/>
   </g>
 
   <g id="wb-spade">
@@ -446,8 +446,11 @@
           <use href="#wb-leaf" fill="var(--heart)" transform="translate(100,228) scale(.45)"/>
 
           <!-- bird perched on shoulder -->
-          <use href="#wb-bird" fill="var(--moon)" opacity=".95" transform="translate(146,98) rotate(-10) scale(1.1)"/>
-          <path d="M146,98 Q146,92 150,90" stroke="var(--ink)" stroke-width="1" fill="none" opacity=".6"/>
+          <g filter="url(#wc-fill)">
+            <use href="#wb-bird" fill="var(--moon)" transform="translate(150,96) rotate(-8) scale(2)"/>
+          </g>
+          <use href="#wb-bird" fill="none" stroke="var(--ink)" stroke-width=".6" opacity=".6" transform="translate(150,96) rotate(-8) scale(2)"/>
+          <path d="M148,96 Q146,88 152,84" stroke="var(--ink)" stroke-width="1" fill="none" opacity=".6"/>
         </svg>
       </div>
       <div class="card-label">EL JARDINERO ERRANTE</div>
