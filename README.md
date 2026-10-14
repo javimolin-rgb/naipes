@@ -1,19 +1,20 @@
-# Mazo Stained Glass — editor para GitHub Pages
+# Stained Glass Deck — editor para GitHub Pages
 
-Editor estático para personalizar cartas con una dirección visual más cercana al vitral ornamental: marcos Art Nouveau, paletas joya, líneas de plomo marcadas, paneles facetados, ornamentos simétricos y figuras estilizadas.
+Editor estático para personalizar cada una de las 40 cartas (8 pintas × Joker, A, J, Q y K). Permite subir una ilustración propia por carta, ajustar tamaño, posición y opacidad, combinarla con el marco vectorial y exportar SVG/PNG o las 40 cartas en un ZIP.
 
 ## Publicar
-1. Descomprime el ZIP.
-2. Sube los archivos `index.html`, `styles.css` y `app.js` a la raíz de un repositorio.
-3. En GitHub entra a **Settings → Pages**.
-4. Selecciona **Deploy from a branch**, rama `main`, carpeta `/ (root)` y guarda.
+1. Descomprime el ZIP y sube el contenido de esta carpeta a la raíz de tu repositorio.
+2. En GitHub abre Settings → Pages.
+3. Elige Deploy from a branch, `main` y `/(root)`.
 
-## Funciones
-- 8 pintas de ejemplo y 5 rangos por pinta: Joker, As, J, Q y K.
-- Editor de colores, símbolo, título, motivo, nivel de detalle y ornamentos.
-- Vista previa y galería de 40 cartas.
-- Exportación individual SVG/PNG, configuración JSON y ZIP real de todas las cartas SVG.
-- La exportación ZIP usa JSZip desde CDN, por lo que requiere internet.
+## Cómo usar las referencias
+- Selecciona una carta en la galería.
+- En “Ilustración propia” elige un PNG/JPG/WebP/SVG. La imagen se incrusta en la carta y se exporta dentro del SVG.
+- Ajusta tamaño, opacidad y ubicación. Desmarca “Mantener ornamentación vectorial” si quieres dejar solo la imagen y el marco exterior.
+- Exporta el ZIP para descargar los 40 SVG, o guarda el proyecto JSON para respaldo y para trasladar las imágenes/ajustes a otro navegador.
 
-## Importante sobre la referencia
-Las imágenes exactas generadas en el turno anterior no estaban disponibles como archivos de referencia en esta sesión. Esta versión refuerza la dirección visual descrita, pero si quieres una coincidencia exacta con esas imágenes, adjúntalas en el chat y se puede ajustar el diseño tomando esas referencias directamente. Las ocho pintas también son provisionales hasta reemplazarlas por las del enlace original.
+## Persistencia
+El editor guarda automáticamente en localStorage del navegador. Como las imágenes ocupan espacio, exporta periódicamente el proyecto JSON. El ZIP masivo requiere conexión para cargar JSZip desde CDN. Google Fonts es opcional y solo afecta la tipografía del panel, no la estructura de las cartas.
+
+## Nota sobre las pintas
+Los símbolos y paletas son provisionales. Puedes reemplazarlos en el arreglo `SUITS` de `app.js` por las ocho pintas definitivas.
